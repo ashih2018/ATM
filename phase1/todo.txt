@@ -1,0 +1,33 @@
+Class
+    *variable
+    *variable
+
+method()
+
+ATM
+
+UserHandler
+
+abstract Person
+    login / username
+    password
+
+getUsername()
+User extends Person
+
+
+BankEmployee extends Person
+
+
+BankDaddy extends BankEmployee
+
+
+abstract Account
+
+
+abstract DebtAccount extends Account
+
+
+abstract AssetAccount extends Account
+
+
