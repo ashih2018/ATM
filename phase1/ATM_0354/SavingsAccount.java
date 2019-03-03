@@ -1,4 +1,4 @@
 package ATM_0354;
 
-public class SavingsAccount {
+public class SavingsAccount extends AssetAccount {
 }

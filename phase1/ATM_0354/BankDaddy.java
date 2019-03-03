@@ -1,4 +1,4 @@
 package ATM_0354;
 
-public class BankDaddy {
+public class BankDaddy extends BankEmployee {
 }

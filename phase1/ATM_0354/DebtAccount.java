@@ -1,4 +1,4 @@
 package ATM_0354;
 
-public class DebtAccount {
+public abstract class DebtAccount extends Account {
 }
