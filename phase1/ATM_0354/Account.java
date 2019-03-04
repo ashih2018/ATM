@@ -9,14 +9,14 @@ public abstract class Account {
     private int id;
     private BigDecimal balance;
 
-    public Account() {
+    public Account(int id) {
         this.transactions = new ArrayList<>();
         this.balance = new BigDecimal(0);
-        // TODO: Set id and figure out a method to create unique ID's for new accounts
+        this.id = id;
     }
 
-    public String summary() {
+    @Override
+    public String toString() {
         return "Account ID: " + this.id + "\nAccount Balance: " + this.balance;
     }
-
 }
