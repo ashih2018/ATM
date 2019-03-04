@@ -1,4 +1,5 @@
 package ATM_0354;
 
-public class BankEmployee {
+public abstract class BankEmployee extends Person{
+
 }
