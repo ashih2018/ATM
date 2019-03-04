@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
-    static ATM atm;
+    public static ATM atm;
 
     public static void main(String[] args) {
         atm = new ATM();
+
+        //need to set up current date - as previous date + 1 day
+
         atm.setDateTime(LocalDateTime.now());
         Scanner in = new Scanner(System.in); //Set up for console input right now
 
