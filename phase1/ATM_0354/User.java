@@ -11,8 +11,7 @@ public class User extends Person {
     private ArrayList<Account> accounts;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-
+    
     public User(Date creationDate) {
         creationDate = new Date();
     }
