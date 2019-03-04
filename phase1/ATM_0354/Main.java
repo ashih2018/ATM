@@ -11,7 +11,7 @@ public class Main {
         atm.setDateTime(LocalDateTime.now());
         Scanner in = new Scanner(System.in); //Set up for console input right now
 
-        //example nput ftomm console
+        //example input from console
         System.out.println("What is your name?");
         String name = in.nextLine();
         System.out.println("Your name is: " + name);
