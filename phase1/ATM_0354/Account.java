@@ -11,11 +11,22 @@ public abstract class Account {
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
 
+    // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
+
     public Account(int id) {
         this.transactions = new ArrayList<>();
         this.balance = new BigDecimal(0);
         this.id = id;
         this.dateOfCreation = LocalDateTime.now();
+    }
+
+    public void transferMoneyIn(BigDecimal value) {
+        this.balance = this.balance.add(value);
+    }
+
+    public void transferMoneyOut(BigDecimal value) {
+        // Note: Balance can be negative after using this method
+        this.balance = this.balance.subtract(value);
     }
 
     public Transaction getLastTransaction() {
