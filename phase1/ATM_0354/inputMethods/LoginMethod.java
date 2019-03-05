@@ -5,13 +5,14 @@ import ATM_0354.Main;
 
 import java.util.Scanner;
 
-public class loginMethod implements InputMethod {
-    public boolean run(Scanner in){
+public class LoginMethod implements InputMethod {
+    public String run(Scanner in){
         System.out.print("Username: ");
         String username = in.nextLine();
         System.out.print("Password: ");
         String password = in.nextLine();
-        return Main.atm.signIn(username, password);
+        Main.atm.signIn(username, password);
+        return "";
     }
 
 }
