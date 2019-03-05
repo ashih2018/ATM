@@ -1,20 +1,32 @@
 package ATM_0354;
 
-public class CashObject {
+import java.math.BigDecimal;
+import java.util.Observable;
 
-    private int cashValue;
+public class CashObject{
+
+    private final BigDecimal cashValue;
     private int count;
 
-    public CashObject(int cashValue, int count){
+    public CashObject(BigDecimal cashValue, int count){
         this.cashValue = cashValue;
         this.count = count;
     }
 
-    public int getCashValue() {
+    public BigDecimal getCashValue() {
         return cashValue;
     }
 
-    public void setCashValue(int cashValue) {
-        this.cashValue = cashValue;
+    public int getCount(){
+        return count;
+    }
+
+    public void setCount(int count){
+        this.count = count;
+    }
+
+    public boolean needsRestocking(){
+        int restockLimit = 20;
+        return count < restockLimit;
     }
 }

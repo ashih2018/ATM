@@ -1,15 +1,69 @@
 package ATM_0354;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
-public class CashHandler implements Observer {
+public class CashHandler{
 
-    private ArrayList<CashObject> cash = new ArrayList<>();
+    private ArrayList<CashObject> cash;
+    private boolean hasEnoughBills;
 
-    @Override
-    public void update(Observable o, Object arg) {
-        
+    /**
+    Precondition: the CashObjects in cash all have different bill values.
+     */
+    public CashHandler(ArrayList<CashObject> cash){
+        this.cash = cash;
     }
+
+    public CashHandler(){
+        this.cash = new ArrayList<>();
+        this.hasEnoughBills = false;
+    }
+
+    public void addCash(BigDecimal billValue, int count){
+        for(CashObject cashObject : cash){
+            if (cashObject.getCashValue().equals(billValue)){
+                cashObject.setCount(cashObject.getCount() + count);
+                updateRestockStatus();
+                return;
+            }
+        }
+        CashObject cashObject = new CashObject(billValue, count);
+        this.cash.add(cashObject);
+        updateRestockStatus();
+    }
+
+    public void withdrawCash(BigDecimal billValue, int count){
+        for(CashObject cashObject : cash){
+            if (cashObject.getCashValue().equals(billValue)){
+                if (cashObject.getCount() < count){
+                    System.out.println("Not enough bills to withdraw " + count + " bills.");
+                    return;
+                }
+                else{
+                    cashObject.setCount(cashObject.getCount() - count);
+                    updateRestockStatus();
+                    return;
+                }
+            }
+        }
+        System.out.println("Not an existing bill denomination: " + billValue);
+    }
+
+    private void updateRestockStatus(){
+        for(CashObject cashObject: cash){
+            if (cashObject.needsRestocking()) {
+                this.hasEnoughBills = true;
+                return;
+            }
+        }
+        hasEnoughBills = false;
+    }
+
+    public boolean hasEnoughBills(){
+        return hasEnoughBills;
+    }
+
+    public void sendAlert(){};
+
 }
