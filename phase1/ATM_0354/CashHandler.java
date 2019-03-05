@@ -1,5 +1,8 @@
 package ATM_0354;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -64,6 +67,22 @@ public class CashHandler{
         return hasEnoughBills;
     }
 
-    public void sendAlert(){};
+    public void sendAlert(){
+        try {
+            File file = new File("Files/alerts.txt");
+            // if it doesnt work "phase1/ATM_0354/Files/alerts.txt"
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            for(CashObject c : cash) {
+                writer.write(c.getCashValue() + ", " + c.getCount());
+                writer.newLine();
+            }
+
+            writer.close();
+        }
+        catch (Exception e) {
+            System.out.println("ERROR: Could not create file.");
+        }
+    }
 
 }
