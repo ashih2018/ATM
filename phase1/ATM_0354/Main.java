@@ -1,7 +1,6 @@
 package ATM_0354;
 
-import jdk.internal.util.xml.impl.Input;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -38,5 +37,9 @@ public class Main {
         for(int i=0; i<50; i++) {
             System.out.println();
         }
+    }
+    //TODO: Complete
+    public static BigDecimal parseDeposits(){
+        return null;
     }
 }

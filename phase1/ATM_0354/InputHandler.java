@@ -41,10 +41,9 @@ public class InputHandler {
                     Undo recent transaction screen
                     ~Logout~
                 ~User screen~
-                    Account view summary screen/account manager
-                         Request new accounts screen
-                    Withdraw money screen - shows all accounts + asks which to withdraw from
-                        Individual account withdrawal - asks how much
+                    ~Account view summary screen/account manager~
+                         ~Request new accounts screen~
+                    ~Withdraw money screen - shows all accounts + asks which to withdraw from + asks how much~
                     Deposit money - amount + account (optional) - using file
                     Transfer money screen - asks to what account / to who
                     Pay bills screen
@@ -69,7 +68,6 @@ public class InputHandler {
         inputMap.put("AccountView", new AccountViewMethod());
         inputMap.put("RequestNewAccount", new RequestNewAccountMethod());
         inputMap.put("WithdrawMoney", new WithdrawMoneyMethod());
-        inputMap.put("IndividualAccountWithdrawal", new IndividualAccountWithdrawalMethod());
         inputMap.put("DepositMoney", new DepositMoneyMethod());
         inputMap.put("TransferMoney", new TransferMoneyMethod());
         inputMap.put("PayBills", new PayBillsMethod());
