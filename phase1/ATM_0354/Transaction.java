@@ -1,17 +1,17 @@
 package ATM_0354;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Transaction {
-    private Date date;
-    private int fromId, toId;
+    private LocalDateTime date;
+    private String userFrom, userTo;
     private BigDecimal value;
 
-    public Transaction(int fromId, int toId, BigDecimal value) {
-        this.date = new Date();
-        this.fromId = fromId;
-        this.toId = toId;
+    public Transaction(String userFrom, String userTo, BigDecimal value) {
+        this.date = LocalDateTime.now();
+        this.userFrom = userFrom;
+        this.userTo = userTo;
         this.value = value;
     }
 
