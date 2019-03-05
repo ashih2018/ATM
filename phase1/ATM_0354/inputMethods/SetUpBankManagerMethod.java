@@ -1,6 +1,7 @@
 package ATM_0354.inputMethods;
 
 import ATM_0354.InputMethod;
+import ATM_0354.Main;
 
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ public class SetUpBankManagerMethod implements InputMethod {
         System.out.print("Password: ");
         String password = in.nextLine();
         System.out.println("Your username is: " + username +" and your password is: "+password);
-        return "";
+        Main.atm.createPerson("BankManager", username, password);
+        return "Login";
     }
 }
