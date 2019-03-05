@@ -1,5 +1,6 @@
 package ATM_0354;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class UserHandler {
@@ -32,7 +33,14 @@ public class UserHandler {
 //        System.err.println("User not found");
         return null;
     }
-    //TODO: Docstring + figure out where createUser should be
+
+    /**
+     * Create a new User.
+     * Precondition: The username of the User is unique.
+     * @param type The type of the new User
+     * @param username The username of the new User.
+     * @param password The password of the new User.
+     */
     public void createUser(String type, String username, String password){
         if(type.equals("BankManager")){
             users.add(new BankDaddy(username, password));
@@ -42,6 +50,11 @@ public class UserHandler {
         }
     }
 
+    /**
+     * Check whether or not a username already exists.
+     * @param username The username to check
+     * @return True if the username exists, false otherwise.
+     */
     public boolean usernameExists(String username){
         for (Person person : users){
             if (person.getUsername().equals(username)){
@@ -52,12 +65,38 @@ public class UserHandler {
     }
 
     public Person getUser(String username) {
-        for (Person person: users) {
+        for (Person person : users) {
             if (person.getUsername().equals(username)) {
                 return person;
             }
         }
         return null;
+    }
+
+    /**
+     * Request a new Account for a user.
+     * @param user The User to request an account for.
+     * @param accountType The type of new Account.
+     */
+    void requestAccount(User user, String accountType){
+        //TODO: complete this
+    }
+
+    /**
+     * Withdraw money from a user's account.
+     * @param user The user to withdraw from
+     * @param money The amount of money to withdraw.
+     * @param id The id of the account to withdraw from.
+     * @return true if the withdrawal succeeds, false otherwise.
+     */
+    boolean withdraw(User user, BigDecimal money, int id){
+        //TODO: Complete
+        return false;
+    }
+
+    boolean deposit(User user, BigDecimal money, int id){
+        //TODO: Complete
+        return false;
     }
 
 }

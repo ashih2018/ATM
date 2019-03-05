@@ -32,8 +32,14 @@ public abstract class Account {
         this.transactions.add(transaction);
     }
 
-    public Transaction getLastTransaction() {
-        return this.transactions.get(this.transactions.size() - 1);
+    public Transaction getLastTransaction() throws IndexOutOfBoundsException{
+        try {
+            return this.transactions.get(this.transactions.size() - 1);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Couldn't get last transaction!");
+            return null;
+        }
+
     }
 
     public LocalDateTime getDateOfCreation() {
