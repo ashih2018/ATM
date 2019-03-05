@@ -15,4 +15,19 @@ public class Transaction {
         this.value = value;
     }
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public String getUserFrom() {
+        return userFrom;
+    }
+
+    public String getUserTo() {
+        return userTo;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
 }
