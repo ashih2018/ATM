@@ -11,7 +11,18 @@ public class LoginMethod implements InputMethod {
         String username = in.nextLine();
         System.out.print("Password: ");
         String password = in.nextLine();
-        Main.atm.signIn(username, password);
+        if(Main.atm.signIn(username, password)){
+            if(username.equals("admin")){ //TODO: replace with a more sophisticated check if the user is a BankEmployee
+                return "BankManagerOptions";
+            }
+            else{
+                return "UserOptions";
+            }
+        }
+        else{
+            System.out.println("Incorrect Login, try again.");
+            this.run(in); //TODO: verify that this won't StackOverflow under reasonable circumstances
+        }
         return "";
     }
 

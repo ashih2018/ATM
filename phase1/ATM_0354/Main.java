@@ -25,18 +25,18 @@ public class Main {
             state = "login";
         }
         Scanner in = new Scanner(System.in); //Set up for console input right now
-
-//        //example input from console
-//        System.out.println("What is your name?");
-//        String name = in.nextLine();
-//        System.out.println("Your name is: " + name);
         generateUI(in);
     }
 
     private static void generateUI(Scanner in){
-
-        while(true) {
-            state = ih.handleInput(state);
+        while(true) { //Note that the program will wait for scanner input, so this shouldn't infinite loop / crash the program
+            state = ih.handleInput(state, in);
+            clearScreen(); //TODO: see if there's a more elegant way to do this
+        }
+    }
+    private static void clearScreen(){
+        for(int i=0; i<50; i++) {
+            System.out.println();
         }
     }
 }

@@ -62,8 +62,8 @@ public class InputHandler {
         inputMap.put("UserCreationScreen", userCreation);
     }
 
-    public static String handleInput(String input){
-        return "";
+    public String handleInput(String input, Scanner in){
+        return inputMap.get(input).run(in);
     }
 
 }
