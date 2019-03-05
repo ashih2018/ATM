@@ -13,6 +13,7 @@ public class User extends Person {
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private int accountID;
+    public static ATM atm;
 
     public User(String username, String password) {
         super(username, password);
@@ -38,17 +39,40 @@ public class User extends Person {
         }
     }
 
+    public int getNumAccounts(){
+        return this.accounts.size();
+    }
+
     public void addAccount(Account account) {
 
     }
 
-    public String getSummary() {
-        String summary = "";
-        for (Account account: this.accounts) {
-            summary += account.toString();
-            summary += "\n";
+    public void sendTransaction(int accountNum, String userTo, BigDecimal value, boolean isBill) {
+        Account account;
+        try {
+            account = this.accounts.get(accountNum);
         }
-        return summary;
+        catch (IndexOutOfBoundsException e) {
+            System.out.println("This account does not exist");
+            return;
+        }
+        if (!atm.usernameExists(userTo)) {
+            return;
+        }
+
+        account.addTransaction(new Transaction(this.getUsername(), userTo, value, isBill));
+    }
+
+    public void recieveTransaction(int accountNum, String userFrom, BigDecimal value, boolean isBill) {
+        Account account;
+        try {
+            account = this.accounts.get(accountNum);
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.println("This account does not exist");
+            return;
+        }
+        account.addTransaction(new Transaction(userFrom, this.getUsername(), value, isBill));
     }
 
     public String getLastTransaction(int accountNum) {
@@ -59,8 +83,16 @@ public class User extends Person {
         catch (IndexOutOfBoundsException e) {
             return("This account does not exist");
         }
-
         return(account.getLastTransaction().toString());
+    }
+
+    public String getSummary() {
+        String summary = "";
+        for (Account account: this.accounts) {
+            summary += account.toString();
+            summary += "\n";
+        }
+        return summary;
     }
 
     public String getAccountDate(int accountNum) {

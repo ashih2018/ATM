@@ -11,10 +11,12 @@ public class BankDaddy extends BankEmployee {
         return new User(username, password);
     }
 
+    // TODO: restock atm
     public void restock() {
 
     }
 
+    // TODO: finish undo recent transaction to undo users last transaction
     public boolean undoRecentTransaction(User user, int accountNum) {
         Transaction t = user.getAccount(accountNum).getLastTransaction();
         if (t.getIsBill()) {
@@ -31,8 +33,6 @@ public class BankDaddy extends BankEmployee {
                 return true;
             }
         }
-
-
     }
 
 

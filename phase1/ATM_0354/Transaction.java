@@ -7,6 +7,8 @@ public class Transaction {
     private LocalDateTime date;
 
     private String userFrom, userTo;
+    //TODO: do we need accnumberfrom and accnumberto?
+//    private int accNumberFrom, accNumberTo;
     private BigDecimal value;
     private boolean isBill;
 

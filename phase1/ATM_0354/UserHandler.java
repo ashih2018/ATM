@@ -51,4 +51,13 @@ public class UserHandler {
         return false;
     }
 
+    public Person getUser(String username) {
+        for (Person person: users) {
+            if (person.getUsername().equals(username)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
 }

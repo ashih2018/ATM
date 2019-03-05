@@ -142,4 +142,8 @@ public class ATM {
     public boolean usernameExists(String username){
         return userHandler.usernameExists(username);
     }
+
+    public Person getUser(String username) {
+        return userHandler.getUser(username);
+    }
 }
