@@ -4,7 +4,7 @@ import ATM_0354.InputMethod;
 
 import java.util.Scanner;
 
-public class AccountCreationRequestMethod implements InputMethod {
+public class IndividualAccountApproveMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         return "";

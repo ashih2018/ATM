@@ -19,10 +19,10 @@ public class Main {
         boolean firstTime = true;
         if(firstTime) {
             atm.setDateTime(LocalDateTime.now());
-            state = "setUpBankManager";
+            state = "SetUpBankManager";
         }
         else{
-            state = "login";
+            state = "Login";
         }
         Scanner in = new Scanner(System.in); //Set up for console input right now
         generateUI(in);

@@ -8,7 +8,7 @@ public class ATM {
     private LocalDateTime datetime;
     UserHandler userHandler;
     CashHandler cashHandler;
-    InputHandler inputHandler;
+    Person curUser;
 
     /**
      * Initialize an empty ATM whose time is set to the current time;
@@ -17,7 +17,7 @@ public class ATM {
         this.datetime = LocalDateTime.now();
         this.userHandler = new UserHandler();
         this.cashHandler = new CashHandler();
-        this.inputHandler = new InputHandler();
+        this.curUser = null;
     }
 
     /**
@@ -43,6 +43,13 @@ public class ATM {
         this.datetime = datetime;
     }
 
+    public void setCurUser(Person p) {
+        this.curUser = p;
+    }
+    public Person getCurUser(){
+        return curUser;
+    }
+
     /**
      * Try to sign in a user
      *
@@ -50,10 +57,13 @@ public class ATM {
      * @param password The inputted password.
      * @return True if the username and password check out, false otherwise.
      */
-    public boolean signIn(String username, String password) {
-        return this.userHandler.verifyUser(username, password);
+    public Person signIn(String username, String password) {
+        this.curUser = this.userHandler.verifyUser(username, password);
+        return curUser;
     }
-
+    public void signOut(){
+        this.curUser = null;
+    }
     /**
      * Withdraw money into a user's account.
      *
@@ -113,12 +123,23 @@ public class ATM {
 
     /**
      * Create a new User Account
-     *
-     * @param TODO: figure this out
+     * TODO: figure this out
+     * @param
      * @return True if the creation succeeds, false otherwise.
      */
     public boolean createAccount(User user, String accountType) { //TODO: Figure out parameters
         return true;
 
+    }
+
+    /**
+     * Create a new Person
+     */
+    public void createPerson(String type, String username, String password){
+        userHandler.createUser(type, username, password);
+    }
+
+    public boolean usernameExists(String username){
+        return userHandler.usernameExists(username);
     }
 }

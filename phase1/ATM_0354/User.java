@@ -16,6 +16,7 @@ public class User extends Person {
 
     public User(String username, String password) {
         super(username, password);
+        accounts = new ArrayList<>();
         accountID = 0;
         creationDate = new Date();
     }

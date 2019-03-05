@@ -28,6 +28,10 @@ public abstract class Account {
         this.balance = this.balance.subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP));
     }
 
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+    }
+
     public Transaction getLastTransaction() {
         return this.transactions.get(this.transactions.size() - 1);
     }

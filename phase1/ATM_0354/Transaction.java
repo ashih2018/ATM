@@ -18,8 +18,12 @@ public class Transaction {
         this.isBill = isBill;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public boolean getIsBill() {
+        return isBill;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
     }
 
     public String getUserFrom() {
@@ -30,8 +34,7 @@ public class Transaction {
         return userTo;
     }
 
-    public boolean getIsBill() {
-        return isBill;
+    public BigDecimal getValue() {
+        return value;
     }
-
 }

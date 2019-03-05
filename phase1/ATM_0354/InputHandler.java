@@ -31,16 +31,16 @@ public class InputHandler {
 
      */
     /* Screens / States:
-                First time setup - bank manager account
-                Login Screen
-                Bank manager options
-                    User creation screen
+                ~First time setup - bank manager account~
+                ~Login Screen~
+                ~Bank manager options~
+                    ~User creation screen~
                     Account creation request screen
                         Individual request approve / decline
                     Refill cash screen
                     Undo recent transaction screen
-                User screen
-                    Request new account screen
+                    ~Logout~
+                ~User screen~
                     Account view summary screen/account manager
                          Request new accounts screen
                     Withdraw money screen - shows all accounts + asks which to withdraw from
@@ -48,18 +48,33 @@ public class InputHandler {
                     Deposit money - amount + account (optional) - using file
                     Transfer money screen - asks to what account / to who
                     Pay bills screen
+                    ~Logout~
 
          */
     public InputHandler(){
         inputMap = new HashMap<>();
-        InputMethod setupBM = new SetUpBankManagerMethod();
-        inputMap.put("SetUpBankManager", setupBM);
-        InputMethod login = new LoginMethod();
-        inputMap.put("Login", login);
-        InputMethod bankManagerOptions = new BankManagerOptionsMethod();
-        inputMap.put("BankManagerOptions", bankManagerOptions);
-        InputMethod userCreation = new UserCreationScreenMethod();
-        inputMap.put("UserCreationScreen", userCreation);
+        inputMap.put("SetUpBankManager", new SetUpBankManagerMethod());
+        inputMap.put("Login", new LoginMethod());
+        inputMap.put("BankManagerOptions", new BankManagerOptionsMethod());
+
+        //BankManager Options
+        inputMap.put("UserCreationScreen", new UserCreationScreenMethod());
+        inputMap.put("AccountCreationRequest", new ViewAccountCreationRequestsMethod());
+        inputMap.put("IndividualAccountApprove", new IndividualAccountApproveMethod());
+        inputMap.put("RefillCash", new RefillCashMethod());
+        inputMap.put("UndoTransaction", new UndoTransactionMethod());
+
+        inputMap.put("UserOptions", new UserOptionsMethod());
+        //User Options
+        inputMap.put("AccountView", new AccountViewMethod());
+        inputMap.put("RequestNewAccount", new RequestNewAccountMethod());
+        inputMap.put("WithdrawMoney", new WithdrawMoneyMethod());
+        inputMap.put("IndividualAccountWithdrawal", new IndividualAccountWithdrawalMethod());
+        inputMap.put("DepositMoney", new DepositMoneyMethod());
+        inputMap.put("TransferMoney", new TransferMoneyMethod());
+        inputMap.put("PayBills", new PayBillsMethod());
+
+        inputMap.put("Logout", new LogoutMethod());
     }
 
     public String handleInput(String input, Scanner in){
