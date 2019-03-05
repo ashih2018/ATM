@@ -6,11 +6,7 @@ public class CreditCardAccount extends DebtAccount {
 
     public CreditCardAccount(int id) {
         super(id);
-    }
-
-    @Override
-    public void decreaseDebt(BigDecimal value) {
-        super.decreaseDebt(value);
+        this.setTransferOut(false);
     }
 
     @Override

@@ -6,16 +6,14 @@ import java.time.LocalDateTime;
 public class Transaction {
     private LocalDateTime date;
 
-    private String userFrom, userTo;
-    //TODO: do we need accnumberfrom and accnumberto?
-//    private int accNumberFrom, accNumberTo;
+    private int accountIdFrom, accountIdTo;
     private BigDecimal value;
     private boolean isBill;
 
-    public Transaction(String userFrom, String userTo, BigDecimal value, boolean isBill) {
+    public Transaction(int accountIdFrom, int accountIdTo, BigDecimal value, boolean isBill) {
         this.date = LocalDateTime.now();
-        this.userFrom = userFrom;
-        this.userTo = userTo;
+        this.accountIdFrom = accountIdFrom;
+        this.accountIdTo = accountIdTo;
         this.value = value;
         this.isBill = isBill;
     }
@@ -28,12 +26,12 @@ public class Transaction {
         return date;
     }
 
-    public String getUserFrom() {
-        return userFrom;
+    public int getAccountIdFrom() {
+        return accountIdFrom;
     }
 
-    public String getUserTo() {
-        return userTo;
+    public int getAccountIdTo() {
+        return accountIdTo;
     }
 
     public BigDecimal getValue() {

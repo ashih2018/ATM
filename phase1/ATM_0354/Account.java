@@ -9,6 +9,7 @@ public abstract class Account {
     private int id;
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
+    private boolean TransferIn, TransferOut;
 
     // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
 
@@ -19,13 +20,32 @@ public abstract class Account {
         this.dateOfCreation = LocalDateTime.now();
     }
 
-    public void transferMoneyIn(BigDecimal value) {
-        this.balance = this.balance.add(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+    public void transferMoneyIn(BigDecimal value) throws MoneyTransferException {
+        if (this.canTransferIn()) {
+            this.balance = this.balance.add(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+        } else throw new MoneyTransferException("Can't transfer money into this account");
+
     }
 
-    public void transferMoneyOut(BigDecimal value) {
+    public void transferMoneyOut(BigDecimal value) throws MoneyTransferException{
         // Note: Balance can be negative after using this method
-        this.balance = this.balance.subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+        if (canTransferOut()) {
+            this.balance = this.balance.subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+        } else throw new MoneyTransferException("Can't transfer money out of this account");
+
+    }
+
+    public void processTransaction(Transaction transaction) throws MoneyTransferException {
+        // TODO: Some types of accounts process transactions differently like DebtAccount so account for that
+        if (transaction.getAccountIdFrom() == this.id) {
+            this.transferMoneyOut(transaction.getValue().setScale(2, BigDecimal.ROUND_HALF_UP));
+            addTransaction(transaction);
+        } else if (transaction.getAccountIdTo() == this.id) {
+            this.transferMoneyIn(transaction.getValue().setScale(2, BigDecimal.ROUND_HALF_UP));
+            addTransaction(transaction);
+        } else {
+            System.out.println("Could not process transaction for account with ID: " + this.id);
+        }
     }
 
     public void addTransaction(Transaction transaction) {
@@ -56,6 +76,22 @@ public abstract class Account {
 
     public Transaction undoTransaction() {
         return this.transactions.remove(this.transactions.size() - 1);
+    }
+
+    public boolean canTransferIn() {
+        return TransferIn;
+    }
+
+    public boolean canTransferOut() {
+        return TransferOut;
+    }
+
+    public void setTransferIn(boolean canTransferIn) {
+        this.TransferIn = canTransferIn;
+    }
+
+    public void setTransferOut(boolean canTransferOut) {
+        this.TransferOut = canTransferOut;
     }
 
     @Override

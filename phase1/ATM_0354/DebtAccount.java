@@ -9,13 +9,15 @@ public abstract class DebtAccount extends Account {
         super(id);
     }
 
-    public void decreaseDebt(BigDecimal value) {
+    public void decreaseDebt(BigDecimal value) throws MoneyTransferException{
         this.transferMoneyOut(value);
     }
 
-    public void increaseDebt(BigDecimal value) {
+    public void increaseDebt(BigDecimal value) throws MoneyTransferException {
         this.transferMoneyIn(value);
     }
+
+    // TODO: Change the way processTransaction() works !!!!
 
     @Override
     public String toString() {
