@@ -6,12 +6,10 @@ public class ChequingAccount extends AssetAccount {
 
     private boolean primary;
 
-    private BigDecimal minimumAllowedBalance;
-
     public ChequingAccount(int id) {
         super(id);
         this.primary = false;
-        this.minimumAllowedBalance = new BigDecimal(-100);
+        this.setMinimumAllowedBalance(new BigDecimal(-100));
     }
 
     public void setPrimary(boolean primary) {

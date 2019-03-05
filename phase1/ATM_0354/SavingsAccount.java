@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 public class SavingsAccount extends AssetAccount {
 
-    private BigDecimal minimumAllowedBalance, interest;
+    private BigDecimal interest;
 
     public SavingsAccount(int id) {
         super(id);
-        this.minimumAllowedBalance = new BigDecimal(0);
+        this.setMinimumAllowedBalance(new BigDecimal(0));
         this.interest = new BigDecimal(0.001);
     }
 

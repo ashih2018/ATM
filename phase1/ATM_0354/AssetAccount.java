@@ -15,7 +15,7 @@ public abstract class AssetAccount extends Account {
         if (this.getBalance().signum() < 1) {
             // Can't withdraw if balance is 0 or negative
             throw new IllegalStateException("Can't withdraw because the current balance is " + this.getBalance());
-        } else if (this.getBalance().subtract(value).compareTo(this.minimumAllowedBalance) >= 0) {
+        } else if (this.getBalance().subtract(value).compareTo(this.getMinimumAllowedBalance()) >= 0) {
             // Withdraw if balance is greater than the minimum allowed balance
             super.transferMoneyOut(value);
         } else {
@@ -24,5 +24,13 @@ public abstract class AssetAccount extends Account {
                             "lower than the minimum allowed balance"
             );
         }
+    }
+
+    public BigDecimal getMinimumAllowedBalance() {
+        return this.minimumAllowedBalance;
+    }
+
+    public void setMinimumAllowedBalance(BigDecimal minimumAllowedBalance) {
+        this.minimumAllowedBalance = minimumAllowedBalance;
     }
 }

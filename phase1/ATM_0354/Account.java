@@ -15,18 +15,18 @@ public abstract class Account {
 
     public Account(int id) {
         this.transactions = new ArrayList<>();
-        this.balance = new BigDecimal(0);
+        this.balance = new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP);
         this.id = id;
         this.dateOfCreation = LocalDateTime.now();
     }
 
     public void transferMoneyIn(BigDecimal value) {
-        this.balance = this.balance.add(value);
+        this.balance = this.balance.add(value.setScale(2, BigDecimal.ROUND_HALF_UP));
     }
 
     public void transferMoneyOut(BigDecimal value) {
         // Note: Balance can be negative after using this method
-        this.balance = this.balance.subtract(value);
+        this.balance = this.balance.subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP));
     }
 
     public Transaction getLastTransaction() {
@@ -38,7 +38,11 @@ public abstract class Account {
     }
 
     public BigDecimal getBalance() {
-        return this.balance;
+        return this.balance.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     @Override
