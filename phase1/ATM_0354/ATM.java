@@ -1,5 +1,6 @@
 package ATM_0354;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.time.LocalDateTime;
@@ -141,5 +142,9 @@ public class ATM {
 
     public boolean usernameExists(String username){
         return userHandler.usernameExists(username);
+    }
+
+    public void addCash(BigDecimal billValue, int count){
+        cashHandler.addCash(billValue, count);
     }
 }
