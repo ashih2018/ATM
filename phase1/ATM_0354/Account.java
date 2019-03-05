@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public abstract class Account {
     private ArrayList<Transaction> transactions;
-
     private int id;
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
@@ -43,6 +42,10 @@ public abstract class Account {
 
     public int getId() {
         return this.id;
+    }
+
+    public Transaction undoTransaction() {
+        return this.transactions.remove(this.transactions.size() - 1);
     }
 
     @Override
