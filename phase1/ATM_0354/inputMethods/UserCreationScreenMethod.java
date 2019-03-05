@@ -13,6 +13,11 @@ public class UserCreationScreenMethod implements InputMethod {
             System.out.println("What is the new user's username?");
             System.out.print(">");
             String username = in.nextLine();
+            while (Main.atm.usernameExists(username)){
+                System.out.println("That username already exists. \n Please enter a different username.");
+                username = in.nextLine();
+            }
+            System.out.println("That is a valid username.");
             System.out.println("What is the new user's password?");
             System.out.print(">");
             String password = in.nextLine();

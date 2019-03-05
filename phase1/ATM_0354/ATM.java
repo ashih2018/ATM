@@ -138,4 +138,8 @@ public class ATM {
     public void createPerson(String type, String username, String password){
         userHandler.createUser(type, username, password);
     }
+
+    public boolean usernameExists(String username){
+        return userHandler.usernameExists(username);
+    }
 }

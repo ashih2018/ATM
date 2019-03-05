@@ -42,4 +42,13 @@ public class UserHandler {
         }
     }
 
+    public boolean usernameExists(String username){
+        for (Person person : users){
+            if (person.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
