@@ -2,6 +2,8 @@ package ATM_0354;
 
 public class BankDaddy extends BankEmployee {
 
+    public static ATM atm;
+
     public BankDaddy(String username, String password) {
         super(username, password);
     }
@@ -16,21 +18,42 @@ public class BankDaddy extends BankEmployee {
 
     }
 
-    // TODO: finish undo recent transaction to undo users last transaction
-    public boolean undoRecentTransaction(User user, int accountNum) {
-        Transaction t = user.getAccount(accountNum).getLastTransaction();
-        if (t.getIsBill()) {
-            return false;
-        }
-        else {
-            user.getAccount(accountNum).undoTransaction();
-            if (t.getUserFrom().equals(user.getUsername())) {
-                user.getAccount(accountNum).transferMoneyIn(t.getValue());
-                return true;
-            }
-            else {
-                user.getAccount(accountNum).transferMoneyOut(t.getValue());
-                return true;
+    public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {
+        Transaction transaction = user.getAccount(accountId).getLastTransaction();
+        if (!transaction.getIsBill()) {
+            Account userAccount = user.getAccount(accountId);
+            User otherUser = atm.userHandler.getUserFromAccountId(accountId);
+            if (otherUser != null) {
+                Account otherAccount = otherUser.getAccount(accountId);
+                if (transaction.getAccountIdFrom() == accountId) {
+                    if (userAccount instanceof AssetAccount) {
+                        userAccount.forceTransferIn(transaction.getValue());
+                    } else if (userAccount instanceof DebtAccount) {
+                        ((DebtAccount) userAccount).decreaseDebt(transaction.getValue());
+                    }
+                    if (otherAccount instanceof AssetAccount) {
+                        otherAccount.forceTransferOut(transaction.getValue());
+                    } else if (otherAccount instanceof DebtAccount) {
+                        ((DebtAccount) otherAccount).increaseDebt(transaction.getValue());
+                    }
+                    userAccount.deleteSpecificTransaction(transaction);
+                    otherAccount.deleteSpecificTransaction(transaction);
+                } else if (transaction.getAccountIdFrom() == otherAccount.getId()) {
+                    if (otherAccount instanceof AssetAccount) {
+                        otherAccount.forceTransferIn(transaction.getValue());
+                    } else if (otherAccount instanceof DebtAccount) {
+                        ((DebtAccount) otherAccount).decreaseDebt(transaction.getValue());
+                    }
+                    if (userAccount instanceof AssetAccount) {
+                        userAccount.forceTransferOut(transaction.getValue());
+                    } else if (userAccount instanceof DebtAccount) {
+                        ((DebtAccount) userAccount).increaseDebt(transaction.getValue());
+                    }
+                    userAccount.deleteSpecificTransaction(transaction);
+                    otherAccount.deleteSpecificTransaction(transaction);
+                }
+            } else {
+                throw new MoneyTransferException("The user that did not request the transaction undo does not exist");
             }
         }
     }

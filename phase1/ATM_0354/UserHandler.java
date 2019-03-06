@@ -73,6 +73,15 @@ public class UserHandler {
         return null;
     }
 
+    public User getUserFromAccountId(int accountId) {
+        for (Person person : users) {
+            if (person instanceof User) {
+                Account account = ((User) person).getAccount(accountId);
+                if (account != null) return (User) person;
+            }
+        } return null;
+    }
+
     /**
      * Request a new Account for a user.
      * @param user The User to request an account for.

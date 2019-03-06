@@ -9,7 +9,7 @@ public abstract class Account {
     private int id;
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
-    private boolean TransferIn, TransferOut;
+    private boolean transferIn, transferOut;
 
     // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
 
@@ -18,6 +18,8 @@ public abstract class Account {
         this.balance = new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP);
         this.id = id;
         this.dateOfCreation = LocalDateTime.now();
+        this.transferIn = true;
+        this.transferOut = true;
     }
 
     public void transferMoneyIn(BigDecimal value) throws MoneyTransferException {
@@ -48,6 +50,14 @@ public abstract class Account {
         }
     }
 
+    public void forceTransferIn(BigDecimal value) {
+        this.balance = this.balance.add(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+    }
+
+    public void forceTransferOut(BigDecimal value) {
+        this.balance = this.balance.subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+    }
+
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
     }
@@ -59,7 +69,11 @@ public abstract class Account {
             System.out.println("Couldn't get last transaction!");
             return null;
         }
+    }
 
+    public void deleteSpecificTransaction(Transaction transaction) {
+        // Should only be used SOME times
+        this.transactions.remove(transaction);
     }
 
     public LocalDateTime getDateOfCreation() {
@@ -79,19 +93,23 @@ public abstract class Account {
     }
 
     public boolean canTransferIn() {
-        return TransferIn;
+        return transferIn;
     }
 
     public boolean canTransferOut() {
-        return TransferOut;
+        return transferOut;
     }
 
-    public void setTransferIn(boolean canTransferIn) {
-        this.TransferIn = canTransferIn;
+    public void setTransferIn(boolean cantransferIn) {
+        this.transferIn = cantransferIn;
     }
 
-    public void setTransferOut(boolean canTransferOut) {
-        this.TransferOut = canTransferOut;
+    public void setTransferOut(boolean cantransferOut) {
+        this.transferOut = cantransferOut;
+    }
+
+    public void setBalance(BigDecimal newBalance) {
+        this.balance = newBalance.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     @Override
