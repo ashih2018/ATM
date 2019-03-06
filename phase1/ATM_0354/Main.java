@@ -1,7 +1,13 @@
 package ATM_0354;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -38,8 +44,45 @@ public class Main {
             System.out.println();
         }
     }
-    //TODO: Complete
-    public static BigDecimal parseDeposits(){
-        return null;
+
+    //TODO: Check two methods below.
+    private static final String FILENAME = "phase1/ATM_0354/Files/deposits.txt";
+
+    // public static BigDecimal parseDeposits()
+    public static List<String> parseDeposits(){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(FILENAME));
+
+            String sCurrentLine;
+            String[] items;
+            String deposit_type;
+            BigDecimal deposit_amount;
+
+            List<String> all_deposits = new ArrayList<String>();
+            while ((sCurrentLine = br.readLine()) != null) {
+                items = sCurrentLine.split(",");
+                deposit_type = items[0];
+                deposit_amount = new BigDecimal(items[1]);
+                all_deposits.add(deposit_type + "," + deposit_amount);
+            }
+            return all_deposits;
+
+        } catch (Exception e) {
+            System.out.println("No Deposits.");
+            return null;
+        }
+    }
+
+    public void outgoingHandlerThingy() {
+        try {
+            String outgoingPath = "phase1/ATM_0354/Files/outgoing.txt";
+            BufferedWriter br = new BufferedWriter(new FileWriter(outgoingPath, true));
+            //todo: find appropriate class and replace str with vars.
+            br.write("bill_name" + "," + "user" + "," + 555.55 + "," + "some LocalDateTime" + "\n");
+
+            br.close();
+        } catch (Exception e) {
+            System.out.println("File does not exist.");
+        }
     }
 }

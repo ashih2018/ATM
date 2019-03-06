@@ -129,4 +129,24 @@ public class User extends Person {
         }
         return total;
     }
+
+    public boolean verifyID(int id){
+        for (Account account : accounts){
+            if(account.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void defaultTransferIn(BigDecimal amount){
+        try{
+            getPrimaryAccount().transferMoneyIn(amount);
+        }
+        catch(MoneyTransferException e){
+            System.out.println("Money transfer exception when transferring between users. \n" +
+                    "Why can't I transfer into my default deposit account?!");
+        }
+
+    }
 }
