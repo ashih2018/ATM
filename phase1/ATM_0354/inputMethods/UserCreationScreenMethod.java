@@ -15,6 +15,7 @@ public class UserCreationScreenMethod implements InputMethod {
             String username = in.nextLine();
             while (Main.atm.usernameExists(username)){
                 System.out.println("That username already exists. \n Please enter a different username.");
+                System.out.print(">");
                 username = in.nextLine();
             }
             System.out.println("That is a valid username.");

@@ -71,12 +71,12 @@ public class ATM {
      * @param user  The user to withdraw money from
      * @param money The amount of money to withdraw.
      * @param id    The id of the account to withdraw from.
-     * @return True if the withdrawal succeeds, false otherwise.
      */
-    public boolean withdraw(User user, double money, int id) {
-        //TODO: complete
-        return true;
+    public boolean withdraw(User user, BigDecimal money, int id) {
+        return userHandler.withdraw(user, money, id);
     }
+
+
 
     /**
      * Deposit money into a user's account.
@@ -86,23 +86,63 @@ public class ATM {
      * @param id    The id of the account to deposit into.
      * @return True if the deposit succeeds, false otherwise.
      */
-    public boolean deposit(User user, double money, int id) {
-        //TODO: complete
-        return true;
+    public boolean deposit(User user, BigDecimal money, int id) {
+        return userHandler.deposit(user, money, id);
     }
 
     /**
-     * Get a summary of a user's account
-     *
-     * @param user The user whose account we want a summary of.
-     * @param id   The id of the account to be summarized.
-     * @return A String representation of the user's account with id {id}.
+     * Get a summary of the current user's accounts
+     * Precondition: this.curUser != null && this.curUser instanceof User
+     * @return A String representation of the current user's accounts.
      */
-    public String viewAccount(User user, int id) {
-        //TODO: complete
-        return "";
+    public String viewCurAccounts(){
+        return this.viewAccount((User)this.curUser);
     }
 
+    /**
+     * Get a summary of a user's accounts
+     *
+     * @param user The user whose account we want a summary of.
+     * @return A String representation of the user's accounts.
+     */
+    private String viewAccount(User user) {
+        return user.getSummary();
+    }
+    /**
+     * Get the total money of the current user.
+     * @return the amount of money the current user has.
+     */
+    public BigDecimal getCurMoney(){
+        return this.getMoney((User)this.curUser);
+    }
+
+    /**
+     * Get the total money of a user.
+     * @param user
+     * @return the amount of money the user has.
+     */
+    private BigDecimal getMoney(User user){
+        return user.getAccountTotal();
+    }
+    /**
+     * Request a new account for the current user
+     * Precondition: this.curUser != null && this.curUser instanceof User
+     * @param accountType
+     */
+    public void requestCurAccount(String accountType){
+        this.requestAccount((User)this.curUser, accountType);
+    }
+
+    /**
+     * Request a new account for {user} of type {accountType}.
+     * @param user The User who is requesting a new account.
+     * @param accountType The type of account the user wishes to open.
+     */
+    public void requestAccount(User user, String accountType){
+        this.userHandler.requestAccount(user, accountType);
+    }
+
+    //TODO: complete these functions
     /**
      * Transfer money from one account to another.
      *
@@ -118,33 +158,30 @@ public class ATM {
      * @return True if the payment succeeds, false otherwise.
      */
     public boolean payBill() {
-        //TODO: figure out proper type signature + name conflict with Bill
+        //TODO: figure out proper type signature
         return true;
-    }
-
-    /**
-     * Create a new User Account
-     * TODO: figure this out
-     * @param
-     * @return True if the creation succeeds, false otherwise.
-     */
-    public boolean createAccount(User user, String accountType) { //TODO: Figure out parameters
-        return true;
-
     }
 
     /**
      * Create a new Person
+     * @param type The type of Person to create.
+     * @param username The username of the new Person.
+     * @param password The password of the new Person.
      */
     public void createPerson(String type, String username, String password){
         userHandler.createUser(type, username, password);
     }
 
+    /**
+     * Check if a username already exists.
+     * @param username The username to check.
+     * @return true if the username already exists, false otherwise.
+     */
     public boolean usernameExists(String username){
         return userHandler.usernameExists(username);
     }
 
-    public void addCash(BigDecimal billValue, int count){
-        cashHandler.addCash(billValue, count);
+    public Person getUser(String username) {
+        return userHandler.getUser(username);
     }
 }
