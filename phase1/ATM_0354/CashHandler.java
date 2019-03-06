@@ -69,8 +69,7 @@ public class CashHandler{
 
     public void sendAlert(){
         try {
-            File file = new File("Files/alerts.txt");
-            // if it doesnt work "phase1/ATM_0354/Files/alerts.txt"
+            File file = new File("phase1/ATM_0354/Files/alerts.txt");
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             for(CashObject c : cash) {
