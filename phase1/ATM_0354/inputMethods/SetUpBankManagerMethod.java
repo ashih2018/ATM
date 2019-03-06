@@ -15,6 +15,7 @@ public class SetUpBankManagerMethod implements InputMethod {
         String password = in.nextLine();
         System.out.println("Your username is: " + username +" and your password is: "+password);
         Main.atm.createPerson("BankManager", username, password);
+        System.out.println("Log in with your new username and password.");
         return "Login";
     }
 }

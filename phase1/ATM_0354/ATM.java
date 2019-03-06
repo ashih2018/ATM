@@ -139,7 +139,7 @@ public class ATM {
      * @param accountType The type of account the user wishes to open.
      */
     public void requestAccount(User user, String accountType){
-        this.userHandler.requestAccount(user, accountType);
+        user.requestAccount(accountType);
     }
 
     //TODO: complete these functions

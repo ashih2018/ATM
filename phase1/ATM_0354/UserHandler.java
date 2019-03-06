@@ -82,15 +82,6 @@ public class UserHandler {
     }
 
     /**
-     * Request a new Account for a user.
-     * @param user The User to request an account for.
-     * @param accountType The type of new Account.
-     */
-    void requestAccount(User user, String accountType){
-        //TODO: complete this
-    }
-
-    /**
      * Withdraw money from a user's account.
      * @param user The user to withdraw from
      * @param money The amount of money to withdraw.

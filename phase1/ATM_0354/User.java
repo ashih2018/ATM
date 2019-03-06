@@ -1,11 +1,16 @@
 package ATM_0354;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 
 
 public class User extends Person {
@@ -142,6 +147,27 @@ public class User extends Person {
         catch(MoneyTransferException e){
             System.out.println("Money transfer exception when transferring between users. \n" +
                     "Why can't I transfer into my default deposit account?!");
+        }
+
+    }
+
+    /* Writes to account_creation_requests.txt
+     */
+    public void requestAccount(String accountType){
+        String filePath = "./Files/account_creation_requests.txt";
+        if(!(new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(accountType))){
+            System.out.println("Invalid account type for request!");
+            return;
+        }
+        String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat + "\n";
+        File file = new File(filePath);
+        try{
+            FileWriter writer = new FileWriter(file, true);
+            writer.write(accountRequest);
+            writer.close();
+        }
+        catch(IOException e){
+            System.out.println("IOException when requesting account, writing to txt file.");
         }
 
     }
