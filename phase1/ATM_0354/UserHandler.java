@@ -27,7 +27,6 @@ public class UserHandler {
                     return null;
                 } else
                     return user;
-
             }
         }
 //        System.err.println("User not found");

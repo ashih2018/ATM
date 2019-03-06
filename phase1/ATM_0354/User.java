@@ -11,15 +11,16 @@ import java.util.Date;
 public class User extends Person {
 
     private ArrayList<Account> accounts;
+    private AccountFactory accountFactory;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    //private int accountID;
     public static ATM atm;
 
     public User(String username, String password) {
         super(username, password);
         accounts = new ArrayList<>();
-        //accountID = 0;
+        accountFactory = new AccountFactory();
+        Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
         creationDate = new Date();
     }
 

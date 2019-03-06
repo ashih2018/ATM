@@ -34,7 +34,6 @@ public abstract class Account {
         if (canTransferOut()) {
             this.balance = this.balance.subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP));
         } else throw new MoneyTransferException("Can't transfer money out of this account");
-
     }
 
     public void processTransaction(Transaction transaction) throws MoneyTransferException {

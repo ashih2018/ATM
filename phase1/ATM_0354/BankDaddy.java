@@ -1,5 +1,7 @@
 package ATM_0354;
 
+import java.math.BigDecimal;
+
 public class BankDaddy extends BankEmployee {
 
     public static ATM atm;
@@ -12,10 +14,9 @@ public class BankDaddy extends BankEmployee {
     public User createUser(String username, String password) {
         return new User(username, password);
     }
-
-    // TODO: restock atm
-    public void restock() {
-
+    
+    public void restock(BigDecimal billValue, int count) {
+        atm.cashHandler.addCash(billValue, count);
     }
 
     public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {
