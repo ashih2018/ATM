@@ -13,7 +13,7 @@ public class User extends Person {
     private ArrayList<Account> accounts;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private int accountID;
+    //private int accountID;
     public static ATM atm;
 
     public User(String username, String password) {
@@ -41,31 +41,44 @@ public class User extends Person {
         this.accounts.add(account);
     }
 
-    public void sendTransaction(int accountNum, String userTo, BigDecimal value, boolean isBill) {
-        Account account;
-        try {
-            account = this.accounts.get(accountNum);
-        }
-        catch (IndexOutOfBoundsException e) {
-            System.out.println("This account does not exist");
-            return;
-        }
-        if (!atm.usernameExists(userTo)) {
-            return;
-        }
-
-        account.addTransaction(new Transaction(this.getUsername(), userTo, value, isBill));
+    public void sendTransaction(String toUsername, int fromAccountId, BigDecimal value) throws MoneyTransferException {
+        // Check if username exists
+        if (atm.userHandler.usernameExists(toUsername)) {
+            //Check if the specified account exists
+            Account account = getAccount(fromAccountId);
+            if (account != null) {
+                User toUser = (User) atm.userHandler.getUser(toUsername);
+                // TODO: use users default deposit id
+                Transaction transaction = new Transaction(fromAccountId, toUser.getPrimaryAccountId(), value, false);
+                // Process transaction for sender first b/c most likely if a problem were to occur, it would be
+                // from subtracting money from an account, not depositing money into an account
+                account.processTransaction(transaction);
+                toUser.receiveTransaction(transaction);
+            } else throw new MoneyTransferException(fromAccountId + " is not an existing account id that this user has");
+        } else throw new MoneyTransferException(toUsername + " is not an existing username");
     }
 
-    public void recieveTransaction(int accountNum, String userFrom, BigDecimal value, boolean isBill) {
-        Account account;
-        try {
-            account = this.accounts.get(accountNum);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("This account does not exist");
-            return;
-        }
-        account.addTransaction(new Transaction(userFrom, this.getUsername(), value, isBill));
+    public void receiveTransaction(Transaction transaction) throws MoneyTransferException {
+        Account account = this.getPrimaryAccount();
+        if (account != null) {
+            account.processTransaction(transaction);
+        } else System.out.println("Account to receive transaction was null"); // Should never happen
+    }
+
+    public int getPrimaryAccountId() {
+        for (Account account : this.accounts) {
+            if (account instanceof ChequingAccount) {
+                if (((ChequingAccount) account).isPrimary()) return account.getId();
+            }
+        } return -99; // Should never return -99 b/c every User should have at least one ChequingAccount
+    }
+
+    private Account getPrimaryAccount() {
+        for (Account account : this.accounts) {
+            if (account instanceof ChequingAccount) {
+                if (((ChequingAccount) account).isPrimary()) return account;
+            }
+        } return null; // Should never return null b/c every User should have at least one ChequingAccount
     }
 
     public String getSummary() {
