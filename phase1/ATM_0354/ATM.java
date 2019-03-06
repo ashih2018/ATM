@@ -184,4 +184,8 @@ public class ATM {
     public Person getUser(String username) {
         return userHandler.getUser(username);
     }
+
+    public void addCash(BigDecimal billValue, int count){
+        cashHandler.addCash(billValue, count);
+    }
 }
