@@ -9,21 +9,48 @@ import java.util.Scanner;
 public class RefillCashMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
-        while(true){
-            System.out.println("What denomination would you like to restock?");
-            BigDecimal denomination = in.nextBigDecimal();
-            while (denomination == null){
-                System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
-                denomination = in.nextBigDecimal();
+        BigDecimal denomination;
+        while (true) {
+            while (true) {
+                try {
+                    System.out.println("What denomination would you like to restock?");
+                    System.out.println(">");
+                    denomination = in.nextBigDecimal();
+                    if (denomination == null) {
+                        System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
+                        System.out.println(">");
+                    } else {
+                        break;
+                    }
+                } catch (ClassCastException e) {
+                    System.out.println("Invalid denomination.");
+                    System.out.println("What denomination would you like to restock?");
+                    System.out.println(">");
+                }
             }
-            System.out.println("How many of those bills would you like to add?");
-            int count = in.nextInt();
-            Main.atm.addCash(denomination, count);
-            System.out.println("Added " + count + " bills of denomination " + denomination);
+
+            while (true) {
+                try {
+                    System.out.println("How many of those bills would you like to add?");
+                    System.out.println(">");
+                    int count = in.nextInt();
+                    if (count <= 0) {
+                        System.out.println("Please enter a positive number of bills.");
+                        System.out.println(">");
+                    } else {
+                        Main.atm.addCash(denomination, count);
+                        System.out.println("Added " + count + " bills of denomination " + denomination);
+                        break;
+                    }
+                } catch (ClassCastException e) {
+                    System.out.println("Invalid count. How many of those bills would you like to add?");
+                    System.out.println(">");
+                }
+            }
             System.out.println("Would you like to restock again?");
-            boolean repeat = in.nextBoolean();
-            if (!repeat) break;
+            System.out.println(">");
+            boolean repeat = in.nextLine().equals("yes");
+            if (!repeat) return "BankManagerOptions";
         }
-        return "BankManagerOptions";
     }
 }
