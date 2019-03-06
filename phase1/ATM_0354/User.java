@@ -15,6 +15,7 @@ public class User extends Person {
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     public static ATM atm;
+    private Account primaryAccount;
 
     public User(String username, String password) {
         super(username, password);
@@ -22,6 +23,7 @@ public class User extends Person {
         accountFactory = new AccountFactory();
         Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
         creationDate = new Date();
+        primaryAccount = account;
     }
 
     public String getCreationDate() {
@@ -40,6 +42,24 @@ public class User extends Person {
 
     public void addAccount(Account account) {
         this.accounts.add(account);
+    }
+
+    public boolean setPrimary(int accountID) {
+        for (Account account: this.accounts) {
+            if (account instanceof ChequingAccount && account.getId() == accountID) {
+                primaryAccount = account;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Account getPrimaryAccount() {
+        return primaryAccount;
+    }
+
+    public int getPrimaryAccountId () {
+        return primaryAccount.getId();
     }
 
     public void sendTransaction(String toUsername, int fromAccountId, BigDecimal value) throws MoneyTransferException {
@@ -64,22 +84,6 @@ public class User extends Person {
         if (account != null) {
             account.processTransaction(transaction);
         } else System.out.println("Account to receive transaction was null"); // Should never happen
-    }
-
-    public int getPrimaryAccountId() {
-        for (Account account : this.accounts) {
-            if (account instanceof ChequingAccount) {
-                if (((ChequingAccount) account).isPrimary()) return account.getId();
-            }
-        } return -99; // Should never return -99 b/c every User should have at least one ChequingAccount
-    }
-
-    private Account getPrimaryAccount() {
-        for (Account account : this.accounts) {
-            if (account instanceof ChequingAccount) {
-                if (((ChequingAccount) account).isPrimary()) return account;
-            }
-        } return null; // Should never return null b/c every User should have at least one ChequingAccount
     }
 
     public String getSummary() {
