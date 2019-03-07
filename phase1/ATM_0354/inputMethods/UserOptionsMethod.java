@@ -8,7 +8,7 @@ public class UserOptionsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("======= User Panel ========");
-        System.out.println("You can 'view accounts', 'withdraw money', 'deposit money', 'transfer money', 'pay bills', or 'logout'");
+        System.out.println("You can 'view accounts', 'withdraw money', 'deposit money', 'transfer money', 'pay bills', 'logout', or 'exit'.");
         System.out.println("What would you like to do?");
         System.out.print(">");
         String input = in.nextLine();
@@ -26,6 +26,8 @@ public class UserOptionsMethod implements InputMethod {
                     return "PayBills";
                 case "logout":
                     return "Logout";
+                case "exit":
+                    return "Exit";
                 default:
                     System.out.println("Invalid option, please try again.");
                     System.out.print(">");
