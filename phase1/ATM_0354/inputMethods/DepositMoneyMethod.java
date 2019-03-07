@@ -36,6 +36,7 @@ public class DepositMoneyMethod implements InputMethod {
                     }
                 }
                 System.out.println("Depositing from deposits.txt....");
+                //TODO: Figure out what's happening here
 //                BigDecimal money = Main.parseDeposits();
 //                Main.atm.deposit((User) Main.atm.getCurUser(), money, id);
                 System.out.println("Would you like to deposit more money?");

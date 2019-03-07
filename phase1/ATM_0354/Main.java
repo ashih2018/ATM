@@ -16,9 +16,7 @@ public class Main {
     public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();
-        //need to set up current date - as previous date + 1 day
 
-        //TODO: check if this is the first time we've started the ATM; if so, set up local date, bankmanager, initial funds, etc.
         Scanner file_in = new Scanner(new File(PEOPLEFILENAME));
         boolean firstTime = file_in.hasNext();
         if(firstTime) {
@@ -26,6 +24,7 @@ public class Main {
             state = "SetUpBankManager";
         }
         else{
+            //TODO: Set up local date, manager, users, funds, etc.
             state = "Login";
         }
         Scanner in = new Scanner(System.in); //Set up for console input right now
@@ -58,7 +57,7 @@ public class Main {
             String deposit_type;
             BigDecimal deposit_amount;
 
-            List<String> all_deposits = new ArrayList<String>();
+            List<String> all_deposits = new ArrayList<>();
             while ((sCurrentLine = br.readLine()) != null) {
                 items = sCurrentLine.split(",");
                 deposit_type = items[0];

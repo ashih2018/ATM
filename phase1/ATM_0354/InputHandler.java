@@ -50,7 +50,7 @@ public class InputHandler {
                     ~Logout~
 
          */
-    public InputHandler(){
+    InputHandler(){
         inputMap = new HashMap<>();
         inputMap.put("SetUpBankManager", new SetUpBankManagerMethod());
         inputMap.put("Login", new LoginMethod());
@@ -58,7 +58,6 @@ public class InputHandler {
 
         //BankManager Options
         inputMap.put("UserCreationScreen", new UserCreationScreenMethod());
-        inputMap.put("AccountCreationRequest", new ViewAccountCreationRequestsMethod());
         inputMap.put("IndividualAccountApprove", new IndividualAccountApproveMethod());
         inputMap.put("RefillCash", new RefillCashMethod());
         inputMap.put("UndoTransaction", new UndoTransactionMethod());
@@ -71,11 +70,12 @@ public class InputHandler {
         inputMap.put("DepositMoney", new DepositMoneyMethod());
         inputMap.put("TransferMoney", new TransferMoneyMethod());
         inputMap.put("PayBills", new PayBillsMethod());
+        inputMap.put("ChangePassword", new ChangePasswordMethod());
 
         inputMap.put("Logout", new LogoutMethod());
     }
 
-    public String handleInput(String input, Scanner in){
+    String handleInput(String input, Scanner in){
         return inputMap.get(input).run(in);
     }
 

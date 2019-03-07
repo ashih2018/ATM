@@ -24,7 +24,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
                 String date = strings[2];
                 System.out.println("Approve a \"" + accountType + "\" Account for \"" + username + "\"?");
                 System.out.println("Press \'yes\'/\'no\'");
-                boolean approved = false;
+                boolean approved;
                 while (true){
                     try{
                         approved = in.nextLine().equalsIgnoreCase("yes");

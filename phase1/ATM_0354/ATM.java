@@ -24,29 +24,12 @@ public class ATM {
     /**
      * Set the ATM's date and time.
      *
-     * @param year
-     * @param month
-     * @param day
-     * @param hour
-     * @param minute
-     * @param second
-     */
-    void setDateTime(int year, int month, int day, int hour, int minute, int second) {
-        this.datetime = LocalDateTime.of(year, month, day, hour, minute, second);
-    }
-
-    /**
-     * Set the ATM's date and time.
-     *
      * @param datetime
      */
     void setDateTime(LocalDateTime datetime) {
         this.datetime = datetime;
     }
 
-    public void setCurUser(Person p) {
-        this.curUser = p;
-    }
     public Person getCurUser(){
         return curUser;
     }
@@ -140,26 +123,6 @@ public class ATM {
      */
     public void requestAccount(User user, String accountType){
         user.requestAccount(accountType);
-    }
-
-    //TODO: complete these functions
-    /**
-     * Transfer money from one account to another.
-     *
-     * @return True if the transaction succeeds, false otherwise.
-     */
-    public boolean transfer() {
-        return true;
-    }
-
-    /**
-     * Pay a bill
-     *
-     * @return True if the payment succeeds, false otherwise.
-     */
-    public boolean payBill() {
-        //TODO: figure out proper type signature
-        return true;
     }
 
     /**

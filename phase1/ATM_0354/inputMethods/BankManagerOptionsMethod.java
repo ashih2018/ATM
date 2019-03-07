@@ -14,7 +14,7 @@ public class BankManagerOptionsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("======= Bank Manager Panel ========");
-        System.out.println("You can 'create users', 'view account creation requests', 'refill cash', 'undo recent transactions', 'logout', or 'exit'");
+        System.out.println("You can 'create users', 'approve account creation requests', 'refill cash', 'undo recent transactions', 'logout', or 'exit'");
         System.out.println("What would you like to do?");
         System.out.print(">");
         String input = in.nextLine();
@@ -22,8 +22,8 @@ public class BankManagerOptionsMethod implements InputMethod {
             switch (input) {
                 case "create users":
                     return "UserCreationScreen";
-                case "view account creation requests":
-                    return "AccountCreationRequest";
+                case "approve account creation requests":
+                    return "IndividualAccountApprove";
                 case "refill cash":
                     return "RefillCash";
                 case "undo recent transactions":

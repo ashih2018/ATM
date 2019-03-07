@@ -49,7 +49,7 @@ public class WithdrawMoneyMethod implements InputMethod {
     private BigDecimal askForMoney(Scanner in){
         System.out.println("How much money would you like to withdraw?");
         System.out.print(">");
-        double money = -1;
+        double money;
         try{
             money = in.nextDouble();
         } catch(ClassCastException e){
