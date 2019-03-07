@@ -4,22 +4,33 @@ import ATM_0354.InputMethod;
 import ATM_0354.Main;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class UserCreationScreenMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("========== User Creation ==========");
         while(true) {
-            System.out.println("What is the new user's username?");
+            System.out.println("What is the new user's username? Use only alphanumeric characters.");
             System.out.print(">");
             String username = in.nextLine();
-            while (Main.atm.usernameExists(username)){
-                System.out.println("That username already exists. \n Please enter a different username.");
-                System.out.print(">");
-                username = in.nextLine();
+            Pattern p = Pattern.compile("^[a-zA-Z0-9]*$");
+
+            while(p.matcher(username).matches()||Main.atm.usernameExists(username)){
+                if(p.matcher(username).matches()){
+                    System.out.println("Invalid character in username. Please only use alphanumeric characters (A-Z, a-z, 1-9)\n Please enter a different username");
+                    System.out.print(">");
+                    username = in.nextLine();
+                }
+                else if(Main.atm.usernameExists(username)){
+                    System.out.println("That username already exists or is invalid. \n Please enter a different username.");
+                    System.out.print(">");
+                    username = in.nextLine();
+                }
             }
+
             System.out.println("That is a valid username.");
-            System.out.println("What is the new user's password?");
+            System.out.println("What is the new user's password? Use only alphanumeric characters.");
             System.out.print(">");
             String password = in.nextLine();
             Main.atm.createPerson("User", username, password);

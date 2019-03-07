@@ -1,9 +1,6 @@
 package ATM_0354;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,13 +12,15 @@ public class Main {
 
     private static InputHandler ih;
     private static String state;
-    public static void main(String[] args) {
+    private static final String PEOPLEFILENAME = "";
+    public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();
         //need to set up current date - as previous date + 1 day
 
-        //TODO: check if this is the first time we've started the ATM; if so, set up local date, bankmanager, intial funds, etc.
-        boolean firstTime = true;
+        //TODO: check if this is the first time we've started the ATM; if so, set up local date, bankmanager, initial funds, etc.
+        Scanner file_in = new Scanner(new File(PEOPLEFILENAME));
+        boolean firstTime = file_in.hasNext();
         if(firstTime) {
             atm.setDateTime(LocalDateTime.now());
             state = "SetUpBankManager";
@@ -34,10 +33,11 @@ public class Main {
     }
 
     private static void generateUI(Scanner in){
-        while(true) { //Note that the program will wait for scanner input, so this shouldn't infinite loop / crash the program
+        while(!state.equals("Exit")) {
             state = ih.handleInput(state, in);
             clearScreen(); //TODO: see if there's a more elegant way to do this
         }
+        //TODO: Add code that writes to files, etc on exit
     }
     private static void clearScreen(){
         for(int i=0; i<50; i++) {
@@ -46,12 +46,12 @@ public class Main {
     }
 
     //TODO: Check two methods below.
-    private static final String FILENAME = "phase1/ATM_0354/Files/deposits.txt";
+    private static final String DEPOSITFILENAME = "phase1/ATM_0354/Files/deposits.txt";
 
     // public static BigDecimal parseDeposits()
     public static List<String> parseDeposits(){
         try {
-            BufferedReader br = new BufferedReader(new FileReader(FILENAME));
+            BufferedReader br = new BufferedReader(new FileReader(DEPOSITFILENAME));
 
             String sCurrentLine;
             String[] items;
