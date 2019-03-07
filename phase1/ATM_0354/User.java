@@ -1,9 +1,6 @@
 package ATM_0354;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -47,8 +44,51 @@ public class User extends Person {
         return this.accounts.size();
     }
 
-    public void addAccount(Account account) {
+    public void addAccount(String accountType) {
+        Account account = accountFactory.createAccount(accountType);
         this.accounts.add(account);
+
+        String path = "phase1/ATM_0354/Files/people.txt";
+        BufferedReader reader;
+        ArrayList<ArrayList<String>> lines = new ArrayList<>();
+        File file = new File(path);
+        try{
+            reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while(line != null){
+                ArrayList<String> entries = new ArrayList<>(Arrays.asList(line.split(",")));
+                if(entries.get(1).equals(this.getUsername())){
+                    entries.add(accountType);
+                    entries.add("0");
+                }
+                lines.add(entries);
+                line = reader.readLine();
+            }
+            reader.close();
+        }
+        catch (IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when reading people.txt to add account.");
+        }
+
+        BufferedWriter writer;
+        try{
+            writer = new BufferedWriter(new FileWriter(file, false));
+            for(ArrayList<String> line: lines){
+                for(int i = 0; i < line.size(); i++){
+                    String entry = line.get(i);
+                    if(i < line.size() - 1)
+                        writer.write(entry + ",");
+                    else
+                        writer.write(entry);
+                }
+                writer.newLine();
+            }
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when writing people.txt to add account.");
+        }
     }
 
     public boolean setPrimary(int accountID) {
@@ -160,7 +200,6 @@ public class User extends Person {
     /* Writes to account_creation_requests.txt
      */
     public void requestAccount(String accountType){
-        System.out.println("cur dir: " + Paths.get("."));
         String filePath = "phase1/ATM_0354/Files/account_creation_requests.txt";
         if(!(new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(accountType))){
             System.out.println("Invalid account type for request!");
@@ -169,8 +208,9 @@ public class User extends Person {
         String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat.toString() + "\n";
         File file = new File(filePath);
         try{
-            FileWriter writer = new FileWriter(file, true);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(accountRequest);
+            writer.newLine();
             writer.close();
         }
         catch(IOException e){

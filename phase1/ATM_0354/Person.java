@@ -22,5 +22,4 @@ public abstract class Person {
         return password;
     }
 
-
 }

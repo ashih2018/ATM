@@ -36,8 +36,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
                     }
                 }
                 if (approved){
-                    Account account = new AccountFactory().createAccount(accountType);
-                    ((User)Main.atm.getUser(username)).addAccount(account);
+                    ((User)Main.atm.getUser(username)).addAccount(accountType);
                 }
                 line = reader.readLine();
             }
