@@ -12,7 +12,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
 
-        String filePath = "./Files/account_creation_requests.txt";
+        String filePath = "phase1/ATM_0354/Files/account_creation_requests.txt";
         try{
             File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -43,6 +43,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
             }
         }
         catch(IOException e){
+            System.out.println(e.toString());
             System.out.println("IOException caught when reading file in IndividualAccountApproveMethod.");
         }
         return "BankManagerOptions";

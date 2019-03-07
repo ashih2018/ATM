@@ -1,9 +1,11 @@
 package ATM_0354;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -154,12 +156,13 @@ public class User extends Person {
     /* Writes to account_creation_requests.txt
      */
     public void requestAccount(String accountType){
-        String filePath = "./Files/account_creation_requests.txt";
+        System.out.println("cur dir: " + Paths.get("."));
+        String filePath = "phase1/ATM_0354/Files/account_creation_requests.txt";
         if(!(new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(accountType))){
             System.out.println("Invalid account type for request!");
             return;
         }
-        String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat + "\n";
+        String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat.toString() + "\n";
         File file = new File(filePath);
         try{
             FileWriter writer = new FileWriter(file, true);
@@ -167,6 +170,7 @@ public class User extends Person {
             writer.close();
         }
         catch(IOException e){
+            System.out.println(e.toString());
             System.out.println("IOException when requesting account, writing to txt file.");
         }
 
