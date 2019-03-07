@@ -16,7 +16,4 @@ public class ChequingAccount extends AssetAccount {
         this.primary = primary;
     }
 
-    public boolean isPrimary() {
-        return primary;
-    }
 }
