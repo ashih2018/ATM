@@ -13,6 +13,10 @@ public class AccountFactory {
         this.nextAccountId = -1;
     }
 
+    public void setNextAccountId(int nextAccountId) {
+        this.nextAccountId = nextAccountId;
+    }
+
     public Account createAccount(String accountType) throws IllegalArgumentException {
         this.nextAccountId++;
         switch (accountType) {
