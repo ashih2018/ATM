@@ -21,6 +21,15 @@ public abstract class Account {
         this.transferIn = true;
         this.transferOut = true;
     }
+    //TODO: Add another constructor in order to facilitate startup
+    public Account(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        this.transactions = transactions;
+        this.balance = balance;
+        this.id = id;
+        this.dateOfCreation = dateOfCreation;
+        this.transferIn = true;
+        this.transferOut = true;
+    }
 
     public void transferMoneyIn(BigDecimal value) throws MoneyTransferException {
         if (this.canTransferIn()) {
@@ -109,6 +118,10 @@ public abstract class Account {
 
     public void setBalance(BigDecimal newBalance) {
         this.balance = newBalance.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

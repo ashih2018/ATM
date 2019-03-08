@@ -1,6 +1,8 @@
 package ATM_0354;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public abstract class DebtAccount extends Account {
     // Debt accounts display a POSITIVE balance when user OWES money and vice versa
@@ -8,7 +10,9 @@ public abstract class DebtAccount extends Account {
     public DebtAccount(int id) {
         super(id);
     }
-
+    public DebtAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(id, balance, dateOfCreation, transactions);
+    }
     public void decreaseDebt(BigDecimal value) {
         this.setBalance(this.getBalance().subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP)));
     }

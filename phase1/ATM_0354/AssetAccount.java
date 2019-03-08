@@ -1,6 +1,8 @@
 package ATM_0354;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public abstract class AssetAccount extends Account {
 
@@ -8,6 +10,9 @@ public abstract class AssetAccount extends Account {
 
     public AssetAccount(int id) {
         super(id);
+    }
+    public AssetAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(id, balance, dateOfCreation, transactions);
     }
 
     @Override

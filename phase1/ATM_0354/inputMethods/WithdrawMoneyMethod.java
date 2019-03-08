@@ -23,12 +23,14 @@ public class WithdrawMoneyMethod implements InputMethod {
             } else {
                 int id = askForID(in);
                 BigDecimal money = askForMoney(in);
-                Main.atm.withdraw((User) Main.atm.getCurUser(), money, id);
-                System.out.println("Would you like to withdraw more money?");
-                System.out.print(">");
-                boolean cont = in.nextLine().equals("yes");
-                if(!cont){
-                    return "UserOptions";
+                boolean success = Main.atm.withdraw((User) Main.atm.getCurUser(), money, id);
+                if(success) {
+                    System.out.println("Would you like to withdraw more money?");
+                    System.out.print(">");
+                    boolean cont = in.nextLine().equals("yes");
+                    if (!cont) {
+                        return "UserOptions";
+                    }
                 }
             }
         }

@@ -1,5 +1,9 @@
 package ATM_0354;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class AccountFactory {
 
     private int nextAccountId;
@@ -16,6 +20,17 @@ public class AccountFactory {
             case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(this.nextAccountId);
             case "CHEQUINGACCOUNT": return new ChequingAccount(this.nextAccountId);
             case "SAVINGSACCOUNT": return new SavingsAccount(this.nextAccountId);
+            default: throw new IllegalArgumentException("No such account of type: " + accountType);
+        }
+    }
+
+    //for setup
+    Account createAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        switch (accountType) {
+            case "CREDITCARDACCOUNT": return new CreditCardAccount(id, balance, dateOfCreation, transactions);
+            case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(id, balance, dateOfCreation, transactions);
+            case "CHEQUINGACCOUNT": return new ChequingAccount(id, balance, dateOfCreation, transactions);
+            case "SAVINGSACCOUNT": return new SavingsAccount(id, balance, dateOfCreation, transactions);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }

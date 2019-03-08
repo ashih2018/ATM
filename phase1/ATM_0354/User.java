@@ -18,7 +18,6 @@ public class User extends Person {
     private AccountFactory accountFactory;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    public static ATM atm;
     private Account primaryAccount;
 
     public User(String username, String password) {
@@ -28,6 +27,10 @@ public class User extends Person {
         Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
+    }
+
+    public void setPrimaryAccount(Account primaryAccount) {
+        this.primaryAccount = primaryAccount;
     }
 
     public String getCreationDate() {
@@ -90,6 +93,10 @@ public class User extends Person {
             System.out.println("IOException when writing people.txt to add account.");
         }
     }
+    void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        Account account = accountFactory.createAccount(accountType, id, balance, dateOfCreation, transactions);
+        this.accounts.add(account);
+    }
 
     public boolean setPrimary(int accountID) {
         for (Account account: this.accounts) {
@@ -111,11 +118,11 @@ public class User extends Person {
 
     public void sendTransaction(String toUsername, int fromAccountId, BigDecimal value) throws MoneyTransferException {
         // Check if username exists
-        if (atm.userHandler.usernameExists(toUsername)) {
+        if (Main.atm.userHandler.usernameExists(toUsername)) {
             //Check if the specified account exists
             Account account = getAccount(fromAccountId);
             if (account != null) {
-                User toUser = (User) atm.userHandler.getUser(toUsername);
+                User toUser = (User) Main.atm.userHandler.getUser(toUsername);
                 // TODO: use users default deposit id
                 Transaction transaction = new Transaction(fromAccountId, toUser.getPrimaryAccountId(), value, false);
                 // Process transaction for sender first b/c most likely if a problem were to occur, it would be

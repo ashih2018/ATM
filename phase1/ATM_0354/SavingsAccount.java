@@ -1,6 +1,8 @@
 package ATM_0354;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class SavingsAccount extends AssetAccount {
 
@@ -8,6 +10,11 @@ public class SavingsAccount extends AssetAccount {
 
     public SavingsAccount(int id) {
         super(id);
+        this.setMinimumAllowedBalance(new BigDecimal(0));
+        this.interest = new BigDecimal(0.001);
+    }
+    public SavingsAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(id, balance, dateOfCreation, transactions);
         this.setMinimumAllowedBalance(new BigDecimal(0));
         this.interest = new BigDecimal(0.001);
     }

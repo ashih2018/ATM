@@ -1,8 +1,10 @@
 package ATM_0354;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,20 +19,53 @@ public class Main {
         atm = new ATM();
         ih = new InputHandler();
 
-        Scanner file_in = new Scanner(new File(PEOPLEFILENAME));
-        boolean firstTime = file_in.hasNext();
+        Scanner fileIn = new Scanner(new File(PEOPLEFILENAME));
+        boolean firstTime = !fileIn.hasNext();
         if(firstTime) {
             atm.setDateTime(LocalDateTime.now());
             state = "SetUpBankManager";
         }
         else{
-            //TODO: Set up local date, manager, users, funds, etc.
-            state = "Login";
-        }
-        Scanner in = new Scanner(System.in); //Set up for console input right now
-        generateUI(in);
-    }
+            //TODO: Set up local date, funds.
+            //TODO: Parse transaction history
+            parseUsers(fileIn, new ArrayList<>()); //Also sets up accounts
 
+            state = "Login";
+
+        }
+
+
+
+        generateUI(new Scanner(System.in)); //Set up for console input
+    }
+    private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ){
+        int maxAccountID = -1; //TODO: figure out what is happening with this stuff
+        while(fileIn.hasNext()){
+            String userType = fileIn.next();
+            String username = fileIn.next();
+            String password = fileIn.next();
+            atm.createPerson(userType, username, password);
+            if(userType.equals("User")){
+                int defaultID = fileIn.nextInt();
+                String[] accounts = fileIn.nextLine().split(", ");
+                User newUser =((User)atm.getUser(username));
+                for(int i=0; i<accounts.length; i+=4){
+                    int accountID = Integer.parseInt(accounts[i]);
+                    if(accountID > maxAccountID) maxAccountID = accountID;
+                    String accountType = accounts[i+1];
+                    BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i+2]));
+                    LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i+3]);
+
+                    ArrayList<Transaction> transactions1 = new ArrayList<>();
+                    for(Transaction t: transactions)
+                        if(t.getAccountIdFrom() == accountID ||t.getAccountIdTo()==accountID)
+                            transactions1.add(t);
+                    newUser.addAccount(accountType, accountID, balance, dateOfCreation, transactions1);
+                }
+                newUser.setPrimary(defaultID); //TODO: make sure this works
+            }
+        }
+    }
     private static void generateUI(Scanner in){
         while(!state.equals("Exit")) {
             state = ih.handleInput(state, in);
