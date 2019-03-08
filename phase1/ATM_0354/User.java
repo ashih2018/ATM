@@ -189,6 +189,8 @@ public class User extends Person {
             str.append(account.getClass().getSimpleName());
             str.append(",");
             str.append(account.getBalance());
+            str.append(",");
+            str.append(account.getDateOfCreation().toString());
         }
         return str.toString();
 
