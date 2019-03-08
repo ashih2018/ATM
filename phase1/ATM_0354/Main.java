@@ -1,10 +1,8 @@
 package ATM_0354;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,12 +12,12 @@ public class Main {
 
     private static InputHandler ih;
     private static String state;
-    private static final String PEOPLEFILENAME = "";
+    private static final String PEOPLE_FILE_NAME = "phase1/ATM_0354/Files/people.txt";
     public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();
 
-        Scanner fileIn = new Scanner(new File(PEOPLEFILENAME));
+        Scanner fileIn = new Scanner(new File(PEOPLE_FILE_NAME));
         boolean firstTime = !fileIn.hasNext();
         if(firstTime) {
             atm.setDateTime(LocalDateTime.now());
@@ -152,6 +150,7 @@ public class Main {
             for (Person person : atm.userHandler.users){
                 if(person instanceof BankDaddy){
                     writer.write("BankManager," + person.getUsername() + "," + person.getPassword());
+                    writer.newLine();
                 }
                 else if (person instanceof  User){
                     User user = (User) person;
