@@ -57,6 +57,8 @@ public class BankDaddy extends BankEmployee {
             } else {
                 throw new MoneyTransferException("The user that did not request the transaction undo does not exist");
             }
+        } else {
+            System.out.println("Can't undo a bill transaction");
         }
     }
 

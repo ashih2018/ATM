@@ -103,6 +103,26 @@ public abstract class Account {
         }
     }
 
+    public void processDeposit(Deposit deposit) throws MoneyTransferException {
+        this.transferMoneyIn(deposit.getValue());
+        addTransaction(deposit);
+    }
+
+    public void processWithdrawl(Withdrawl withdrawl) throws MoneyTransferException {
+        this.transferMoneyOut(withdrawl.getValue());
+        addTransaction(withdrawl);
+    }
+
+    public void processCheque(Cheque cheque) throws MoneyTransferException {
+        this.transferMoneyIn(cheque.getValue());
+        addTransaction(cheque);
+    }
+
+    public void processBill(Bill bill) throws MoneyTransferException {
+        this.transferMoneyOut(bill.getValue());
+        addTransaction(bill);
+    }
+
     public void deleteSpecificTransaction(Transaction transaction) {
         // Should only be used SOME times
         this.transactions.remove(transaction);
