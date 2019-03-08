@@ -13,6 +13,16 @@ public class Main {
     private static InputHandler ih;
     private static String state;
     private static final String PEOPLE_FILE_NAME = "phase1/ATM_0354/Files/people.txt";
+    private static final String DEPOSIT_FILE_NAME = "phase1/ATM_0354/Files/deposits.txt";
+    private static final String ACCOUNT_REQUESTS_FILE_NAME = "phase1/ATM_0354/Files/account_creation_requests.txt";
+    private static final String ALERTS_FILE_NAME = "phase1/ATM_0354/Files/alerts.txt";
+    private static final String OUTGOING_FILE_NAME = "phase1/ATM_0354/Files/outgoing.txt";
+    private static final String ATM_FILE_NAME = "phase1/ATM_0354/Files/atm.txt";
+
+
+
+
+
     public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();
@@ -27,7 +37,6 @@ public class Main {
             //TODO: Set up local date, funds.
             //TODO: Parse transaction history
             parseUsers(fileIn, new ArrayList<>()); //Also sets up accounts
-
             state = "Login";
 
         }
@@ -70,6 +79,7 @@ public class Main {
             clearScreen(); //TODO: see if there's a more elegant way to do this
         }
         shutdownATM();
+        reset();
     }
     private static void clearScreen(){
         for(int i=0; i<50; i++) {
@@ -78,12 +88,11 @@ public class Main {
     }
 
     //TODO: Check two methods below.
-    private static final String DEPOSITFILENAME = "phase1/ATM_0354/Files/deposits.txt";
 
     // public static BigDecimal parseDeposits()
     public static List<String> parseDeposits(){
         try {
-            BufferedReader br = new BufferedReader(new FileReader(DEPOSITFILENAME));
+            BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
 
             String sCurrentLine;
             String[] items;
@@ -125,8 +134,7 @@ public class Main {
 
     private static void writeATM(){
         try{
-            String filepath = "phase1/ATM_0354/Files/atm.txt";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(ATM_FILE_NAME), false));
             writer.write(atm.getDateTime().toString());
             writer.newLine();
 
@@ -144,8 +152,7 @@ public class Main {
 
     private static void writePeople(){
         try{
-            String filepath = "phase1/ATM_0354/Files/people.txt";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
 
             for (Person person : atm.userHandler.users){
                 if(person instanceof BankDaddy){
@@ -163,6 +170,23 @@ public class Main {
         catch(IOException e){
             System.out.println(e.toString());
             System.out.println("IOException when writing people to people.txt");
+        }
+    }
+
+    private static void reset(){
+        try{
+            String[] paths = {PEOPLE_FILE_NAME, DEPOSIT_FILE_NAME, OUTGOING_FILE_NAME,
+                    ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME};
+            BufferedWriter bw;
+            for (String path : paths){
+                bw = new BufferedWriter(new FileWriter(new File (path), false));
+                bw.write("");
+                bw.close();
+            }
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when resetting the program.");
         }
     }
 }
