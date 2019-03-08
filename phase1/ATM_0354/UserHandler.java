@@ -42,27 +42,11 @@ public class UserHandler {
      * @param password The password of the new User.
      */
     public void createUser(String type, String username, String password){
-        String entry;
         if(type.equals("BankManager")){
             users.add(new BankDaddy(username, password));
-            entry = "BankManager," + username + "," + password;
         }
         else{
             users.add(new User(username, password));
-            entry = "User, " + username + "," + password;
-        }
-        String path = "phase1/ATM_0354/Files/people.txt";
-        BufferedWriter writer;
-        try{
-            File file = new File(path);
-            writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(entry);
-            writer.newLine();
-            writer.close();
-        }
-        catch (IOException e){
-            System.out.println(e.toString());
-            System.out.println("IOException when writing to people.txt to create users.");
         }
     }
 

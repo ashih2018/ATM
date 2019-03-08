@@ -30,6 +30,10 @@ public class ATM {
         this.datetime = datetime;
     }
 
+    public LocalDateTime getDateTime(){
+        return this.datetime;
+    }
+
     public Person getCurUser(){
         return curUser;
     }

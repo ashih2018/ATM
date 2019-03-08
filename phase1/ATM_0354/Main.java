@@ -32,11 +32,11 @@ public class Main {
     }
 
     private static void generateUI(Scanner in){
-        while(!state.equals("Exit")) {
+        while(!state.equals("Shutdown")) {
             state = ih.handleInput(state, in);
             clearScreen(); //TODO: see if there's a more elegant way to do this
         }
-        //TODO: Add code that writes to files, etc on exit
+        shutdownATM();
     }
     private static void clearScreen(){
         for(int i=0; i<50; i++) {
@@ -82,6 +82,53 @@ public class Main {
             br.close();
         } catch (Exception e) {
             System.out.println("File does not exist.");
+        }
+    }
+
+    private static void shutdownATM(){
+        writeATM();
+        writePeople();
+    }
+
+    private static void writeATM(){
+        try{
+            String filepath = "phase1/ATM_0354/Files/atm.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), false));
+            writer.write(atm.getDateTime().toString());
+            writer.newLine();
+
+            for (CashObject cash : atm.cashHandler.getCash()){
+                writer.write(cash.getCashValue() + "," + cash.getCount());
+                writer.newLine();
+            }
+            writer.close();
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when writing atm cash amounts to atm.txt");
+        }
+    }
+
+    private static void writePeople(){
+        try{
+            String filepath = "phase1/ATM_0354/Files/people.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), false));
+
+            for (Person person : atm.userHandler.users){
+                if(person instanceof BankDaddy){
+                    writer.write("BankManager," + person.getUsername() + "," + person.getPassword());
+                }
+                else if (person instanceof  User){
+                    User user = (User) person;
+                    writer.write(user.writeUser());
+                    writer.newLine();
+                }
+            }
+            writer.close();
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when writing people to people.txt");
         }
     }
 }
