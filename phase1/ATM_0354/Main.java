@@ -1,8 +1,10 @@
 package ATM_0354;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,9 +36,14 @@ public class Main {
             state = "SetUpBankManager";
         }
         else{
-            //TODO: Set up local date, funds.
+            Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
+            String date = atmFileIn.nextLine();
+            atm.setDateTime(LocalDateTime.parse(date));
+            //TODO: Set up initial funds
             //TODO: Parse transaction history
-            parseUsers(fileIn, new ArrayList<>()); //Also sets up accounts
+            ArrayList<Transaction> transactions = parseTransactions();
+            parseUsers(fileIn, transactions); //Also sets up accounts
+
             state = "Login";
 
         }
@@ -44,6 +51,13 @@ public class Main {
 
 
         generateUI(new Scanner(System.in)); //Set up for console input
+    }
+    private static final String TRANSACTIONSFILE = "phase1/ATM_0354/Files/transactions.txt";
+    private static ArrayList<Transaction> parseTransactions() throws IOException{
+        Scanner in = new Scanner(new File(TRANSACTIONSFILE));
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        //TODO: finish this
+        return transactions;
     }
     private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ){
         int maxAccountID = -1; //TODO: figure out what is happening with this stuff
@@ -58,7 +72,6 @@ public class Main {
                 User newUser =((User)atm.getUser(username));
                 for(int i=0; i<accounts.length; i+=4){
                     int accountID = Integer.parseInt(accounts[i]);
-                    if(accountID > maxAccountID) maxAccountID = accountID;
                     String accountType = accounts[i+1];
                     BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i+2]));
                     LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i+3]);
@@ -70,6 +83,8 @@ public class Main {
                     newUser.addAccount(accountType, accountID, balance, dateOfCreation, transactions1);
                 }
                 newUser.setPrimary(defaultID); //TODO: make sure this works
+                newUser.setPrimaryAccount(newUser.getAccount(defaultID));
+                newUser.accountFactory.setNextAccountId(maxAccountID);
             }
         }
     }

@@ -15,7 +15,7 @@ import java.util.HashSet;
 public class User extends Person {
 
     private ArrayList<Account> accounts;
-    private AccountFactory accountFactory;
+    AccountFactory accountFactory;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Account primaryAccount;
