@@ -37,4 +37,12 @@ public class Transaction {
     public BigDecimal getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        if (isBill) {
+            return "Account ID Number " + this.accountIdFrom + " paid a $" + value + " bill.";
+        }
+        return "Account ID Number " + this.accountIdFrom + " sent $" + value + " to " + this.accountIdTo;
+    }
 }
