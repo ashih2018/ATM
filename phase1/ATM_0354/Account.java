@@ -7,9 +7,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.logging.FileHandler;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class Account {
@@ -107,9 +105,9 @@ public abstract class Account {
         addTransaction(deposit);
     }
 
-    public void processWithdrawl(Withdrawl withdrawl) throws MoneyTransferException {
-        this.transferMoneyOut(withdrawl.getValue());
-        addTransaction(withdrawl);
+    public void processWithdrawl(Withdrawal withdrawal) throws MoneyTransferException {
+        this.transferMoneyOut(withdrawal.getValue());
+        addTransaction(withdrawal);
     }
 
     public void processCheque(Cheque cheque) throws MoneyTransferException {

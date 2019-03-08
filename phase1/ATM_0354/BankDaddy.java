@@ -28,7 +28,7 @@ public class BankDaddy extends BankEmployee {
             if (transaction instanceof Deposit || transaction instanceof Cheque) {
                 userAccount.transferMoneyOut(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
-            } else if (transaction instanceof Withdrawl) {
+            } else if (transaction instanceof Withdrawal) {
                 userAccount.transferMoneyIn(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
             } else {
