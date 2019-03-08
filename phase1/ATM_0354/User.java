@@ -50,48 +50,6 @@ public class User extends Person {
     public void addAccount(String accountType) {
         Account account = accountFactory.createAccount(accountType);
         this.accounts.add(account);
-
-        String path = "phase1/ATM_0354/Files/people.txt";
-        BufferedReader reader;
-        ArrayList<ArrayList<String>> lines = new ArrayList<>();
-        File file = new File(path);
-        try{
-            reader = new BufferedReader(new FileReader(file));
-            String line = reader.readLine();
-            while(line != null){
-                ArrayList<String> entries = new ArrayList<>(Arrays.asList(line.split(",")));
-                if(entries.get(1).equals(this.getUsername())){
-                    entries.add(accountType);
-                    entries.add("0");
-                }
-                lines.add(entries);
-                line = reader.readLine();
-            }
-            reader.close();
-        }
-        catch (IOException e){
-            System.out.println(e.toString());
-            System.out.println("IOException when reading people.txt to add account.");
-        }
-
-        BufferedWriter writer;
-        try{
-            writer = new BufferedWriter(new FileWriter(file, false));
-            for(ArrayList<String> line: lines){
-                for(int i = 0; i < line.size(); i++){
-                    String entry = line.get(i);
-                    if(i < line.size() - 1)
-                        writer.write(entry + ",");
-                    else
-                        writer.write(entry);
-                }
-                writer.newLine();
-            }
-        }
-        catch(IOException e){
-            System.out.println(e.toString());
-            System.out.println("IOException when writing people.txt to add account.");
-        }
     }
     void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         Account account = accountFactory.createAccount(accountType, id, balance, dateOfCreation, transactions);
@@ -224,6 +182,24 @@ public class User extends Person {
             System.out.println(e.toString());
             System.out.println("IOException when requesting account, writing to txt file.");
         }
+
+    }
+
+    /*
+        For storage in people.txt
+     */
+    public String writeUser(){
+        StringBuilder str = new StringBuilder("User, " + getUsername() + "," + getPassword() +
+                "," + getPrimaryAccountId());
+        for (Account account : accounts){
+            str.append(",");
+            str.append(account.getClass().getSimpleName());
+            str.append(",");
+            str.append(account.getBalance());
+            str.append(",");
+            str.append(account.getDateOfCreation().toString());
+        }
+        return str.toString();
 
     }
 }

@@ -6,14 +6,11 @@ import java.util.ArrayList;
 
 public class ChequingAccount extends AssetAccount {
 
-    private boolean primary;
-
     public ChequingAccount(int id) {
         super(id);
-        this.primary = false;
         this.setMinimumAllowedBalance(new BigDecimal(-100));
     }
-
+    
     public ChequingAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         super(id, balance, dateOfCreation, transactions);
         this.primary = false;
@@ -22,5 +19,6 @@ public class ChequingAccount extends AssetAccount {
     public void setPrimary(boolean primary) {
         this.primary = primary;
     }
+
 
 }

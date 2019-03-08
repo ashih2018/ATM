@@ -14,7 +14,7 @@ public class BankManagerOptionsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("======= Bank Manager Panel ========");
-        System.out.println("You can 'create users', 'approve account creation requests', 'refill cash', 'undo recent transactions', 'logout', or 'exit'");
+        System.out.println("You can 'create users', 'approve account creation requests', 'refill cash', 'undo recent transactions', 'logout', or 'shutdown'");
         System.out.println("What would you like to do?");
         System.out.print(">");
         String input = in.nextLine();
@@ -30,8 +30,8 @@ public class BankManagerOptionsMethod implements InputMethod {
                     return "UndoTransaction";
                 case "logout":
                     return "Logout";
-                case "exit":
-                    return "Exit";
+                case "shutdown":
+                    return "Shutdown";
                 default:
                     System.out.println("Invalid option, please try again.");
                     System.out.print(">");

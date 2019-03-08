@@ -84,4 +84,8 @@ public class CashHandler{
         }
     }
 
+    public ArrayList<CashObject> getCash(){
+        return cash;
+    }
+
 }

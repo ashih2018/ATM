@@ -1,8 +1,16 @@
 package ATM_0354;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Account {
     private ArrayList<Transaction> transactions;
@@ -10,6 +18,8 @@ public abstract class Account {
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
     private boolean transferIn, transferOut;
+    private static final Logger LOGGER = Logger.getLogger(Account.class.getName());
+    private Handler fileHandler;
 
     // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
 
@@ -76,6 +86,20 @@ public abstract class Account {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Couldn't get last transaction!");
             return null;
+        }
+    }
+
+    public void payBill(BigDecimal amount) throws MoneyTransferException {
+        this.transferMoneyOut(amount);
+        Transaction newTransaction = new Transaction(this.id, -99, amount, true);
+        this.transactions.add(newTransaction);
+        try(FileWriter fw = new FileWriter("./ATM_0354/Files/outgoing.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(newTransaction.toString());
+        } catch (IOException e) {
+            System.out.println("Transaction did not go through!");
         }
     }
 
