@@ -24,43 +24,45 @@ public class BankDaddy extends BankEmployee {
         Transaction transaction = user.getAccount(accountId).getLastTransaction();
         if (!transaction.getIsBill()) {
             Account userAccount = user.getAccount(accountId);
-            User otherUser = atm.userHandler.getUserFromAccountId(accountId);
-            if (otherUser != null) {
-                Account otherAccount = otherUser.getAccount(accountId);
-                if (transaction.getAccountIdFrom() == accountId) {
-                    if (userAccount instanceof AssetAccount) {
-                        userAccount.forceTransferIn(transaction.getValue());
-                    } else if (userAccount instanceof DebtAccount) {
-                        ((DebtAccount) userAccount).decreaseDebt(transaction.getValue());
-                    }
-                    if (otherAccount instanceof AssetAccount) {
-                        otherAccount.forceTransferOut(transaction.getValue());
-                    } else if (otherAccount instanceof DebtAccount) {
-                        ((DebtAccount) otherAccount).increaseDebt(transaction.getValue());
-                    }
-                    userAccount.deleteSpecificTransaction(transaction);
-                    otherAccount.deleteSpecificTransaction(transaction);
-                } else if (transaction.getAccountIdFrom() == otherAccount.getId()) {
-                    if (otherAccount instanceof AssetAccount) {
-                        otherAccount.forceTransferIn(transaction.getValue());
-                    } else if (otherAccount instanceof DebtAccount) {
-                        ((DebtAccount) otherAccount).decreaseDebt(transaction.getValue());
-                    }
-                    if (userAccount instanceof AssetAccount) {
-                        userAccount.forceTransferOut(transaction.getValue());
-                    } else if (userAccount instanceof DebtAccount) {
-                        ((DebtAccount) userAccount).increaseDebt(transaction.getValue());
-                    }
-                    userAccount.deleteSpecificTransaction(transaction);
-                    otherAccount.deleteSpecificTransaction(transaction);
-                }
+
+            if (transaction instanceof Deposit || transaction instanceof Cheque) {
+                userAccount.transferMoneyOut(transaction.getValue());
+                userAccount.deleteSpecificTransaction(transaction);
+            } else if (transaction instanceof Withdrawl) {
+                userAccount.transferMoneyIn(transaction.getValue());
+                userAccount.deleteSpecificTransaction(transaction);
             } else {
-                throw new MoneyTransferException("The user that did not request the transaction undo does not exist");
+                User otherUser = atm.userHandler.getUserFromAccountId(accountId);
+                if (otherUser != null) {
+                    Account otherAccount = otherUser.getAccount(accountId);
+                    if (transaction.getAccountIdFrom() == accountId) {
+                        transferBackMoney(userAccount, otherAccount, transaction);
+                    } else if (transaction.getAccountIdFrom() == otherAccount.getId()) {
+                        transferBackMoney(otherAccount, userAccount, transaction);
+                    }
+                } else {
+                    throw new MoneyTransferException("The user that did not request the transaction undo does not exist");
+                }
             }
         } else {
             System.out.println("Can't undo a bill transaction");
         }
     }
+    public void transferBackMoney (Account transferIn, Account transferOut, Transaction transaction) {
+        if (transferIn instanceof AssetAccount) {
+            transferIn.forceTransferIn(transaction.getValue());
+        } else if (transferIn instanceof DebtAccount) {
+            ((DebtAccount) transferIn).decreaseDebt(transaction.getValue());
+        }
+        if (transferOut instanceof AssetAccount) {
+            transferOut.forceTransferOut(transaction.getValue());
+        } else if (transferOut instanceof DebtAccount) {
+            ((DebtAccount) transferOut).increaseDebt(transaction.getValue());
+        }
+        transferIn.deleteSpecificTransaction(transaction);
+        transferOut.deleteSpecificTransaction(transaction);
+    }
+
 
 
 
