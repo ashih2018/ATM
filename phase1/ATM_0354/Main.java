@@ -14,7 +14,7 @@ public class Main {
 
     private static InputHandler ih;
     private static String state;
-    private static final String PEOPLEFILENAME = "";
+    private static final String PEOPLEFILENAME = "phase1/ATM_0354/Files/people.txt";
     public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();

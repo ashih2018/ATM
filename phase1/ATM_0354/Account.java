@@ -91,13 +91,13 @@ public abstract class Account {
         this.transferMoneyOut(amount);
         Transaction newTransaction = new Transaction(this.id, -99, amount, true);
         this.transactions.add(newTransaction);
-        try(FileWriter fw = new FileWriter("./ATM_0354/Files/outgoing.txt", true);
+        try(FileWriter fw = new FileWriter("phase1/ATM_0354/Files/outgoing.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw))
+            PrintWriter pw = new PrintWriter(bw))
         {
-            out.println(newTransaction.toString());
+            pw.println(newTransaction.toString());
         } catch (IOException e) {
-            System.out.println("Transaction did not go through!");
+            System.out.println("IOException writing to outgoing.txt");
         }
     }
 
