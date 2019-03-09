@@ -1,10 +1,8 @@
 package ATM_0354;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,13 +33,15 @@ public class Main {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
             atm.setDateTime(LocalDateTime.parse(date));
-            //TODO: Set up initial funds
-            //TODO: Parse transaction history
+            ArrayList<CashObject> cash = new ArrayList<>();
+            while(atmFileIn.hasNextLine()){ //update cash amounts
+                String[] lineInput = atmFileIn.nextLine().split(", ");
+                cash.add(new CashObject(BigDecimal.valueOf(Double.parseDouble(lineInput[0])), Integer.parseInt(lineInput[1])));
+            }
+            atm.cashHandler = new CashHandler(cash);
             ArrayList<Transaction> transactions = parseTransactions();
             parseUsers(fileIn, transactions); //Also sets up accounts
-
             state = "Login";
-
         }
 
         generateUI(new Scanner(System.in)); //Set up for console input
@@ -50,7 +50,30 @@ public class Main {
     private static ArrayList<Transaction> parseTransactions() throws IOException{
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         ArrayList<Transaction> transactions = new ArrayList<>();
-        //TODO: finish this
+        while(in.hasNextLine()){
+            String[] userTransactions = in.nextLine().split(", ");
+            String username = userTransactions[0];
+            User curUser = (User)atm.getUser(username); //idk what this does
+            for(int i=1; i<userTransactions.length; i+=5){
+                String transactionType = userTransactions[i+1];
+                int accountid = Integer.parseInt(userTransactions[i]);
+                int receiverAccount = Integer.parseInt(userTransactions[i+2]);
+                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(userTransactions[i+3]));
+                LocalDateTime date = LocalDateTime.parse(userTransactions[i+4]); //TODO: figure out why this is useful
+                if (transactionType.equals("Bill")) {
+                    Transaction newBill = new Bill(accountid, receiverAccount, amount);
+                    transactions.add(newBill);
+                }
+                else if(transactionType.equals("Transaction")){
+                    Transaction newTransaction = new Transaction(accountid, receiverAccount, amount, false);
+                    transactions.add(newTransaction);
+                }
+                else{
+                    System.out.println("Error"); //TODO: better error message
+                }
+            }
+
+        }
         return transactions;
     }
     private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ){
@@ -139,6 +162,7 @@ public class Main {
     private static void shutdownATM(){
         writeATM();
         writePeople();
+        //TODO: Write a whole bunch of other things too!
     }
 
     private static void writeATM(){
