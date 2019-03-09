@@ -29,7 +29,6 @@ public abstract class Account {
         this.transferIn = true;
         this.transferOut = true;
     }
-    //TODO: Add another constructor in order to facilitate startup
     public Account(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         this.transactions = transactions;
         this.balance = balance;
