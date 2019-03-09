@@ -5,6 +5,7 @@ import ATM_0354.Main;
 import ATM_0354.User;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class DepositMoneyMethod implements InputMethod {
@@ -35,16 +36,41 @@ public class DepositMoneyMethod implements InputMethod {
                         System.out.print(">");
                     }
                 }
+
                 System.out.println("Depositing from deposits.txt....");
                 //TODO: Figure out what's happening here
-//                BigDecimal money = Main.parseDeposits();
-//                Main.atm.deposit((User) Main.atm.getCurUser(), money, id);
+
+                List<String> all_deposits = Main.parseDeposits();
+                displayDeposits(all_deposits);
+
+                System.out.println("Select a deposit by inputting 'deposit_type, amount': ");
+                String input = "replace this";
+                
+                // if all_deposits.contains(input)
+                all_deposits.remove(input);
+
+                String[] items = input.split(", "); // what about cheque/cash (i.e. items[0])?
+                BigDecimal money = new BigDecimal(items[1]);
+                Main.atm.deposit((User) Main.atm.getCurUser(), money, id);
+
                 System.out.println("Would you like to deposit more money?");
                 System.out.print(">");
                 boolean cont = in.nextLine().equals("yes");
+                displayDeposits(all_deposits); //todo is this a good place?
                 if (!cont) {
                     return "UserOptions";
                 }
+            }
+        }
+    }
+
+    public void displayDeposits(List<String> deposits){
+        System.out.println("==== Available Deposits ====");
+        if (deposits.size() == 0)
+            System.out.println("No available deposits.");
+        else{
+            for (String deposit: deposits) {
+                System.out.println(deposit);
             }
         }
     }
