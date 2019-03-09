@@ -1,9 +1,6 @@
 package ATM_0354;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -168,5 +165,23 @@ public abstract class Account {
     @Override
     public String toString() {
         return "Account ID: " + this.id + "\nAccount Balance: " + this.balance;
+    }
+
+    public void writeTransactions(String username){
+        try{
+            String filepath = "phase1/ATM_0354/Files/transactions.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
+            //TODO: Format???
+            for (Transaction transaction : transactions){
+                writer.write(username + "," + transaction.getAccountIdFrom()
+                        + "," + transaction + "," + transaction.getAccountIdTo()
+                        + "," + transaction.getValue() + "," + transaction.getDate());
+                writer.newLine();
+            }
+            writer.close();
+        } catch(IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when writing transaction to transactions.txt");
+        }
     }
 }

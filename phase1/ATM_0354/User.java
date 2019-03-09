@@ -200,6 +200,11 @@ public class User extends Person {
             str.append(account.getDateOfCreation().toString());
         }
         return str.toString();
+    }
 
+    public void writeTransactions() {
+        for (Account account : accounts){
+            account.writeTransactions(this.getUsername());
+        }
     }
 }

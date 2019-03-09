@@ -162,6 +162,7 @@ public class Main {
     private static void shutdownATM(){
         writeATM();
         writePeople();
+        writeTransactions();
         //TODO: Write a whole bunch of other things too!
     }
 
@@ -203,6 +204,15 @@ public class Main {
         catch(IOException e){
             System.out.println(e.toString());
             System.out.println("IOException when writing people to people.txt");
+        }
+    }
+
+    private static void writeTransactions(){
+        for (Person person : atm.userHandler.users){
+            if(person instanceof User){
+                User user = (User) person;
+                user.writeTransactions();
+            }
         }
     }
 
