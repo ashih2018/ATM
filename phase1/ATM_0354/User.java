@@ -27,6 +27,7 @@ public class User extends Person {
         Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
+        accounts.add(account);
     }
 
     public void setPrimaryAccount(Account primaryAccount) {
