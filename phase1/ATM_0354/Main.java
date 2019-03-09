@@ -20,7 +20,7 @@ public class Main {
     private static final String ALERTS_FILE_NAME = "phase1/ATM_0354/Files/alerts.txt";
     private static final String OUTGOING_FILE_NAME = "phase1/ATM_0354/Files/outgoing.txt";
     private static final String ATM_FILE_NAME = "phase1/ATM_0354/Files/atm.txt";
-    
+
     public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();
@@ -43,8 +43,6 @@ public class Main {
             state = "Login";
 
         }
-
-
 
         generateUI(new Scanner(System.in)); //Set up for console input
     }
