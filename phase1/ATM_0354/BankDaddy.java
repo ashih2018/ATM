@@ -32,7 +32,7 @@ public class BankDaddy extends BankEmployee {
                 userAccount.transferMoneyIn(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
             } else {
-                User otherUser = atm.userHandler.getUserFromAccountId(accountId);
+                User otherUser = atm.userHandler.getUserFromTransaction(transaction);
                 if (otherUser != null) {
                     Account otherAccount = otherUser.getAccount(accountId);
                     if (transaction.getAccountIdFrom() == accountId) {

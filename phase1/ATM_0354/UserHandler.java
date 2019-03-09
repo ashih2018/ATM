@@ -73,11 +73,13 @@ public class UserHandler {
         return null;
     }
 
-    public User getUserFromAccountId(int accountId) {
+    public User getUserFromTransaction(Transaction transaction) {
+        // Check if transaction exists in any user account
         for (Person person : users) {
             if (person instanceof User) {
-                Account account = ((User) person).getAccount(accountId);
-                if (account != null) return (User) person;
+                if (((User) person).checkIfTransactionExists(transaction)) {
+                    return (User) person;
+                }
             }
         } return null;
     }

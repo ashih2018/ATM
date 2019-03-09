@@ -102,7 +102,7 @@ public abstract class Account {
         addTransaction(deposit);
     }
 
-    public void processWithdrawl(Withdrawal withdrawal) throws MoneyTransferException {
+    public void processWithdrawal(Withdrawal withdrawal) throws MoneyTransferException {
         this.transferMoneyOut(withdrawal.getValue());
         addTransaction(withdrawal);
     }
@@ -115,6 +115,10 @@ public abstract class Account {
     public void processBill(Bill bill) throws MoneyTransferException {
         this.transferMoneyOut(bill.getValue());
         addTransaction(bill);
+    }
+
+    public boolean doesTransactionExist(Transaction transaction) {
+        return transactions.contains(transaction);
     }
 
     public void deleteSpecificTransaction(Transaction transaction) {

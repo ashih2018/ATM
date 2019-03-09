@@ -21,7 +21,6 @@ public abstract class DebtAccount extends Account {
         this.setBalance(this.getBalance().add(value.setScale(2, BigDecimal.ROUND_HALF_UP)));
     }
 
-    // TODO: Change the way processTransaction() works !!!!
     @Override
     public void processTransaction(Transaction transaction) throws MoneyTransferException {
         if (transaction.getAccountIdFrom() == this.getId()) {
@@ -38,6 +37,38 @@ public abstract class DebtAccount extends Account {
         } else {
             System.out.println("Could not process transaction for account with ID: " + this.getId());
         }
+    }
+
+    @Override
+    public void processDeposit(Deposit deposit) throws MoneyTransferException {
+        if (canTransferIn()) {
+            decreaseDebt(deposit.getValue());
+            this.addTransaction(deposit);
+        }
+    }
+
+    @Override
+    public void processWithdrawal(Withdrawal withdrawal) throws MoneyTransferException {
+        if (canTransferOut()) {
+            increaseDebt(withdrawal.getValue());
+            this.addTransaction(withdrawal);
+        } else throw new MoneyTransferException("Can't transfer money out of this account!");
+    }
+
+    @Override
+    public void processCheque(Cheque cheque) throws MoneyTransferException {
+        if (canTransferIn()) {
+            decreaseDebt(cheque.getValue());
+            this.addTransaction(cheque);
+        }
+    }
+
+    @Override
+    public void processBill(Bill bill) throws MoneyTransferException {
+        if (canTransferOut()) {
+            increaseDebt(bill.getValue());
+            this.addTransaction(bill);
+        } else throw new MoneyTransferException("Can't transfer money out of this account!");
     }
 
     @Override

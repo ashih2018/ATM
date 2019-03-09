@@ -122,6 +122,12 @@ public class User extends Person {
         }
     }
 
+    public boolean checkIfTransactionExists(Transaction transaction) {
+        for (Account account : accounts) {
+            if (account.doesTransactionExist(transaction)) return true;
+        } return false;
+    }
+
     public LocalDateTime getAccountDate(int accountId) {
         Account account = this.getAccount(accountId);
         if (account == null) {
