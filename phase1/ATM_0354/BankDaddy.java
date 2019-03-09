@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class BankDaddy extends BankEmployee {
 
-    public static ATM atm;
+    //public static ATM atm;
 
     public BankDaddy(String username, String password) {
         super(username, password);
@@ -17,7 +17,7 @@ public class BankDaddy extends BankEmployee {
 //    }
     
     public void restock(BigDecimal billValue, int count) {
-        atm.cashHandler.addCash(billValue, count);
+        Main.atm.cashHandler.addCash(billValue, count);
     }
 
     public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {
@@ -32,7 +32,7 @@ public class BankDaddy extends BankEmployee {
                 userAccount.transferMoneyIn(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
             } else {
-                User otherUser = atm.userHandler.getUserFromTransaction(transaction);
+                User otherUser = Main.atm.userHandler.getUserFromTransaction(transaction);
                 if (otherUser != null) {
                     Account otherAccount = otherUser.getAccount(accountId);
                     if (transaction.getAccountIdFrom() == accountId) {
