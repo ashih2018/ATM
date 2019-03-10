@@ -9,12 +9,6 @@ public class BankDaddy extends BankEmployee {
     public BankDaddy(String username, String password) {
         super(username, password);
     }
-
-    //TODO: decide exactly where new users should be created
-    //This was implemented in UserHandler.
-//    public User createUser(String username, String password) {
-//        return new User(username, password);
-//    }
     
     public void restock(BigDecimal billValue, int count) {
         Main.atm.cashHandler.addCash(billValue, count);

@@ -80,13 +80,46 @@ public class UserHandler {
      * @param id The id of the account to withdraw from.
      * @return true if the withdrawal succeeds, false otherwise.
      */
-    boolean withdraw(User user, BigDecimal money, int id){
-        //TODO: Complete
+    boolean withdraw(User user, BigDecimal money, int id) throws MoneyTransferException {
+        for (Person person: this.users) {
+            if (person == user) {
+                if (person instanceof User) {
+                    Account account;
+                    if (id < 0) {
+                        account = ((User)person).getPrimaryAccount();
+                    }
+                    else {
+                        account = ((User)person).getAccount(id);
+                    }
+                    if (account == null) {
+                        return false;
+                    }
+                    account.transferMoneyOut(money);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
-    boolean deposit(User user, BigDecimal money, int id){
-        //TODO: Complete
+    boolean deposit(User user, BigDecimal money, int id) throws MoneyTransferException {
+        for (Person person: this.users)
+            if (person == user) {
+                if (person instanceof User) {
+                    Account account;
+                    if (id < 0) {
+                        account = ((User) person).getPrimaryAccount();
+                    }
+                    else {
+                        account = ((User) person).getAccount(id);
+                    }
+                    if (account == null) {
+                        return false;
+                    }
+                    account.transferMoneyIn(money);
+                    return true;
+                }
+            }
         return false;
     }
 

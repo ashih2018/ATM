@@ -13,8 +13,6 @@ public abstract class Account {
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
     private boolean transferIn, transferOut;
-    private static final Logger LOGGER = Logger.getLogger(Account.class.getName());
-    private Handler fileHandler;
 
     // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
 
