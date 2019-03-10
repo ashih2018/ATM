@@ -125,19 +125,13 @@ public class Main {
     public static List<String> parseDeposits(){
         try {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
+            String line;
 
-            String sCurrentLine;
-            String[] items;
-            String deposit_type;
-            BigDecimal deposit_amount;
-
-            List<String> all_deposits = new ArrayList<>();
-            while ((sCurrentLine = br.readLine()) != null) {
-                items = sCurrentLine.split(",");
-                deposit_type = items[0];
-                deposit_amount = new BigDecimal(items[1]);
-                all_deposits.add(deposit_type + "," + deposit_amount);
+            List<String> all_deposits = new ArrayList<String>();
+            while ((line = br.readLine()) != null) {
+                all_deposits.add(line);
             }
+            br.close();
             return all_deposits;
 
         } catch (Exception e) {
