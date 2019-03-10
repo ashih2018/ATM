@@ -4,14 +4,8 @@ import java.math.BigDecimal;
 
 public class BankDaddy extends BankEmployee {
 
-    //public static ATM atm;
-
     public BankDaddy(String username, String password) {
         super(username, password);
-    }
-    
-    public void restock(BigDecimal billValue, int count) {
-        Main.atm.cashHandler.addCash(billValue, count);
     }
 
     public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {

@@ -10,6 +10,7 @@ public class UserHandler {
      */
     ArrayList<Person> users;
 
+
     public UserHandler() {
         users = new ArrayList<>();
     }
@@ -117,6 +118,7 @@ public class UserHandler {
                         return false;
                     }
                     account.transferMoneyIn(money);
+
                     return true;
                 }
             }

@@ -8,6 +8,11 @@ accounts they own, send and receive money, pay bills. Our ATM currently allows u
 which includes credit card accounts and line of credit accounts, or an asset account, which includes a checking
 accounts and savings accounts.
 
+Notes:
+- If the user does not have an account, they must go to view accounts to request to create an account.
+- The first chequing account created is defaulted as the primary chequing account.
+- All storable information in the ATM is stored under Files.
+
 Bank Manager Actions:
 - create users: Creates a new user with a unique username and password
 - approve account creation requests: If there is a request to open an account, the Bank Manager can choose whether

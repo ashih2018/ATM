@@ -56,11 +56,13 @@ public class CashHandler{
     private void updateRestockStatus(){
         for(CashObject cashObject: cash){
             if (cashObject.needsRestocking()) {
-                this.hasEnoughBills = true;
+                sendAlert();
+                this.hasEnoughBills = false;
                 return;
             }
         }
-        hasEnoughBills = false;
+
+        this.hasEnoughBills = true;
     }
 
     public boolean hasEnoughBills(){

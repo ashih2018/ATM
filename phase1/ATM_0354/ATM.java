@@ -61,10 +61,44 @@ public class ATM {
      */
     public boolean withdraw(User user, BigDecimal money, int id) {
         try {
-            return userHandler.withdraw(user, money, id);
+            boolean success = userHandler.withdraw(user, money, id);
+            if (success) {
+                withdrawCashFromATM(money);
+            }
+            return success;
         } catch (MoneyTransferException e) {
             System.out.println("Could not withdraw money!");
         } return false;
+    }
+
+    private void withdrawCashFromATM(BigDecimal money) {
+        double cash = money.doubleValue();
+        int fifties = 0;
+        int twenties = 0;
+        int tens = 0;
+        int fives = 0;
+        while (cash >= 5) {
+            if (cash >= 50) {
+                fifties += 1;
+                cash -= 50;
+            }
+            else if (cash >= 20) {
+                twenties += 1;
+                cash -= 20;
+            }
+            else if (cash >= 10) {
+                tens += 1;
+                cash -= 10;
+            }
+            else if (cash >= 5) {
+                fives += 1;
+                cash -= 5;
+            }
+        }
+        cashHandler.withdrawCash(new BigDecimal(50), fifties);
+        cashHandler.withdrawCash(new BigDecimal(20), twenties);
+        cashHandler.withdrawCash(new BigDecimal(10), tens);
+        cashHandler.withdrawCash(new BigDecimal(5), fives);
     }
 
 
