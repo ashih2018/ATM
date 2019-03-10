@@ -9,7 +9,7 @@ public class ChangePasswordMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("What is your current password?");
         System.out.print(">");
-
+        //TODO: Finish this
         return null;
     }
 }
