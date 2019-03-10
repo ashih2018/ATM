@@ -31,17 +31,20 @@ public class BankDaddy extends BankEmployee {
             } else if (transaction instanceof Withdrawal) {
                 userAccount.transferMoneyIn(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
-            } else {
-                User otherUser = Main.atm.userHandler.getUserFromTransaction(transaction);
-                if (otherUser != null) {
-                    Account otherAccount = otherUser.getAccount(accountId);
-                    if (transaction.getAccountIdFrom() == accountId) {
-                        transferBackMoney(userAccount, otherAccount, transaction);
-                    } else if (transaction.getAccountIdFrom() == otherAccount.getId()) {
-                        transferBackMoney(otherAccount, userAccount, transaction);
-                    }
+            } else { // It is a Transfer
+                User otherUser;
+                if (((Transfer) transaction).getUsernameFrom().equals(user.getUsername())) {
+                    otherUser = (User) Main.atm.userHandler.getUser(((Transfer) transaction).getUsernameTo());
+                    Account otherAccount = otherUser.getAccount(transaction.getAccountIdTo());
+                    transferBackMoney(userAccount, otherAccount, transaction);
                 } else {
-                    throw new MoneyTransferException("The user that did not request the transaction undo does not exist");
+                    otherUser = (User) Main.atm.userHandler.getUser(((Transfer) transaction).getUsernameFrom());
+                    Account otherAccount = otherUser.getAccount(transaction.getAccountIdFrom());
+                    transferBackMoney(otherAccount, userAccount, transaction);
+                }
+
+                if (otherUser == null) { // Should never happen
+                    System.out.println("The other user is null for some reason!!!");
                 }
             }
         } else {

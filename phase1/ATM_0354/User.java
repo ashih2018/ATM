@@ -2,7 +2,6 @@ package ATM_0354;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -76,6 +75,7 @@ public class User extends Person {
     }
 
     public void sendTransaction(String toUsername, int fromAccountId, BigDecimal value) throws MoneyTransferException {
+        // User should never send a transaction with a negative value
         // Check if username exists
         if (Main.atm.userHandler.usernameExists(toUsername)) {
             //Check if the specified account exists
@@ -83,20 +83,14 @@ public class User extends Person {
             if (account != null) {
                 User toUser = (User) Main.atm.userHandler.getUser(toUsername);
                 // TODO: use users default deposit id
-                Transaction transaction = new Transaction(fromAccountId, toUser.getPrimaryAccountId(), value, false);
+                Transfer transfer =
+                        new Transfer(fromAccountId, toUser.getPrimaryAccountId(), this.getUsername(), toUsername, value);
                 // Process transaction for sender first b/c most likely if a problem were to occur, it would be
                 // from subtracting money from an account, not depositing money into an account
-                account.processTransaction(transaction);
-                toUser.receiveTransaction(transaction);
+                account.sendTransfer(transfer);
+                toUser.getPrimaryAccount().receiveTransfer(transfer);
             } else throw new MoneyTransferException(fromAccountId + " is not an existing account id that this user has");
         } else throw new MoneyTransferException(toUsername + " is not an existing username");
-    }
-
-    public void receiveTransaction(Transaction transaction) throws MoneyTransferException {
-        Account account = this.getPrimaryAccount();
-        if (account != null) {
-            account.processTransaction(transaction);
-        } else System.out.println("Account to receive transaction was null"); // Should never happen
     }
 
     public String getSummary() {

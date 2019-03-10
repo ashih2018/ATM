@@ -22,20 +22,18 @@ public abstract class DebtAccount extends Account {
     }
 
     @Override
-    public void processTransaction(Transaction transaction) throws MoneyTransferException {
-        if (transaction.getAccountIdFrom() == this.getId()) {
-            if (canTransferOut()) {
-                increaseDebt(transaction.getValue().setScale(2, BigDecimal.ROUND_HALF_UP));
-                this.addTransaction(transaction);
-            }
-            else throw new MoneyTransferException("Can't transfer money out of this account!");
-        } else  if (transaction.getAccountIdTo() == this.getId()) {
-            if (canTransferIn()) {
-                decreaseDebt(transaction.getValue().setScale(2, BigDecimal.ROUND_HALF_UP));
-                this.addTransaction(transaction);
-            }
-        } else {
-            System.out.println("Could not process transaction for account with ID: " + this.getId());
+    public void sendTransfer(Transfer transfer) throws MoneyTransferException {
+        if (canTransferOut()) {
+            increaseDebt(transfer.getValue());
+            this.addTransaction(transfer);
+        } else throw new MoneyTransferException("Can't transfer money out of this account!");
+    }
+
+    @Override
+    public void receiveTransfer(Transfer transfer) throws MoneyTransferException {
+        if (canTransferIn()) {
+            decreaseDebt(transfer.getValue());
+            this.addTransaction(transfer);
         }
     }
 

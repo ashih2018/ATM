@@ -49,17 +49,14 @@ public abstract class Account {
         } else throw new MoneyTransferException("Can't transfer money out of this account");
     }
 
-    public void processTransaction(Transaction transaction) throws MoneyTransferException {
-        // TODO: Some types of accounts process transactions differently like DebtAccount so account for that
-        if (transaction.getAccountIdFrom() == this.id) {
-            this.transferMoneyOut(transaction.getValue().setScale(2, BigDecimal.ROUND_HALF_UP));
-            addTransaction(transaction);
-        } else if (transaction.getAccountIdTo() == this.id) {
-            this.transferMoneyIn(transaction.getValue().setScale(2, BigDecimal.ROUND_HALF_UP));
-            addTransaction(transaction);
-        } else {
-            System.out.println("Could not process transaction for account with ID: " + this.id);
-        }
+    public void sendTransfer(Transfer transfer) throws MoneyTransferException {
+        transferMoneyOut(transfer.getValue());
+        addTransaction(transfer);
+    }
+
+    public void receiveTransfer(Transfer transfer) throws MoneyTransferException {
+        transferMoneyIn(transfer.getValue());
+        addTransaction(transfer);
     }
 
     public void forceTransferIn(BigDecimal value) {

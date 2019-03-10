@@ -73,17 +73,6 @@ public class UserHandler {
         return null;
     }
 
-    public User getUserFromTransaction(Transaction transaction) {
-        // Check if transaction exists in any user account
-        for (Person person : users) {
-            if (person instanceof User) {
-                if (((User) person).checkIfTransactionExists(transaction)) {
-                    return (User) person;
-                }
-            }
-        } return null;
-    }
-
     /**
      * Withdraw money from a user's account.
      * @param user The user to withdraw from
