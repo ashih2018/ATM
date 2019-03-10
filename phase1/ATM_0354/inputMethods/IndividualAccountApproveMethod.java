@@ -36,7 +36,8 @@ public class IndividualAccountApproveMethod implements InputMethod {
                     }
                 }
                 if (approved){
-                    ((User)Main.atm.getUser(username)).addAccount(accountType.toUpperCase() + "ACCOUNT");
+                    ((User)Main.atm.getUser(username)).addAccount(accountType.toUpperCase().
+                            replaceAll("\\s+","") + "ACCOUNT");
                 }
                 line = reader.readLine();
             }

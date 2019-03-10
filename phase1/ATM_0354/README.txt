@@ -47,4 +47,5 @@ just created.
 specified above under Bank Manager actions.
 5. If a user is signed in, there will be a list of actions that the user can perform, which are specified above under
 User Actions.
-6. The program will end when the BankManager performs the "shutdown" action.
+6. Users and BankManager will be able to logout of their account with the logout action.
+7. The program will end when the BankManager performs the "shutdown" action.
