@@ -60,7 +60,11 @@ public class ATM {
      * @param id    The id of the account to withdraw from.
      */
     public boolean withdraw(User user, BigDecimal money, int id) {
-        return userHandler.withdraw(user, money, id);
+        try {
+            return userHandler.withdraw(user, money, id);
+        } catch (MoneyTransferException e) {
+            System.out.println("Could not withdraw money!");
+        } return false;
     }
 
 
@@ -74,7 +78,11 @@ public class ATM {
      * @return True if the deposit succeeds, false otherwise.
      */
     public boolean deposit(User user, BigDecimal money, int id) {
-        return userHandler.deposit(user, money, id);
+        try {
+            return userHandler.deposit(user, money, id);
+        } catch (MoneyTransferException e) {
+            System.out.println("Could not deposit money!");
+        } return false;
     }
 
     /**
