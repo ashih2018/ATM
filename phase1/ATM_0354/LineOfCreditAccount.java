@@ -12,4 +12,9 @@ public class LineOfCreditAccount extends DebtAccount {
     public LineOfCreditAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         super(id, balance, dateOfCreation, transactions);
     }
+
+    @Override
+    public String toString() {
+        return "Line of Credit Account: " + "\n" + super.toString();
+    }
 }

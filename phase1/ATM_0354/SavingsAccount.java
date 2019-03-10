@@ -25,4 +25,9 @@ public class SavingsAccount extends AssetAccount {
         this.transferMoneyIn(this.getBalance().multiply(this.interest));
     }
 
+    @Override
+    public String toString() {
+        return "Savings Account: " + "\n" + super.toString();
+    }
+
 }

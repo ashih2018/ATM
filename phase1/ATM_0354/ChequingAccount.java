@@ -16,4 +16,8 @@ public class ChequingAccount extends AssetAccount {
         this.setMinimumAllowedBalance(new BigDecimal(-100));
     }
 
+    @Override
+    public String toString() {
+        return "Chequing Account: " + "\n" + super.toString();
+    }
 }

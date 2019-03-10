@@ -20,4 +20,9 @@ public class CreditCardAccount extends DebtAccount {
         throw new UnsupportedOperationException(
                 "An ATM can't increase the debt on this class (" + this.getClass() + ")");
     }
+
+    @Override
+    public String toString() {
+        return "Credit Card Account: " + "\n" + super.toString();
+    }
 }
