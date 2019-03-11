@@ -1,6 +1,8 @@
 CSC 207 ATM Project
 Group 0354: Alex Shih, Sky Li, Stella Cai, Labib Zaman, Samarth Patel
 
+The UML Diagram is under design1.pdf and design2.pdf.
+
 Description:
 Our program models an ATM, Automated Teller Machine. Our ATM shares most of the functionality with an ATM you would
 find at a bank. Once an account is created by the bank manager, a user can view their account(s), transfer money between

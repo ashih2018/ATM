@@ -48,6 +48,7 @@ public class Main {
 
         generateUI(new Scanner(System.in)); //Set up for console input
     }
+
     private static final String TRANSACTIONSFILE = "phase1/ATM_0354/Files/transactions.txt";
     private static ArrayList<Transaction> parseTransactions() throws IOException{
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
