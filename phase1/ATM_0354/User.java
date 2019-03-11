@@ -171,7 +171,7 @@ public class User extends Person {
             System.out.println("Invalid account type for request!");
             return;
         }
-        String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat.toString() + "\n";
+        String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat.toString();
         File file = new File(filePath);
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
