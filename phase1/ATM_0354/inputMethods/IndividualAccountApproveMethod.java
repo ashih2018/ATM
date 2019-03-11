@@ -17,7 +17,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
             File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
-            while(!line.equals("")){
+            while(line != null && !line.equals("")){
                 String[] strings = line.split(",");
                 String username = strings[0];
                 String accountType = strings[1];
@@ -36,11 +36,13 @@ public class IndividualAccountApproveMethod implements InputMethod {
                     }
                 }
                 if (approved){
-                    ((User)Main.atm.getUser(username)).addAccount(accountType.toUpperCase().
-                            replaceAll("\\s+","") + "ACCOUNT");
+                    String accType = accountType.toUpperCase().replaceAll("\\s+","");
+                    System.out.println(accType);
+                    ((User)Main.atm.getUser(username)).addAccount(accType + "ACCOUNT");
                 }
                 line = reader.readLine();
             }
+            Main.overwriteRequests();
         }
         catch(IOException e){
             System.out.println(e.toString());

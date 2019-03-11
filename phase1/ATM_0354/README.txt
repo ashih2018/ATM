@@ -9,8 +9,8 @@ which includes credit card accounts and line of credit accounts, or an asset acc
 accounts and savings accounts.
 
 Notes:
-- If the user does not have an account, they must go to view accounts to request to create an account.
-- The first chequing account created is defaulted as the primary chequing account.
+- In order to create an account, a user must go to view accounts to request to create an account.
+- When a user is created, they are automatically set up with a chequing account.
 - All storable information in the ATM is stored under Files.
 
 Bank Manager Actions:

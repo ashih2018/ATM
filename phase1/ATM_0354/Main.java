@@ -1,5 +1,7 @@
 package ATM_0354;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -76,13 +78,14 @@ public class Main {
         }
         return transactions;
     }
-    private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ){
+    private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ) throws IOException {
         int maxAccountID = -1; //TODO: figure out what is happening with this stuff
         while(fileIn.hasNext()){
             String userType = fileIn.next();
             String username = fileIn.next();
             String password = fileIn.next();
             atm.createPerson(userType, username, password);
+
             if(userType.equals("User")){
                 int defaultID = fileIn.nextInt();
                 String[] accounts = fileIn.nextLine().split(", ");
@@ -117,6 +120,17 @@ public class Main {
         for(int i=0; i<50; i++) {
             System.out.println();
         }
+    }
+
+    public static void overwriteRequests(){
+        try {
+            PrintWriter writer = new PrintWriter(ACCOUNT_REQUESTS_FILE_NAME);
+            writer.print("");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("IOException with Account Creation Requests file");
+        }
+        System.out.println("asfssfasfsfaf");
     }
 
     //TODO: Check two methods below.
