@@ -26,8 +26,6 @@ public class UserOptionsMethod implements InputMethod {
                     return "PayBills";
                 case "logout":
                     return "Logout";
-                case "exit":
-                    return "Exit";
                 default:
                     System.out.println("Invalid option, please try again.");
                     System.out.print(">");

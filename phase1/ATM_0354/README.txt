@@ -12,6 +12,8 @@ Notes:
 - In order to create an account, a user must go to view accounts to request to create an account.
 - When a user is created, they are automatically set up with a chequing account.
 - All storable information in the ATM is stored under Files.
+- Only the Bank Manager can shut off the ATM, and thus end the program; The user can only choose to log off from
+their account.
 
 Bank Manager Actions:
 - create users: Creates a new user with a unique username and password
@@ -33,7 +35,6 @@ card account.
 as long as the user has created an account in the ATM.
 - pay bills: Allows the user to pay a bill to a non-user's account. These transactions cannot be undo'ed.
 - logout: Logs out of the current user's account.
-- exit: Exits the program and shuts down the ATM.
 
 Usage:
 1. To run the ATM, run Main.java.
