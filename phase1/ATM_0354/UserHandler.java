@@ -95,7 +95,8 @@ public class UserHandler {
                     if (account == null) {
                         return false;
                     }
-                    account.transferMoneyOut(money);
+                    Withdrawal withdrawal = new Withdrawal(-99, id, money);
+                    account.processWithdrawal(withdrawal);
                     return true;
                 }
             }
@@ -117,7 +118,10 @@ public class UserHandler {
                     if (account == null) {
                         return false;
                     }
-                    account.transferMoneyIn(money);
+
+                    //TODO: Handle all transactions this way!
+                    Deposit deposit = new Deposit(-99, id, money);
+                    account.processDeposit(deposit);
 
                     return true;
                 }
