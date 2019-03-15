@@ -31,10 +31,10 @@ public class AccountFactory {
     //for setup
     Account createAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         switch (accountType) {
-            case "CREDITCARDACCOUNT": return new CreditCardAccount(id, balance, dateOfCreation, transactions);
-            case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(id, balance, dateOfCreation, transactions);
-            case "CHEQUINGACCOUNT": return new ChequingAccount(id, balance, dateOfCreation, transactions);
-            case "SAVINGSACCOUNT": return new SavingsAccount(id, balance, dateOfCreation, transactions);
+            case "CreditCardAccount": return new CreditCardAccount(id, balance, dateOfCreation, transactions);
+            case "LineOfCreditAccount": return new LineOfCreditAccount(id, balance, dateOfCreation, transactions);
+            case "ChequingAccount": return new ChequingAccount(id, balance, dateOfCreation, transactions);
+            case "SavingsAccount": return new SavingsAccount(id, balance, dateOfCreation, transactions);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }

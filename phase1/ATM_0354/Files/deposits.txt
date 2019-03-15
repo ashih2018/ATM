@@ -1,2 +1,0 @@
-cheque, 50
-cash, 25

@@ -6,6 +6,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,7 +38,7 @@ public class Main {
             atm.setDateTime(LocalDateTime.parse(date));
             ArrayList<CashObject> cash = new ArrayList<>();
             while(atmFileIn.hasNextLine()){ //update cash amounts
-                String[] lineInput = atmFileIn.nextLine().split(", ");
+                String[] lineInput = atmFileIn.nextLine().split(",");
                 cash.add(new CashObject(BigDecimal.valueOf(Double.parseDouble(lineInput[0])), Integer.parseInt(lineInput[1])));
             }
             atm.cashHandler = new CashHandler(cash);
@@ -53,7 +54,7 @@ public class Main {
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         ArrayList<Transaction> transactions = new ArrayList<>();
         while(in.hasNextLine()){
-            String[] userTransactions = in.nextLine().split(", ");
+            String[] userTransactions = in.nextLine().split(",");
             String username = userTransactions[0];
             User curUser = (User)atm.getUser(username); //idk what this does
             for(int i=1; i<userTransactions.length; i+=5){
@@ -81,14 +82,14 @@ public class Main {
     private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ) throws IOException {
         int maxAccountID = -1; //TODO: figure out what is happening with this stuff
         while(fileIn.hasNext()){
-            String userType = fileIn.next();
-            String username = fileIn.next();
-            String password = fileIn.next();
+            String[] personInput = fileIn.nextLine().split(",");
+            String userType = personInput[0];
+            String username = personInput[1];
+            String password = personInput[2];
             atm.createPerson(userType, username, password);
-
             if(userType.equals("User")){
-                int defaultID = fileIn.nextInt();
-                String[] accounts = fileIn.nextLine().split(", ");
+                int defaultID = Integer.parseInt(personInput[3]);
+                String[] accounts = Arrays.copyOfRange(personInput, 3, personInput.length);
                 User newUser =((User)atm.getUser(username));
                 for(int i=0; i<accounts.length; i+=4){
                     int accountID = Integer.parseInt(accounts[i]);
@@ -114,7 +115,7 @@ public class Main {
             clearScreen(); //TODO: see if there's a more elegant way to do this
         }
         shutdownATM();
-        reset();
+//        reset();
     }
     private static void clearScreen(){
         for(int i=0; i<50; i++) {
@@ -130,7 +131,6 @@ public class Main {
         } catch (IOException e) {
             System.out.println("IOException with Account Creation Requests file");
         }
-        System.out.println("asfssfasfsfaf");
     }
 
     //TODO: Check two methods below.

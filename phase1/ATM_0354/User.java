@@ -190,7 +190,7 @@ public class User extends Person {
         For storage in people.txt
      */
     public String writeUser(){
-        StringBuilder str = new StringBuilder("User, " + getUsername() + "," + getPassword() +
+        StringBuilder str = new StringBuilder("User," + getUsername() + "," + getPassword() +
                 "," + getPrimaryAccountId());
         for (Account account : accounts){
             str.append(",");
