@@ -1,0 +1,2 @@
+BankManager,manager,password
+User,a,a,0,ChequingAccount,0.00,2019-03-11T15:26:34.509
