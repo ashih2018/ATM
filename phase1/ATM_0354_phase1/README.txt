@@ -13,7 +13,7 @@ accounts and savings accounts.
 Notes:
 - In order to create an account, a user must go to view accounts to request to create an account.
 - When a user is created, they are automatically set up with a chequing account.
-- All storable information in the ATM is stored under Files.
+- All storable information in the ATM is stored under ATM_0354_phase2.Files.
 - Only the Bank Manager can shut off the ATM, and thus end the program; The user can only choose to log off from
 their account.
 

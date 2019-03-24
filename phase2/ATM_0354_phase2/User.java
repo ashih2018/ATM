@@ -166,7 +166,7 @@ public class User extends Person {
     /* Writes to account_creation_requests.txt
      */
     public void requestAccount(String accountType){
-        String filePath = "phase2/ATM_0354_phase2/Files/account_creation_requests.txt";
+        String filePath = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/account_creation_requests.txt";
         if(!(new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(accountType))){
             System.out.println("Invalid account type for request!");
             return;

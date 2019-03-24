@@ -23,12 +23,12 @@ public class Main {
 
     private static ATM_0354_phase2.InputHandler ih;
     private static String state;
-    private static final String PEOPLE_FILE_NAME = "phase1/ATM_0354_phase1/Files/people.txt";
-    private static final String DEPOSIT_FILE_NAME = "phase1/ATM_0354_phase1/Files/deposits.txt";
-    private static final String ACCOUNT_REQUESTS_FILE_NAME = "phase1/ATM_0354_phase1/Files/account_creation_requests.txt";
-    private static final String ALERTS_FILE_NAME = "phase1/ATM_0354_phase1/Files/alerts.txt";
-    private static final String OUTGOING_FILE_NAME = "phase1/ATM_0354_phase1/Files/outgoing.txt";
-    private static final String ATM_FILE_NAME = "phase1/ATM_0354_phase1/Files/atm.txt";
+    private static final String PEOPLE_FILE_NAME = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/people.txt";
+    private static final String DEPOSIT_FILE_NAME = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/deposits.txt";
+    private static final String ACCOUNT_REQUESTS_FILE_NAME = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/account_creation_requests.txt";
+    private static final String ALERTS_FILE_NAME = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/alerts.txt";
+    private static final String OUTGOING_FILE_NAME = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/outgoing.txt";
+    private static final String ATM_FILE_NAME = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/atm.txt";
 
     public static void main(String[] args) throws IOException{
         atm = new ATM();
@@ -58,7 +58,7 @@ public class Main {
         generateUI(new Scanner(System.in)); //Set up for console input
     }
 
-    private static final String TRANSACTIONSFILE = "phase1/ATM_0354_phase1/Files/transactions.txt";
+    private static final String TRANSACTIONSFILE = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/transactions.txt";
     private static ArrayList<ATM_0354_phase2.Transaction> parseTransactions() throws IOException{
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         ArrayList<ATM_0354_phase2.Transaction> transactions = new ArrayList<>();
@@ -165,7 +165,7 @@ public class Main {
 
     public void outgoingHandlerThingy() {
         try {
-            String outgoingPath = "phase1/ATM_0354_phase1/Files/outgoing.txt";
+            String outgoingPath = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/outgoing.txt";
             BufferedWriter br = new BufferedWriter(new FileWriter(outgoingPath, true));
             //todo: find appropriate class and replace str with vars.
             br.write("bill_name" + "," + "user" + "," + 555.55 + "," + "some LocalDateTime" + "\n");

@@ -88,7 +88,7 @@ public abstract class Account {
         this.transferMoneyOut(amount);
         ATM_0354_phase2.Transaction newTransaction = new ATM_0354_phase2.Transaction(this.id, -99, amount, true);
         this.transactions.add(newTransaction);
-        try(FileWriter fw = new FileWriter("phase1/ATM_0354_phase1/Files/outgoing.txt", true);
+        try(FileWriter fw = new FileWriter("phase1/ATM_0354_phase1/ATM_0354_phase2.Files/outgoing.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw))
         {
@@ -174,7 +174,7 @@ public abstract class Account {
 
     public void writeTransactions(String username){
         try{
-            String filepath = "phase1/ATM_0354_phase1/Files/transactions.txt";
+            String filepath = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/transactions.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
             //TODO: Format???
             for (Transaction transaction : transactions){

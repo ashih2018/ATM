@@ -12,7 +12,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
 
-        String filePath = "phase1/ATM_0354_phase1/Files/account_creation_requests.txt";
+        String filePath = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/account_creation_requests.txt";
         try{
             File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
