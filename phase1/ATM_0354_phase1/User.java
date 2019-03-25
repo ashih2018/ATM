@@ -24,17 +24,17 @@ import java.util.HashSet;
 
 public class User extends Person {
 
-    private ArrayList<ATM_0354_phase2.Account> accounts;
-    ATM_0354_phase2.AccountFactory accountFactory;
+    private ArrayList<Account> accounts;
+    ATM_0354_phase1.AccountFactory accountFactory;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private ATM_0354_phase2.Account primaryAccount;
+    private Account primaryAccount;
 
     public User(String username, String password) {
         super(username, password);
         accounts = new ArrayList<>();
         accountFactory = new AccountFactory();
-        ATM_0354_phase2.Account account = accountFactory.createAccount(getUsername(), "CHEQUINGACCOUNT");
+        Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
         accounts.add(account);

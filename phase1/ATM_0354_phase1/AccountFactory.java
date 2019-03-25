@@ -1,12 +1,5 @@
 package ATM_0354_phase1;
 
-import ATM_0354_phase2.Account;
-import ATM_0354_phase2.ChequingAccount;
-import ATM_0354_phase2.CreditCardAccount;
-import ATM_0354_phase2.LineOfCreditAccount;
-import ATM_0354_phase2.SavingsAccount;
-import ATM_0354_phase2.Transaction;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,13 +17,13 @@ public class AccountFactory {
         this.nextAccountId = nextAccountId;
     }
 
-    public ATM_0354_phase2.Account createAccount(String accountType) throws IllegalArgumentException {
+    public Account createAccount(String accountType) throws IllegalArgumentException {
         this.nextAccountId++;
         switch (accountType) {
-            case "CREDITCARDACCOUNT": return new ATM_0354_phase2.CreditCardAccount(this.nextAccountId);
-            case "LINEOFCREDITACCOUNT": return new ATM_0354_phase2.LineOfCreditAccount(this.nextAccountId);
-            case "CHEQUINGACCOUNT": return new ATM_0354_phase2.ChequingAccount(this.nextAccountId);
-            case "SAVINGSACCOUNT": return new ATM_0354_phase2.SavingsAccount(this.nextAccountId);
+            case "CREDITCARDACCOUNT": return new CreditCardAccount(this.nextAccountId);
+            case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(this.nextAccountId);
+            case "CHEQUINGACCOUNT": return new ChequingAccount(this.nextAccountId);
+            case "SAVINGSACCOUNT": return new SavingsAccount(this.nextAccountId);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }

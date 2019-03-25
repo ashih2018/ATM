@@ -9,19 +9,20 @@ import java.util.Scanner;
 public class RefillCashMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
-        BigDecimal denomination;
+        int denomination;
         while (true) {
             while (true) {
                 try {
                     System.out.println("What denomination would you like to restock?");
                     System.out.println(">");
-                    denomination = in.nextBigDecimal();
-                    if (denomination == null) {
-                        System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
-                        System.out.println(">");
-                    } else {
-                        break;
-                    }
+                    denomination = in.nextInt();
+                    break;
+//                    if (denomination == -1) {
+//                        System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
+//                        System.out.println(">");
+//                    } else {
+//                        break;
+//                    }
                 } catch (ClassCastException e) {
                     System.out.println("Invalid denomination.");
                     System.out.println("What denomination would you like to restock?");
