@@ -13,23 +13,12 @@ public class Bill extends Transaction {
 
     @Override
     public void process(){
-        if(!getAccountFrom().canTransferOut()){
-            System.out.println("Account unable to transfer money out.");
-            return;
-        }
-
-        try{
-            getAccountFrom().transferMoneyOut(getValue());
-            getAccountFrom().addTransaction(this);
-        }
-        catch(MoneyTransferException e){
-            System.out.println(e.toString());
-        }
+        super.process();
         writeBill();
     }
 
     private void writeBill(){
-        try(FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/ATM_0354_phase2.Files/outgoing.txt", true);
+        try(FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw))
         {

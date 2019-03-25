@@ -3,7 +3,6 @@ package ATM_0354_phase2.inputMethods;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class RefillCashMethod implements InputMethod {

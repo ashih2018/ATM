@@ -88,16 +88,8 @@ public class UserHandler {
         for (Person person: this.users) {
             if (person == user) {
                 if (person instanceof User) {
-                    Account account;
-                    if (id < 0) {
-                        account = ((User)person).getPrimaryAccount();
-                    }
-                    else {
-                        account = ((User)person).getAccount(id);
-                    }
-                    if (account == null) {
-                        return false;
-                    }
+                    Account account = processAccountID(person, id);
+                    if(account == null) return false;
                     Withdrawal withdrawal = new Withdrawal(-99, id, money);
                     account.processWithdrawal(withdrawal);
                     return true;
@@ -106,15 +98,16 @@ public class UserHandler {
         }
         return false;
     }
-
+    private Account processAccountID(Person person, int id){
+        if (id < 0) return ((User)person).getPrimaryAccount();
+        else return ((User)person).getAccount(id);
+    }
     boolean deposit(User user, BigDecimal money, int id) throws MoneyTransferException {
         for (Person person: this.users)
             if (person == user) {
                 if (person instanceof User) {
-                    Account account = null;
-                    if (id < 0) account = ((User) person).getPrimaryAccount();
-                    else account = ((User) person).getAccount(id);
-                    if (account == null) return false;
+                    Account account = processAccountID(person, id);
+                    if(account == null) return false;
 
                     //TODO: Handle all transactions this way!
                     Deposit deposit = new Deposit(-99, id, money);

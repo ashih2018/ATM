@@ -1,6 +1,6 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.InputMethod;
+import ATM_0354_phase2.*;
 
 import java.util.Scanner;
 
@@ -14,11 +14,11 @@ public class UndoTransactionMethod implements InputMethod {
 
         if (username.equals(".")) return "BankManagerOptions";
 
-        ATM_0354_phase2.Person currUser = ATM_0354_phase2.Main.atm.getUser(username);
+        Person currUser = Main.atm.getUser(username);
         if (currUser != null) {
             System.out.println("These are the available accounts.");
             System.out.println("Type the account (id) to undo transaction for that account:");
-            System.out.println(((ATM_0354_phase2.User) currUser).getSummary());
+            System.out.println(((User) currUser).getSummary());
             int accountId;
             try {
                 accountId = Integer.parseInt(in.nextLine());
@@ -28,9 +28,9 @@ public class UndoTransactionMethod implements InputMethod {
             }
 
             try {
-                ((ATM_0354_phase2.BankDaddy) ATM_0354_phase2.Main.atm.getCurUser()).undoRecentTransaction((ATM_0354_phase2.User) currUser, accountId);
-            } catch (ATM_0354_phase2.MoneyTransferException e) {
-                System.out.println(e);
+                ((BankDaddy) Main.atm.getCurUser()).undoRecentTransaction((User) currUser, accountId);
+            } catch (MoneyTransferException e) {
+                e.printStackTrace();
                 return "BankManagerOptions";
             }
 

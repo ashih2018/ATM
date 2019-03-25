@@ -19,11 +19,6 @@ public class ATM {
         this.curUser = null;
     }
 
-    /**
-     * Set the ATM's date and time.
-     *
-     * @param datetime
-     */
     void setDateTime(LocalDateTime datetime) {
         this.datetime = datetime;
     }
@@ -122,18 +117,13 @@ public class ATM {
         return this.getMoney((User)this.curUser);
     }
 
-    /**
-     * Get the total money of a user.
-     * @param user
-     * @return the amount of money the user has.
-     */
     private BigDecimal getMoney(User user){
         return user.getAccountTotal();
     }
     /**
      * Request a new account for the current user
      * Precondition: this.curUser != null && this.curUser instanceof User
-     * @param accountType
+     * @param accountType The type of account to request.
      */
     public void requestCurAccount(String accountType){
         this.requestAccount((User)this.curUser, accountType);

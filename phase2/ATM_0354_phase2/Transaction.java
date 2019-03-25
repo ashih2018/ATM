@@ -2,10 +2,6 @@ package ATM_0354_phase2;
 
 import com.sun.istack.internal.Nullable;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -43,7 +39,20 @@ public abstract class Transaction {
         return value;
     }
 
-    public abstract void process();
+    public void process(){
+        if(!getAccountFrom().canTransferOut()){
+            System.out.println("Account unable to transfer money out.");
+            return;
+        }
+
+        try{
+            getAccountFrom().transferMoneyOut(getValue());
+            getAccountFrom().addTransaction(this);
+        }
+        catch(MoneyTransferException e){
+            System.out.println(e.toString());
+        }
+    }
 
     @Override
     public String toString() {

@@ -58,16 +58,16 @@ public class Main {
             User curUser = (User)atm.getUser(username); //idk what this does
             for(int i=1; i<userTransactions.length; i+=5){
                 String transactionType = userTransactions[i+1];
-                int accountid = Integer.parseInt(userTransactions[i]);
+                int accountId = Integer.parseInt(userTransactions[i]);
                 int receiverAccount = Integer.parseInt(userTransactions[i+2]);
                 BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(userTransactions[i+3]));
                 LocalDateTime date = LocalDateTime.parse(userTransactions[i+4]); //TODO: figure out why this is useful
                 if (transactionType.equals("Bill")) {
-                    Transaction newBill = new Bill(accountid, receiverAccount, amount);
+                    Transaction newBill = new Bill(accountId, receiverAccount, amount);
                     transactions.add(newBill);
                 }
                 else if(transactionType.equals("Transaction")){
-                    Transaction newTransaction = new Transaction(accountid, receiverAccount, amount, false);
+                    Transaction newTransaction = new Transaction(accountId, receiverAccount, amount, false);
                     transactions.add(newTransaction);
                 }
                 else{
@@ -142,7 +142,7 @@ public class Main {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
             String line;
 
-            List<String> all_deposits = new ArrayList<String>();
+            List<String> all_deposits = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 all_deposits.add(line);
             }
