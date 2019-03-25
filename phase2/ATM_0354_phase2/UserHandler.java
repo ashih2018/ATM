@@ -90,8 +90,8 @@ public class UserHandler {
                 if (person instanceof User) {
                     Account account = processAccountID(person, id);
                     if(account == null) return false;
-                    Withdrawal withdrawal = new Withdrawal(-99, id, money);
-                    account.processWithdrawal(withdrawal);
+                    Withdrawal withdrawal = new Withdrawal(account, money);
+                    withdrawal.process();
                     return true;
                 }
             }
@@ -110,8 +110,8 @@ public class UserHandler {
                     if(account == null) return false;
 
                     //TODO: Handle all transactions this way!
-                    Deposit deposit = new Deposit(-99, id, money);
-                    account.processDeposit(deposit);
+                    Deposit deposit = new Deposit(account, money);
+                    deposit.process();
 
                     return true;
                 }

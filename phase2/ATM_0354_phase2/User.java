@@ -20,7 +20,7 @@ public class User extends Person {
         super(username, password);
         accounts = new ArrayList<>();
         accountFactory = new AccountFactory();
-        Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
+        Account account = accountFactory.createAccount(getUsername(), "CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
         accounts.add(account);
@@ -41,11 +41,11 @@ public class User extends Person {
     }
 
     public void addAccount(String accountType) {
-        Account account = accountFactory.createAccount(accountType);
+        Account account = accountFactory.createAccount(getUsername(), accountType);
         this.accounts.add(account);
     }
     void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        Account account = accountFactory.createAccount(accountType, id, balance, dateOfCreation, transactions);
+        Account account = accountFactory.createAccount(getUsername(), accountType, id, balance, dateOfCreation, transactions);
         this.accounts.add(account);
     }
 
@@ -65,25 +65,6 @@ public class User extends Person {
 
     public int getPrimaryAccountId() {
         return primaryAccount.getId();
-    }
-
-    public void sendTransaction(String toUsername, int fromAccountId, BigDecimal value) throws MoneyTransferException {
-        // User should never send a transaction with a negative value
-        // Check if username exists
-        if (Main.atm.userHandler.usernameExists(toUsername)) {
-            //Check if the specified account exists
-            Account account = getAccount(fromAccountId);
-            if (account != null) {
-                User toUser = (User) Main.atm.userHandler.getUser(toUsername);
-                // TODO: use users default deposit id
-                Transfer transfer =
-                        new Transfer(fromAccountId, toUser.getPrimaryAccountId(), this.getUsername(), toUsername, value);
-                // Process transaction for sender first b/c most likely if a problem were to occur, it would be
-                // from subtracting money from an account, not depositing money into an account
-                account.sendTransfer(transfer);
-                toUser.getPrimaryAccount().receiveTransfer(transfer);
-            } else throw new MoneyTransferException(fromAccountId + " is not an existing account id that this user has");
-        } else throw new MoneyTransferException(toUsername + " is not an existing username");
     }
 
     public String getSummary() {
