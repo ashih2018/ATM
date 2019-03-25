@@ -35,7 +35,7 @@ public class UserHandler {
     }
 
     public static boolean verifyPassword(Person user, String password){
-        return user.getHash().equals(PasswordHash.hashPassword(password, PasswordHash.getSalt()));
+        return user.getHash().equals(PasswordHash.hashPassword(password, user.getSalt()));
     }
 
     /**
