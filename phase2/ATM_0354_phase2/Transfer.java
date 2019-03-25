@@ -1,27 +1,35 @@
 package ATM_0354_phase2;
 
+import com.sun.istack.internal.NotNull;
+
 import java.math.BigDecimal;
 
 public class Transfer extends Transaction {
 
-    private String usernameFrom, usernameTo;
-
-    public Transfer(int accountIdFrom, int accountIdTo, String usernameFrom, String usernameTo, BigDecimal value) {
-        super(accountIdFrom, accountIdTo, value, false);
-        this.usernameFrom = usernameFrom;
-        this.usernameTo = usernameTo;
+    public Transfer(@NotNull Account accountFrom,@NotNull Account accountTo, BigDecimal value) {
+        super(accountFrom, accountTo, value);
     }
 
-    public String getUsernameFrom() {
-        return usernameFrom;
-    }
+    @Override
+    public void process(){
+        if(!getAccountFrom().canTransferOut() || !getAccountTo().canTransferIn()){
+            System.out.println("Accounts unable to transfer.");
+            return;
+        }
 
-    public String getUsernameTo() {
-        return usernameTo;
+        try{
+            getAccountFrom().transferMoneyOut(getValue());
+            getAccountTo().transferMoneyIn(getValue());
+            getAccountFrom().addTransaction(this);
+            getAccountTo().addTransaction(this);
+        }
+        catch(MoneyTransferException e){
+            System.out.println(e.toString());
+        }
     }
 
     @Override
     public String toString() {
-        return usernameFrom + " sent $" + getValue() + " to " + usernameTo;
+        return super.getAccountFrom() + " sent $" + getValue() + " to " + super.getAccountTo();
     }
 }

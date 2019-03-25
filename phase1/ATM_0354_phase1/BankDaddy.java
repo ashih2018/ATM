@@ -3,7 +3,6 @@ package ATM_0354_phase1;
 import ATM_0354_phase2.Account;
 import ATM_0354_phase2.AssetAccount;
 import ATM_0354_phase2.BankEmployee;
-import ATM_0354_phase2.Cheque;
 import ATM_0354_phase2.DebtAccount;
 import ATM_0354_phase2.Deposit;
 import ATM_0354_phase2.Main;
@@ -34,11 +33,11 @@ public class BankDaddy extends BankEmployee {
                 ATM_0354_phase2.User otherUser;
                 if (((ATM_0354_phase2.Transfer) transaction).getUsernameFrom().equals(user.getUsername())) {
                     otherUser = (ATM_0354_phase2.User) ATM_0354_phase2.Main.atm.userHandler.getUser(((ATM_0354_phase2.Transfer) transaction).getUsernameTo());
-                    ATM_0354_phase2.Account otherAccount = otherUser.getAccount(transaction.getAccountIdTo());
+                    ATM_0354_phase2.Account otherAccount = otherUser.getAccount(transaction.getAccountTo());
                     transferBackMoney(userAccount, otherAccount, transaction);
                 } else {
                     otherUser = (User) Main.atm.userHandler.getUser(((Transfer) transaction).getUsernameFrom());
-                    ATM_0354_phase2.Account otherAccount = otherUser.getAccount(transaction.getAccountIdFrom());
+                    ATM_0354_phase2.Account otherAccount = otherUser.getAccount(transaction.getAccountFrom());
                     transferBackMoney(otherAccount, userAccount, transaction);
                 }
 

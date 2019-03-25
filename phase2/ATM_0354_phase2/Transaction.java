@@ -1,48 +1,53 @@
 package ATM_0354_phase2;
 
+import com.sun.istack.internal.Nullable;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Transaction {
+public abstract class Transaction {
+
     private LocalDateTime date;
-
-    private int accountIdFrom, accountIdTo;
+    private Account accountFrom, accountTo;
     private BigDecimal value;
-    private boolean isBill;
 
-    public Transaction(int accountIdFrom, int accountIdTo, BigDecimal value, boolean isBill) {
+    /**
+     * accountFrom can be null iff instanceof Deposit
+     * accountTo can be null iff instanceof Bill or Withdrawal
+     */
+    public Transaction(@Nullable Account accountFrom, @Nullable Account accountTo, BigDecimal value) {
         this.date = LocalDateTime.now();
-        this.accountIdFrom = accountIdFrom;
-        this.accountIdTo = accountIdTo;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.value = value;
-        this.isBill = isBill;
     }
 
-    public boolean getIsBill() {
-        return isBill;
-    }
 
     public LocalDateTime getDate() {
         return date;
     }
 
-    public int getAccountIdFrom() {
-        return accountIdFrom;
+    public Account getAccountFrom() {
+        return accountFrom;
     }
 
-    public int getAccountIdTo() {
-        return accountIdTo;
+    public Account getAccountTo() {
+        return accountTo;
     }
 
     public BigDecimal getValue() {
         return value;
     }
 
+    public abstract void process();
+
     @Override
     public String toString() {
-        if (isBill) {
-            return "Account ID Number " + this.accountIdFrom + " paid a $" + value + " bill.";
-        }
-        return "Account ID Number " + this.accountIdFrom + " sent $" + value + " to " + this.accountIdTo;
+        return this.getClass().getSimpleName() + " : Account ID Number " + this.accountFrom + " sent $" + value +
+                " to " + this.accountTo;
     }
 }

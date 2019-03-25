@@ -2,7 +2,6 @@ package ATM_0354_phase1;
 
 import ATM_0354_phase2.Account;
 import ATM_0354_phase2.Bill;
-import ATM_0354_phase2.Cheque;
 import ATM_0354_phase2.Deposit;
 import ATM_0354_phase2.MoneyTransferException;
 import ATM_0354_phase2.Transaction;
