@@ -57,7 +57,7 @@ public class ATM {
      * @param money The amount of money to withdraw.
      * @param id    The id of the account to withdraw from.
      */
-    public boolean withdraw(User user, BigDecimal money, int id) {
+    public boolean withdraw(User user, int money, int id) {
         try {
             boolean success = userHandler.withdraw(user, money, id);
             if (success) {
@@ -171,7 +171,7 @@ public class ATM {
         return userHandler.getUser(username);
     }
 
-    public void addCash(BigDecimal billValue, int count){
+    public void addCash(int billValue, int count){
         cashHandler.addCash(billValue, count);
     }
 }
