@@ -5,10 +5,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 
 public class User extends Person {
@@ -29,10 +26,6 @@ public class User extends Person {
         accounts.add(account);
     }
 
-    public void setPrimaryAccount(Account primaryAccount) {
-        this.primaryAccount = primaryAccount;
-    }
-
     public String getCreationDate() {
         return dateFormat.format(creationDate);
     }
@@ -51,7 +44,7 @@ public class User extends Person {
         Account account = accountFactory.createAccount(accountType);
         this.accounts.add(account);
     }
-    void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<ATM_0354_phase2.Transaction> transactions){
+    void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         Account account = accountFactory.createAccount(accountType, id, balance, dateOfCreation, transactions);
         this.accounts.add(account);
     }
@@ -70,7 +63,7 @@ public class User extends Person {
         return primaryAccount;
     }
 
-    public int getPrimaryAccountId () {
+    public int getPrimaryAccountId() {
         return primaryAccount.getId();
     }
 
@@ -94,15 +87,27 @@ public class User extends Person {
     }
 
     public String getSummary() {
-        // Use a StringBuilder instead of String when we are mutating a string is better practice
         StringBuilder summary = new StringBuilder();
         for (Account account: this.accounts) {
+            if(account.getId() == this.getPrimaryAccountId()){
+                summary.append("(Primary Account)\n");
+            }
             summary.append(account.toString());
             summary.append("\n");
         }
         return summary.toString();
     }
 
+    public void removeAccount(int id){
+        Iterator<Account> i = this.accounts.iterator();
+        while (i.hasNext()) {
+            Account acc = i.next();
+            if(acc.getId()== id) {
+                i.remove();
+                break;
+            }
+        }
+    }
     public Transaction getLastTransaction(int accountId) {
         Account account = this.getAccount(accountId);
         if (account == null) {
@@ -166,7 +171,7 @@ public class User extends Person {
     /* Writes to account_creation_requests.txt
      */
     public void requestAccount(String accountType){
-        String filePath = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/account_creation_requests.txt";
+        String filePath = "phase2/ATM_0354_phase2/Files/account_creation_requests.txt";
         if(!(new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(accountType))){
             System.out.println("Invalid account type for request!");
             return;

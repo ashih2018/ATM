@@ -13,12 +13,12 @@ public class Main {
 
     private static InputHandler ih;
     private static String state;
-    private static final String PEOPLE_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/people.txt";
-    private static final String DEPOSIT_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/deposits.txt";
-    private static final String ACCOUNT_REQUESTS_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/account_creation_requests.txt";
-    private static final String ALERTS_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/alerts.txt";
-    private static final String OUTGOING_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/outgoing.txt";
-    private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/atm.txt";
+    private static final String PEOPLE_FILE_NAME = "phase2/ATM_0354_phase2/Files/people.txt";
+    private static final String DEPOSIT_FILE_NAME = "phase2/ATM_0354_phase2/Files/deposits.txt";
+    private static final String ACCOUNT_REQUESTS_FILE_NAME = "phase2/ATM_0354_phase2/Files/account_creation_requests.txt";
+    private static final String ALERTS_FILE_NAME = "phase2/ATM_0354_phase2/Files/alerts.txt";
+    private static final String OUTGOING_FILE_NAME = "phase2/ATM_0354_phase2/Files/outgoing.txt";
+    private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
 
     public static void main(String[] args) throws IOException{
         atm = new ATM();
@@ -48,7 +48,7 @@ public class Main {
         generateUI(new Scanner(System.in)); //Set up for console input
     }
 
-    private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/transactions.txt";
+    private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
     private static ArrayList<Transaction> parseTransactions() throws IOException{
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         ArrayList<Transaction> transactions = new ArrayList<>();
@@ -78,7 +78,7 @@ public class Main {
         }
         return transactions;
     }
-    private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions ) throws IOException {
+    private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions) {
         int maxAccountID = -1; //TODO: figure out what is happening with this stuff
         while(fileIn.hasNext()){
             String[] personInput = fileIn.nextLine().split(",");
@@ -88,22 +88,24 @@ public class Main {
             atm.createPerson(userType, username, password);
             if(userType.equals("User")){
                 int defaultID = Integer.parseInt(personInput[3]);
-                String[] accounts = Arrays.copyOfRange(personInput, 3, personInput.length);
+                String[] accounts = Arrays.copyOfRange(personInput, 4, personInput.length);
                 User newUser =((User)atm.getUser(username));
-                for(int i=0; i<accounts.length; i+=4){
-                    int accountID = Integer.parseInt(accounts[i]);
-                    String accountType = accounts[i+1];
-                    BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i+2]));
-                    LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i+3]);
+                newUser.removeAccount(0); //Removes the "primary account"
+                System.out.println(Arrays.toString(accounts));
+                int accountID = 0;
+                for(int i=0; i<accounts.length; i+=3){
+                    String accountType = accounts[i];
+                    BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i+1]));
+                    System.out.println(balance);
+                    LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i+2]);
 
                     ArrayList<Transaction> transactions1 = new ArrayList<>();
                     for(Transaction t: transactions)
-                        if(t.getAccountIdFrom() == accountID ||t.getAccountIdTo()==accountID)
+                        if(t.getAccountIdFrom() == accountID ||t.getAccountIdTo() == accountID)
                             transactions1.add(t);
-                    newUser.addAccount(accountType, accountID, balance, dateOfCreation, transactions1);
+                    newUser.addAccount(accountType, accountID++, balance, dateOfCreation, transactions1);
                 }
-                newUser.setPrimary(defaultID); //TODO: make sure this works
-                newUser.setPrimaryAccount(newUser.getAccount(defaultID));
+                newUser.setPrimary(defaultID);
                 newUser.accountFactory.setNextAccountId(maxAccountID);
             }
         }
@@ -155,7 +157,7 @@ public class Main {
 
     public void outgoingHandlerThingy() {
         try {
-            String outgoingPath = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/outgoing.txt";
+            String outgoingPath = "phase2/ATM_0354_phase2/Files/outgoing.txt";
             BufferedWriter br = new BufferedWriter(new FileWriter(outgoingPath, true));
             //todo: find appropriate class and replace str with vars.
             br.write("bill_name" + "," + "user" + "," + 555.55 + "," + "some LocalDateTime" + "\n");

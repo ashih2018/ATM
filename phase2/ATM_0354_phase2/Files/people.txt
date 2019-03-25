@@ -1,2 +1,2 @@
 BankManager,manager,password
-User,a,a,0,ChequingAccount,0.00,2019-03-11T15:26:34.509
+User,a,a,0,ChequingAccount,1000.00,2019-03-24T21:29:46.789,ChequingAccount,70.00,2019-03-11T15:26:34.509
