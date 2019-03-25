@@ -210,7 +210,7 @@ public class User extends Person {
 
     public void writeTransactions() {
         for (Account account : accounts){
-            account.writeTransactions(this.getUsername());
+            account.writeTransactions();
         }
     }
 }

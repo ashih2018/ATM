@@ -19,6 +19,7 @@ public class Main {
     private static final String ALERTS_FILE_NAME = "phase2/ATM_0354_phase2/Files/alerts.txt";
     private static final String OUTGOING_FILE_NAME = "phase2/ATM_0354_phase2/Files/outgoing.txt";
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
+    private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
 
     public static void main(String[] args) throws IOException{
         atm = new ATM();
@@ -48,7 +49,6 @@ public class Main {
         generateUI(new Scanner(System.in)); //Set up for console input
     }
 
-    private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
     private static ArrayList<Transaction> parseTransactions() throws IOException{
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         ArrayList<Transaction> transactions = new ArrayList<>();

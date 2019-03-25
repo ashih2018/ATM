@@ -8,11 +8,11 @@ public abstract class AssetAccount extends Account {
 
     private BigDecimal minimumAllowedBalance;
 
-    public AssetAccount(int id) {
-        super(id);
+    public AssetAccount(String username, int id) {
+        super(username, id);
     }
-    public AssetAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        super(id, balance, dateOfCreation, transactions);
+    public AssetAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(username, id, balance, dateOfCreation, transactions);
     }
 
     @Override

@@ -54,6 +54,8 @@ public abstract class Transaction {
         }
     }
 
+    public abstract String serialize();
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " : Account ID Number " + this.accountFrom + " sent $" + value +

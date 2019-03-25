@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class CreditCardAccount extends DebtAccount {
 
-    public CreditCardAccount(int id) {
-        super(id);
+    public CreditCardAccount(String username, int id) {
+        super(username, id);
         this.setTransferOut(false);
     }
-    public CreditCardAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        super(id, balance, dateOfCreation, transactions);
+    public CreditCardAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(username, id, balance, dateOfCreation, transactions);
         this.setTransferOut(false);
     }
     @Override
