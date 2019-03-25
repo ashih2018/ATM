@@ -127,7 +127,7 @@ public abstract class Account {
         return "Account ID: " + this.id + "\nAccount Balance: " + this.balance + "\n";
     }
 
-    public void writeTransactions(String username){
+    public void writeTransactions(){
         try{
             String filepath = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/transactions.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
