@@ -34,6 +34,10 @@ public class UserHandler {
         return null;
     }
 
+    public static boolean verifyPassword(Person user, String password){
+        return user.getHash().equals(PasswordHash.hashPassword(password, PasswordHash.getSalt()));
+    }
+
     /**
      * Create a new User.
      * Precondition: The username of the User is unique.
