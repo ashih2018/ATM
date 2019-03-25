@@ -69,37 +69,16 @@ public class ATM {
         } return false;
     }
 
-    private void withdrawCashFromATM(BigDecimal money) {
-        double cash = money.doubleValue();
-        int fifties = 0;
-        int twenties = 0;
-        int tens = 0;
-        int fives = 0;
-        while (cash >= 5) {
-            if (cash >= 50) {
-                fifties += 1;
-                cash -= 50;
-            }
-            else if (cash >= 20) {
-                twenties += 1;
-                cash -= 20;
-            }
-            else if (cash >= 10) {
-                tens += 1;
-                cash -= 10;
-            }
-            else if (cash >= 5) {
-                fives += 1;
-                cash -= 5;
-            }
+    private void withdrawCashFromATM(int money) {
+        if(money % 5 != 0)
+            System.out.println("invalid amount to withdraw");
+        int[] cashValues = {50, 20, 10, 5};
+        for(int cashValue: cashValues){
+            int numBills = money / cashValue;
+            money -= cashValue*numBills;
+            cashHandler.withdrawCash(cashValue, numBills);
         }
-        cashHandler.withdrawCash(new BigDecimal(50), fifties);
-        cashHandler.withdrawCash(new BigDecimal(20), twenties);
-        cashHandler.withdrawCash(new BigDecimal(10), tens);
-        cashHandler.withdrawCash(new BigDecimal(5), fives);
     }
-
-
 
     /**
      * Deposit money into a user's account.
