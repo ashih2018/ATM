@@ -34,7 +34,7 @@ public class User extends Person {
         super(username, password);
         accounts = new ArrayList<>();
         accountFactory = new AccountFactory();
-        ATM_0354_phase2.Account account = accountFactory.createAccount("CHEQUINGACCOUNT");
+        ATM_0354_phase2.Account account = accountFactory.createAccount(getUsername(), "CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
         accounts.add(account);
@@ -59,11 +59,11 @@ public class User extends Person {
     }
 
     public void addAccount(String accountType) {
-        ATM_0354_phase2.Account account = accountFactory.createAccount(accountType);
+        ATM_0354_phase2.Account account = accountFactory.createAccount(getUsername(), accountType);
         this.accounts.add(account);
     }
     void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<ATM_0354_phase2.Transaction> transactions){
-        ATM_0354_phase2.Account account = accountFactory.createAccount(accountType, id, balance, dateOfCreation, transactions);
+        ATM_0354_phase2.Account account = accountFactory.createAccount(getUsername(), accountType, id, balance, dateOfCreation, transactions);
         this.accounts.add(account);
     }
 

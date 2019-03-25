@@ -40,6 +40,14 @@ public class Bill extends Transaction {
     }
 
     @Override
+    public String serialize() {
+        return this.getClass().getSimpleName()
+                + "," + getAccountFrom().getUsername() + "," + getAccountFrom().getId()
+                + "," + getValue()
+                + "," + getDate();
+    }
+
+    @Override
     public String toString() {
         return "Account ID Number " + getAccountFrom() + " paid a $" + getValue() + " bill.";
     }

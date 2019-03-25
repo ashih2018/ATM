@@ -8,13 +8,13 @@ public class SavingsAccount extends AssetAccount {
 
     private BigDecimal interest;
 
-    public SavingsAccount(int id) {
-        super(id);
+    public SavingsAccount(String username, int id) {
+        super(username, id);
         this.setMinimumAllowedBalance(new BigDecimal(0));
         this.interest = new BigDecimal(0.001);
     }
-    public SavingsAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        super(id, balance, dateOfCreation, transactions);
+    public SavingsAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(username, id, balance, dateOfCreation, transactions);
         this.setMinimumAllowedBalance(new BigDecimal(0));
         this.interest = new BigDecimal(0.001);
     }

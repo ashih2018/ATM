@@ -17,24 +17,24 @@ public class AccountFactory {
         this.nextAccountId = nextAccountId;
     }
 
-    public Account createAccount(String accountType) throws IllegalArgumentException {
+    public Account createAccount(String username, String accountType) throws IllegalArgumentException {
         this.nextAccountId++;
         switch (accountType) {
-            case "CREDITCARDACCOUNT": return new CreditCardAccount(this.nextAccountId);
-            case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(this.nextAccountId);
-            case "CHEQUINGACCOUNT": return new ChequingAccount(this.nextAccountId);
-            case "SAVINGSACCOUNT": return new SavingsAccount(this.nextAccountId);
+            case "CREDITCARDACCOUNT": return new CreditCardAccount(username, this.nextAccountId);
+            case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(username, this.nextAccountId);
+            case "CHEQUINGACCOUNT": return new ChequingAccount(username, this.nextAccountId);
+            case "SAVINGSACCOUNT": return new SavingsAccount(username, this.nextAccountId);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }
 
     //for setup
-    Account createAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+    public Account createAccount(String username, String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         switch (accountType) {
-            case "CreditCardAccount": return new CreditCardAccount(id, balance, dateOfCreation, transactions);
-            case "LineOfCreditAccount": return new LineOfCreditAccount(id, balance, dateOfCreation, transactions);
-            case "ChequingAccount": return new ChequingAccount(id, balance, dateOfCreation, transactions);
-            case "SavingsAccount": return new SavingsAccount(id, balance, dateOfCreation, transactions);
+            case "CreditCardAccount": return new CreditCardAccount(username, id, balance, dateOfCreation, transactions);
+            case "LineOfCreditAccount": return new LineOfCreditAccount(username, id, balance, dateOfCreation, transactions);
+            case "ChequingAccount": return new ChequingAccount(username, id, balance, dateOfCreation, transactions);
+            case "SavingsAccount": return new SavingsAccount(username, id, balance, dateOfCreation, transactions);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }

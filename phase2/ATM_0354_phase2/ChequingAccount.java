@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class ChequingAccount extends AssetAccount {
 
-    public ChequingAccount(int id) {
-        super(id);
+    public ChequingAccount(String username, int id) {
+        super(username, id);
         this.setMinimumAllowedBalance(new BigDecimal(-100));
     }
 
-    public ChequingAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        super(id, balance, dateOfCreation, transactions);
+    public ChequingAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(username, id, balance, dateOfCreation, transactions);
         this.setMinimumAllowedBalance(new BigDecimal(-100));
     }
 

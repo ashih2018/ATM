@@ -23,5 +23,13 @@ public class Withdrawal extends Transaction {
         }
     }
 
+    @Override
+    public String serialize() {
+        return this.getClass().getSimpleName()
+                + "," + getAccountFrom().getUsername() + "," + getAccountFrom().getId()
+                + "," + getValue()
+                + "," + getDate();
+    }
+
 
 }

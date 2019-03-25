@@ -24,4 +24,12 @@ public class Deposit extends Transaction {
             System.out.println(e.toString());
         }
     }
+
+    @Override
+    public String serialize() {
+        return this.getClass().getSimpleName()
+                + "," + getAccountTo().getUsername() + "," + getAccountTo().getId()
+                + "," + getValue()
+                + "," + getDate();
+    }
 }

@@ -11,10 +11,12 @@ public abstract class Account {
     private BigDecimal balance;
     private LocalDateTime dateOfCreation;
     private boolean transferIn, transferOut;
+    private String username;
 
     // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
 
-    public Account(int id) {
+    public Account(String username, int id) {
+        this.username = username;
         this.transactions = new ArrayList<>();
         this.balance = new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP);
         this.id = id;
@@ -22,7 +24,8 @@ public abstract class Account {
         this.transferIn = true;
         this.transferOut = true;
     }
-    public Account(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+    public Account(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        this.username = username;
         this.transactions = transactions;
         this.balance = balance;
         this.id = id;
@@ -115,6 +118,10 @@ public abstract class Account {
         this.id = id;
     }
 
+    public String getUsername(){
+        return username;
+    }
+
     @Override
     public String toString() {
         return "Account ID: " + this.id + "\nAccount Balance: " + this.balance + "\n";
@@ -126,9 +133,7 @@ public abstract class Account {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
             //TODO: Format???
             for (Transaction transaction : transactions){
-                writer.write(username + "," + transaction.getAccountFrom()
-                        + "," + transaction + "," + transaction.getAccountTo()
-                        + "," + transaction.getValue() + "," + transaction.getDate());
+                writer.write(username + "," + transaction.serialize());
                 writer.newLine();
             }
             writer.close();

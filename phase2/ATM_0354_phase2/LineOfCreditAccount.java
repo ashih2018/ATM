@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class LineOfCreditAccount extends DebtAccount {
 
-    public LineOfCreditAccount(int id) {
-        super(id);
+    public LineOfCreditAccount(String username, int id) {
+        super(username, id);
     }
-    public LineOfCreditAccount(int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        super(id, balance, dateOfCreation, transactions);
+    public LineOfCreditAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(username, id, balance, dateOfCreation, transactions);
     }
 
     @Override
