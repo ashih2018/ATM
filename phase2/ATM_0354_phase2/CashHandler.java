@@ -3,7 +3,6 @@ package ATM_0354_phase2;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class CashHandler{
@@ -23,9 +22,9 @@ public class CashHandler{
         this.hasEnoughBills = false;
     }
 
-    public void addCash(BigDecimal billValue, int count){
+    public void addCash(int billValue, int count){
         for(CashObject cashObject : cash){
-            if (cashObject.getCashValue().equals(billValue)){
+            if (cashObject.getCashValue() == billValue){
                 cashObject.setCount(cashObject.getCount() + count);
                 updateRestockStatus();
                 return;
@@ -36,9 +35,9 @@ public class CashHandler{
         updateRestockStatus();
     }
 
-    public void withdrawCash(BigDecimal billValue, int count){
+    public void withdrawCash(int billValue, int count){
         for(CashObject cashObject : cash){
-            if (cashObject.getCashValue().equals(billValue)){
+            if (cashObject.getCashValue() == billValue){
                 if (cashObject.getCount() < count){
                     System.out.println("Not enough bills to withdraw " + count + " bills.");
                     return;
