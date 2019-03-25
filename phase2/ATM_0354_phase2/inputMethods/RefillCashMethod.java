@@ -9,14 +9,14 @@ import java.util.Scanner;
 public class RefillCashMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
-        BigDecimal denomination;
+        int denomination = 0;
         while (true) {
             while (true) {
                 try {
                     System.out.println("What denomination would you like to restock?");
                     System.out.println(">");
-                    denomination = in.nextBigDecimal();
-                    if (denomination == null) {
+                    denomination = in.nextInt();
+                    if (denomination <= 0) {
                         System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
                         System.out.println(">");
                     } else {
