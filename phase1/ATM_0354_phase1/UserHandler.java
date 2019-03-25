@@ -102,8 +102,8 @@ public class UserHandler {
                     if (account == null) {
                         return false;
                     }
-                    ATM_0354_phase2.Withdrawal withdrawal = new Withdrawal(-99, id, money);
-                    account.processWithdrawal(withdrawal);
+                    ATM_0354_phase2.Withdrawal withdrawal = new Withdrawal(account, money);
+                    withdrawal.process();
                     return true;
                 }
             }
@@ -127,8 +127,8 @@ public class UserHandler {
                     }
 
                     //TODO: Handle all transactions this way!
-                    ATM_0354_phase2.Deposit deposit = new Deposit(-99, id, money);
-                    account.processDeposit(deposit);
+                    ATM_0354_phase2.Deposit deposit = new Deposit(account, money);
+                    deposit.process();
 
                     return true;
                 }

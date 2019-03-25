@@ -22,54 +22,6 @@ public abstract class DebtAccount extends Account {
     }
 
     @Override
-    public void sendTransfer(Transfer transfer) throws MoneyTransferException {
-        if (canTransferOut()) {
-            increaseDebt(transfer.getValue());
-            this.addTransaction(transfer);
-        } else throw new MoneyTransferException("Can't transfer money out of this account!");
-    }
-
-    @Override
-    public void receiveTransfer(Transfer transfer) throws MoneyTransferException {
-        if (canTransferIn()) {
-            decreaseDebt(transfer.getValue());
-            this.addTransaction(transfer);
-        }
-    }
-
-    @Override
-    public void processDeposit(Deposit deposit) throws MoneyTransferException {
-        if (canTransferIn()) {
-            decreaseDebt(deposit.getValue());
-            this.addTransaction(deposit);
-        }
-    }
-
-    @Override
-    public void processWithdrawal(Withdrawal withdrawal) throws MoneyTransferException {
-        if (canTransferOut()) {
-            increaseDebt(withdrawal.getValue());
-            this.addTransaction(withdrawal);
-        } else throw new MoneyTransferException("Can't transfer money out of this account!");
-    }
-
-    @Override
-    public void processCheque(Cheque cheque) throws MoneyTransferException {
-        if (canTransferIn()) {
-            decreaseDebt(cheque.getValue());
-            this.addTransaction(cheque);
-        }
-    }
-
-    @Override
-    public void processBill(Bill bill) throws MoneyTransferException {
-        if (canTransferOut()) {
-            increaseDebt(bill.getValue());
-            this.addTransaction(bill);
-        } else throw new MoneyTransferException("Can't transfer money out of this account!");
-    }
-
-    @Override
     public String toString() {
         return "Account ID: " + this.getId() + "\nAmount Owed: " + this.getBalance();
     }

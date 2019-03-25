@@ -45,16 +45,6 @@ public abstract class Account {
         } else throw new MoneyTransferException("Can't transfer money out of this account");
     }
 
-    public void sendTransfer(Transfer transfer) throws MoneyTransferException {
-        transferMoneyOut(transfer.getValue());
-        addTransaction(transfer);
-    }
-
-    public void receiveTransfer(Transfer transfer) throws MoneyTransferException {
-        transferMoneyIn(transfer.getValue());
-        addTransaction(transfer);
-    }
-
     public void forceTransferIn(BigDecimal value) {
         this.balance = this.balance.add(value.setScale(2, BigDecimal.ROUND_HALF_UP));
     }
@@ -74,40 +64,6 @@ public abstract class Account {
             System.out.println("Couldn't get last transaction!");
             return null;
         }
-    }
-
-    public void payBill(BigDecimal amount) throws MoneyTransferException {
-        this.transferMoneyOut(amount);
-        Transaction newTransaction = new Transaction(this.id, -99, amount, true);
-        this.transactions.add(newTransaction);
-        try(FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/ATM_0354_phase2.Files/outgoing.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(bw))
-        {
-            pw.println(newTransaction.toString());
-        } catch (IOException e) {
-            System.out.println("IOException writing to outgoing.txt");
-        }
-    }
-
-    public void processDeposit(Deposit deposit) throws MoneyTransferException {
-        this.transferMoneyIn(deposit.getValue());
-        addTransaction(deposit);
-    }
-
-    public void processWithdrawal(Withdrawal withdrawal) throws MoneyTransferException {
-        this.transferMoneyOut(withdrawal.getValue());
-        addTransaction(withdrawal);
-    }
-
-    public void processCheque(Cheque cheque) throws MoneyTransferException {
-        this.transferMoneyIn(cheque.getValue());
-        addTransaction(cheque);
-    }
-
-    public void processBill(Bill bill) throws MoneyTransferException {
-        this.transferMoneyOut(bill.getValue());
-        addTransaction(bill);
     }
 
     public boolean doesTransactionExist(Transaction transaction) {
@@ -170,8 +126,8 @@ public abstract class Account {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
             //TODO: Format???
             for (Transaction transaction : transactions){
-                writer.write(username + "," + transaction.getAccountIdFrom()
-                        + "," + transaction + "," + transaction.getAccountIdTo()
+                writer.write(username + "," + transaction.getAccountFrom()
+                        + "," + transaction + "," + transaction.getAccountTo()
                         + "," + transaction.getValue() + "," + transaction.getDate());
                 writer.newLine();
             }

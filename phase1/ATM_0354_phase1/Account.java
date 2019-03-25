@@ -1,7 +1,6 @@
 package ATM_0354_phase1;
 
 import ATM_0354_phase2.Bill;
-import ATM_0354_phase2.Cheque;
 import ATM_0354_phase2.Deposit;
 import ATM_0354_phase2.MoneyTransferException;
 import ATM_0354_phase2.Transaction;
@@ -178,8 +177,8 @@ public abstract class Account {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
             //TODO: Format???
             for (Transaction transaction : transactions){
-                writer.write(username + "," + transaction.getAccountIdFrom()
-                        + "," + transaction + "," + transaction.getAccountIdTo()
+                writer.write(username + "," + transaction.getAccountFrom()
+                        + "," + transaction + "," + transaction.getAccountTo()
                         + "," + transaction.getValue() + "," + transaction.getDate());
                 writer.newLine();
             }

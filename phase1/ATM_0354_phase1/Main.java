@@ -108,7 +108,7 @@ public class Main {
 
                     ArrayList<ATM_0354_phase2.Transaction> transactions1 = new ArrayList<>();
                     for(Transaction t: transactions)
-                        if(t.getAccountIdFrom() == accountID ||t.getAccountIdTo()==accountID)
+                        if(t.getAccountFrom() == accountID ||t.getAccountTo()==accountID)
                             transactions1.add(t);
                     newUser.addAccount(accountType, accountID, balance, dateOfCreation, transactions1);
                 }

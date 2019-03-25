@@ -1,9 +1,46 @@
 package ATM_0354_phase2;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 
 public class Bill extends Transaction {
-    public Bill (int accountIdFrom, int accountIdTo, BigDecimal value) {
-        super(accountIdFrom, accountIdTo, value, true);
+    public Bill (Account accountFrom, BigDecimal value) {
+        super(accountFrom, null, value);
+    }
+
+    @Override
+    public void process(){
+        if(!getAccountFrom().canTransferOut()){
+            System.out.println("Account unable to transfer money out.");
+            return;
+        }
+
+        try{
+            getAccountFrom().transferMoneyOut(getValue());
+            getAccountFrom().addTransaction(this);
+        }
+        catch(MoneyTransferException e){
+            System.out.println(e.toString());
+        }
+        writeBill();
+    }
+
+    private void writeBill(){
+        try(FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/ATM_0354_phase2.Files/outgoing.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw))
+        {
+            pw.println(this.toString());
+        } catch (IOException e) {
+            System.out.println("IOException writing to outgoing.txt");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Account ID Number " + getAccountFrom() + " paid a $" + getValue() + " bill.";
     }
 }

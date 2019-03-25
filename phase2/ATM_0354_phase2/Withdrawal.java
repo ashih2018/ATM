@@ -3,7 +3,25 @@ package ATM_0354_phase2;
 import java.math.BigDecimal;
 
 public class Withdrawal extends Transaction {
-    public Withdrawal(int accountIdFrom, int accountIdTo, BigDecimal value) {
-        super(accountIdFrom, accountIdTo, value, false);
+    public Withdrawal(Account accountFrom, BigDecimal value) {
+        super(accountFrom, null, value);
     }
+
+    @Override
+    public void process(){
+        if(!getAccountFrom().canTransferOut()){
+            System.out.println("Account unable to transfer money out.");
+            return;
+        }
+
+        try{
+            getAccountFrom().transferMoneyOut(getValue());
+            getAccountFrom().addTransaction(this);
+        }
+        catch(MoneyTransferException e){
+            System.out.println(e.toString());
+        }
+    }
+
+
 }

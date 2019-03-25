@@ -8,30 +8,19 @@ public class BankDaddy extends BankEmployee {
 
     public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {
         Transaction transaction = user.getAccount(accountId).getLastTransaction();
-        if (!transaction.getIsBill()) {
+        if (!(transaction instanceof Bill)) {
             Account userAccount = user.getAccount(accountId);
 
-            if (transaction instanceof Deposit || transaction instanceof Cheque) {
+            if (transaction instanceof Deposit) {
                 userAccount.transferMoneyOut(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
             } else if (transaction instanceof Withdrawal) {
                 userAccount.transferMoneyIn(transaction.getValue());
                 userAccount.deleteSpecificTransaction(transaction);
             } else { // It is a Transfer
-                User otherUser;
-                if (((Transfer) transaction).getUsernameFrom().equals(user.getUsername())) {
-                    otherUser = (User) Main.atm.userHandler.getUser(((Transfer) transaction).getUsernameTo());
-                    Account otherAccount = otherUser.getAccount(transaction.getAccountIdTo());
-                    transferBackMoney(userAccount, otherAccount, transaction);
-                } else {
-                    otherUser = (User) Main.atm.userHandler.getUser(((Transfer) transaction).getUsernameFrom());
-                    Account otherAccount = otherUser.getAccount(transaction.getAccountIdFrom());
-                    transferBackMoney(otherAccount, userAccount, transaction);
-                }
-
-                if (otherUser == null) { // Should never happen
-                    System.out.println("The other user is null for some reason!!!");
-                }
+                Account accountFrom = transaction.getAccountFrom();
+                Account accountTo = transaction.getAccountTo();
+                transferBackMoney(accountFrom, accountTo, transaction);
             }
         } else {
             System.out.println("Can't undo a bill transaction");
