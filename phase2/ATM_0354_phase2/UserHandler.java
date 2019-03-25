@@ -34,6 +34,10 @@ public class UserHandler {
         return null;
     }
 
+    public static boolean verifyPassword(Person user, String password){
+        return user.getHash().equals(PasswordHash.hashPassword(password, PasswordHash.getSalt()));
+    }
+
     /**
      * Create a new User.
      * Precondition: The username of the User is unique.
@@ -80,7 +84,7 @@ public class UserHandler {
      * @param id The id of the account to withdraw from.
      * @return true if the withdrawal succeeds, false otherwise.
      */
-    boolean withdraw(User user, BigDecimal money, int id) throws MoneyTransferException {
+    boolean withdraw(User user, int money, int id) throws MoneyTransferException {
         for (Person person: this.users) {
             if (person == user) {
                 if (person instanceof User) {

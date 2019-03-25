@@ -37,7 +37,7 @@ public class Main {
             ArrayList<CashObject> cash = new ArrayList<>();
             while(atmFileIn.hasNextLine()){ //update cash amounts
                 String[] lineInput = atmFileIn.nextLine().split(",");
-                cash.add(new CashObject(BigDecimal.valueOf(Double.parseDouble(lineInput[0])), Integer.parseInt(lineInput[1])));
+                cash.add(new CashObject((Integer.parseInt(lineInput[0])), Integer.parseInt(lineInput[1])));
             }
             atm.cashHandler = new CashHandler(cash);
             ArrayList<Transaction> transactions = parseTransactions();

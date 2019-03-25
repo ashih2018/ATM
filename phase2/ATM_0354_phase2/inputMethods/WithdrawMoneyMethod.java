@@ -4,7 +4,6 @@ import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 import ATM_0354_phase2.User;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class WithdrawMoneyMethod implements InputMethod {
@@ -22,7 +21,7 @@ public class WithdrawMoneyMethod implements InputMethod {
                 return "UserOptions";
             } else {
                 int id = askForID(in);
-                BigDecimal money = askForMoney(in);
+                int money = askForMoney(in);
                 boolean success = Main.atm.withdraw((User) Main.atm.getCurUser(), money, id);
                 if(success) {
                     System.out.println("Would you like to withdraw more money?");
@@ -48,16 +47,16 @@ public class WithdrawMoneyMethod implements InputMethod {
         //TODO: check if id is within an acceptable range
         return id;
     }
-    private BigDecimal askForMoney(Scanner in){
+    private int askForMoney(Scanner in){
         System.out.println("How much money would you like to withdraw?");
         System.out.print(">");
-        double money;
+        int money;
         try{
-            money = in.nextDouble();
+            money = in.nextInt();
         } catch(ClassCastException e){
             System.out.println("Invalid amount");
             return askForMoney(in);
         }
-        return BigDecimal.valueOf(money);
+        return money;
     }
 }
