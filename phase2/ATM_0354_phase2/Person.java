@@ -3,11 +3,18 @@ package ATM_0354_phase2;
 public abstract class Person {
 
     private String username;
-    private String password;
+    private String hash;
+    private String salt;
 
-    public Person(String username, String password) {
+    public Person(String username, String password, String salt) {
         this.username = username;
-        this.password = password;
+        if (salt == null) {
+            this.setPassword(password);
+        }
+        else {
+            this.salt = salt;
+            this.hash = password;
+        }
     }
 
     public String getUsername() {
@@ -15,11 +22,16 @@ public abstract class Person {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        salt = PasswordHash.getSalt().toString();
+        hash = PasswordHash.hashPassword(password, this.salt);
     }
 
-    public String getPassword() {
-        return password;
+    public String getHash() {
+        return hash;
+    }
+
+    String getSalt() {
+        return salt;
     }
 
 }

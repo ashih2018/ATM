@@ -15,15 +15,17 @@ public class User extends Person {
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Account primaryAccount;
+    private int loanLimit;
 
-    public User(String username, String password) {
-        super(username, password);
+    public User(String username, String password, String salt) {
+        super(username, password, salt);
         accounts = new ArrayList<>();
         accountFactory = new AccountFactory();
         Account account = accountFactory.createAccount(getUsername(), "CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
         accounts.add(account);
+        this.loanLimit = 50000;
     }
 
     public String getCreationDate() {
@@ -176,8 +178,13 @@ public class User extends Person {
         For storage in people.txt
      */
     public String writeUser(){
+<<<<<<< HEAD:phase2/ATM_0354_phase2/User.java
+        StringBuilder str = new StringBuilder("User," + getUsername() + "," + getHash() +
+                "," + getSalt() + "," + getPrimaryAccountId());
+=======
         StringBuilder str = new StringBuilder("User," + getUsername() + "," + getPassword() +
                 "," + getPrimaryAccountId());
+>>>>>>> d7cf3bbacc1ec3134463fda064abf28eec1df873:phase2/ATM_0354_phase2/User.java
         for (Account account : accounts){
             str.append(",");
             str.append(account.getClass().getSimpleName());

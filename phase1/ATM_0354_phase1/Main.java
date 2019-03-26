@@ -225,11 +225,29 @@ public class Main {
     }
 
     private static void writeTransactions(){
+<<<<<<< HEAD:phase1/ATM_0354/Main.java
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
+
+            for (Person person : atm.userHandler.users) {
+                if (person instanceof User) {
+                    User user = (User) person;
+                    user.writeTransactions();
+                    writer.write(user.writeUser());
+                    writer.newLine();
+                }
+                writer.close();
+=======
         for (Person person : atm.userHandler.users){
             if(person instanceof ATM_0354_phase2.User){
                 ATM_0354_phase2.User user = (User) person;
                 user.writeTransactions();
+>>>>>>> 485668265392226ed11515cd8de8ee1c084722f9:phase1/ATM_0354_phase1/Main.java
             }
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
+            System.out.println("IOException when writing people to transactions.txt");
         }
     }
 

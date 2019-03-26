@@ -2,8 +2,8 @@ package ATM_0354_phase2;
 
 public class BankDaddy extends BankEmployee {
 
-    public BankDaddy(String username, String password) {
-        super(username, password);
+    public BankDaddy(String username, String password, String salt) {
+        super(username, password, salt);
     }
 
     public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {

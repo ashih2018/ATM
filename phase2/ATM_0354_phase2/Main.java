@@ -102,8 +102,6 @@ public class Main {
                 relevantAcc.addTransaction(newTransaction);
             }
         }
-
-
     }
 
 
@@ -114,11 +112,12 @@ public class Main {
             String userType = personInput[0];
             String username = personInput[1];
             String password = personInput[2];
-            atm.createPerson(userType, username, password);
-            if (userType.equals("User")) {
-                int defaultID = Integer.parseInt(personInput[3]);
-                String[] accounts = Arrays.copyOfRange(personInput, 4, personInput.length);
-                User newUser = ((User) atm.getUser(username));
+            String salt = personInput[3];
+            atm.createPerson(userType, username, password, salt);
+            if(userType.equals("User")){
+                int defaultID = Integer.parseInt(personInput[4]);
+                String[] accounts = Arrays.copyOfRange(personInput, 5, personInput.length);
+                User newUser =((User)atm.getUser(username));
                 newUser.removeAccount(0); //Removes the "primary account"
                 System.out.println(Arrays.toString(accounts));
                 int accountID = 0;
@@ -161,8 +160,6 @@ public class Main {
     }
 
     //TODO: Check two methods below.
-
-    // public static BigDecimal parseDeposits()
     public static List<String> parseDeposits() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
@@ -221,10 +218,10 @@ public class Main {
     private static void writePeople() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
-
-            for (Person person : atm.userHandler.users) {
-                if (person instanceof BankDaddy) {
-                    writer.write("BankManager," + person.getUsername() + "," + person.getPassword());
+            for (Person person : atm.userHandler.users){
+                if(person instanceof BankDaddy){
+                    writer.write("BankManager," + person.getUsername() + "," + person.getHash()
+                            + "," + person.getSalt());
                     writer.newLine();
                 } else if (person instanceof User) {
                     User user = (User) person;

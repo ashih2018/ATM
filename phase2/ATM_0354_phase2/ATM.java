@@ -144,8 +144,8 @@ public class ATM {
      * @param username The username of the new Person.
      * @param password The password of the new Person.
      */
-    public void createPerson(String type, String username, String password){
-        userHandler.createUser(type, username, password);
+    public void createPerson(String type, String username, String password, String salt){
+        userHandler.createUser(type, username, password, salt);
     }
 
     /**

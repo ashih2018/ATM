@@ -8,8 +8,6 @@ public class UserHandler {
      * An ArrayList that stores all users that are managed by this handler
      */
     ArrayList<Person> users;
-
-
     public UserHandler() {
         users = new ArrayList<>();
     }
@@ -23,14 +21,15 @@ public class UserHandler {
     public Person verifyUser(String username, String password) {
         for (Person user : users) {
             if (user.getUsername().equals(username)) {
-                if (!user.getPassword().equals(password)) {
-//                    System.err.println("Incorrect Password");
+                if (!user.getHash().equals(PasswordHash.hashPassword(password, user.getSalt()))) {
+                    System.out.println("Incorrect Password");
                     return null;
-                } else
+                } else {
                     return user;
+                }
             }
         }
-//        System.err.println("User not found");
+        System.out.println("User not found");
         return null;
     }
 
@@ -45,12 +44,12 @@ public class UserHandler {
      * @param username The username of the new User.
      * @param password The password of the new User.
      */
-    public void createUser(String type, String username, String password){
+    public void createUser(String type, String username, String password, String salt){
         if(type.equals("BankManager")){
-            users.add(new BankDaddy(username, password));
+            users.add(new BankDaddy(username, password, salt));
         }
         else{
-            users.add(new User(username, password));
+            users.add(new User(username, password, salt));
         }
     }
 

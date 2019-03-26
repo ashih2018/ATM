@@ -168,7 +168,7 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return "Account ID: " + this.id + "\nAccount Balance: " + this.balance + "\n";
+        return "Account ID: " + this.id + "\nAccount Balance: " + this.balance;
     }
 
     public void writeTransactions(String username){

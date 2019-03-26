@@ -109,7 +109,11 @@ public class User extends Person {
         StringBuilder summary = new StringBuilder();
         for (ATM_0354_phase2.Account account: this.accounts) {
             summary.append(account.toString());
+<<<<<<< HEAD
+            summary.append("\n\n");
+=======
             summary.append("\n");
+>>>>>>> d7cf3bbacc1ec3134463fda064abf28eec1df873
         }
         return summary.toString();
     }

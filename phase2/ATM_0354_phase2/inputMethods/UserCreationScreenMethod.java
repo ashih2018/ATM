@@ -37,7 +37,11 @@ public class    UserCreationScreenMethod implements InputMethod {
                 System.out.print(">");
                 password = in.nextLine();
             }
+<<<<<<< HEAD
+            Main.atm.createPerson("User", username, password, null);
+=======
             Main.atm.createPerson("User", username, password);
+>>>>>>> d7cf3bbacc1ec3134463fda064abf28eec1df873
             System.out.println("Would you like to create another user? (yes/no)");
             System.out.print(">");
             boolean anotherUser = in.nextLine().equals("yes");
