@@ -181,7 +181,7 @@ public class Main {
         }
     }
 
-    public void outgoingHandlerThingy() {
+    public void outgoingHandler() {
         try {
             String outgoingPath = "phase2/ATM_0354_phase2/Files/outgoing.txt";
             BufferedWriter br = new BufferedWriter(new FileWriter(outgoingPath, true));
