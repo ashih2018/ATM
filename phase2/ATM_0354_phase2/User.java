@@ -15,6 +15,7 @@ public class User extends Person {
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Account primaryAccount;
+    private int loanLimit;
 
     public User(String username, String password, String salt) {
         super(username, password, salt);
@@ -24,6 +25,7 @@ public class User extends Person {
         creationDate = new Date();
         primaryAccount = account;
         accounts.add(account);
+        this.loanLimit = 50000;
     }
 
     public String getCreationDate() {

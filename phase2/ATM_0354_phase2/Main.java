@@ -102,8 +102,6 @@ public class Main {
                 relevantAcc.addTransaction(newTransaction);
             }
         }
-
-
     }
 
 
