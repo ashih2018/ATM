@@ -15,7 +15,6 @@ public abstract class Person {
             this.salt = salt;
             this.hash = password;
         }
-
     }
 
     public String getUsername() {

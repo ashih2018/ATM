@@ -176,8 +176,13 @@ public class User extends Person {
         For storage in people.txt
      */
     public String writeUser(){
+<<<<<<< HEAD:phase2/ATM_0354_phase2/User.java
         StringBuilder str = new StringBuilder("User," + getUsername() + "," + getHash() +
                 "," + getSalt() + "," + getPrimaryAccountId());
+=======
+        StringBuilder str = new StringBuilder("User," + getUsername() + "," + getPassword() +
+                "," + getPrimaryAccountId());
+>>>>>>> d7cf3bbacc1ec3134463fda064abf28eec1df873:phase2/ATM_0354_phase2/User.java
         for (Account account : accounts){
             str.append(",");
             str.append(account.getClass().getSimpleName());

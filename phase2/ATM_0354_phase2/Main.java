@@ -220,7 +220,6 @@ public class Main {
     private static void writePeople() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
-            
             for (Person person : atm.userHandler.users){
                 if(person instanceof BankDaddy){
                     writer.write("BankManager," + person.getUsername() + "," + person.getHash()
