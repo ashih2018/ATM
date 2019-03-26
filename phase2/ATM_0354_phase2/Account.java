@@ -129,7 +129,7 @@ public abstract class Account {
 
     public void writeTransactions(){
         try{
-            String filepath = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/transactions.txt";
+            String filepath = "phase2/ATM_0354_phase2/Files/transactions.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
             //TODO: Format???
             for (Transaction transaction : transactions){

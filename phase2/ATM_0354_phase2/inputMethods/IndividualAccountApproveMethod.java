@@ -1,6 +1,8 @@
 package ATM_0354_phase2.inputMethods;
 
 import ATM_0354_phase2.InputMethod;
+import ATM_0354_phase2.Main;
+import ATM_0354_phase2.User;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,7 +14,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
 
-        String filePath = "phase1/ATM_0354_phase1/ATM_0354_phase2.Files/account_creation_requests.txt";
+        String filePath = "phase1/ATM_0354_phase2/Files/account_creation_requests.txt";
         try{
             File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -38,11 +40,11 @@ public class IndividualAccountApproveMethod implements InputMethod {
                 if (approved){
                     String accType = accountType.toUpperCase().replaceAll("\\s+","");
                     System.out.println(accType);
-                    ((ATM_0354_phase2.User) ATM_0354_phase2.Main.atm.getUser(username)).addAccount(accType + "ACCOUNT");
+                    ((User) Main.atm.getUser(username)).addAccount(accType + "ACCOUNT");
                 }
                 line = reader.readLine();
             }
-            ATM_0354_phase2.Main.overwriteRequests();
+            Main.overwriteRequests();
         }
         catch(IOException e){
             System.out.println(e.toString());

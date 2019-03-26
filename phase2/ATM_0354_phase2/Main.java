@@ -106,7 +106,7 @@ public class Main {
 
 
     private static void parseUsers(Scanner fileIn) {
-        int maxAccountID = -1; 
+        int maxAccountID = -1;
         while (fileIn.hasNext()) {
             String[] personInput = fileIn.nextLine().split(",");
             String userType = personInput[0];
@@ -137,10 +137,10 @@ public class Main {
     private static void generateUI(Scanner in) {
         while (!state.equals("Shutdown")) {
             state = ih.handleInput(state, in);
-            clearScreen(); //TODO: see if there's a more elegant way to do this
+            clearScreen();
         }
         shutdownATM();
-//        reset();
+//        reset(); //Note: uncomment this for testing fresh startup
     }
 
     private static void clearScreen() {
