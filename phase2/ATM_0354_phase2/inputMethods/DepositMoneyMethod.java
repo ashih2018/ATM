@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class DepositMoneyMethod implements InputMethod {
 
-    private static final String DEPOSIT_FILE_NAME = "phase2/ATM_0354_phase2/ATM_0354_phase2.Files/deposits.txt";
+    private static final String DEPOSIT_FILE_NAME = "phase2/ATM_0354_phase2/Files/deposits.txt";
     @Override
     public String run(Scanner in) {
         System.out.println("======= Deposit Money =======");
