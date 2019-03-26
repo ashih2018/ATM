@@ -21,110 +21,136 @@ public class Main {
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
     private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         atm = new ATM();
         ih = new InputHandler();
 
         Scanner fileIn = new Scanner(new File(PEOPLE_FILE_NAME));
         boolean firstTime = !fileIn.hasNext();
-        if(firstTime) {
+        if (firstTime) {
             atm.setDateTime(LocalDateTime.now());
             state = "SetUpBankManager";
-        }
-        else{
+        } else {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
             atm.setDateTime(LocalDateTime.parse(date));
             ArrayList<CashObject> cash = new ArrayList<>();
-            while(atmFileIn.hasNextLine()){ //update cash amounts
+            while (atmFileIn.hasNextLine()) { //update cash amounts
                 String[] lineInput = atmFileIn.nextLine().split(",");
                 cash.add(new CashObject((Integer.parseInt(lineInput[0])), Integer.parseInt(lineInput[1])));
             }
             atm.cashHandler = new CashHandler(cash);
-            ArrayList<Transaction> transactions = parseTransactions();
-            parseUsers(fileIn, transactions); //Also sets up accounts
+            parseUsers(fileIn); //Also sets up accounts
+            parseTransactions();
             state = "Login";
         }
 
         generateUI(new Scanner(System.in)); //Set up for console input
     }
 
-    private static ArrayList<Transaction> parseTransactions() throws IOException{
+    private static void parseTransactions() throws IOException {
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        while(in.hasNextLine()){
+        while (in.hasNextLine()) {
             String[] userTransactions = in.nextLine().split(",");
             String username = userTransactions[0];
-            User curUser = (User)atm.getUser(username); //idk what this does
-            for(int i=1; i<userTransactions.length; i+=5){
-                String transactionType = userTransactions[i+1];
-                int accountId = Integer.parseInt(userTransactions[i]);
-                int receiverAccount = Integer.parseInt(userTransactions[i+2]);
-                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(userTransactions[i+3]));
-                LocalDateTime date = LocalDateTime.parse(userTransactions[i+4]); //TODO: figure out why this is useful
-                if (transactionType.equals("Bill")) {
-                    Transaction newBill = new Bill(accountId, receiverAccount, amount);
-                    transactions.add(newBill);
+            User curUser = (User) atm.getUser(username); //idk what this does
+            String transactionType = userTransactions[1];
+            Transaction newTransaction = null;
+            ArrayList<Account> relevantAccs = new ArrayList<>();
+            switch (transactionType) {
+                case "Bill": {
+                    int accountFromId = Integer.parseInt(userTransactions[3]);
+                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
+                    newTransaction = new Bill(curUser.getAccount(accountFromId), value);
+                    relevantAccs.add(curUser.getAccount(accountFromId));
+                    break;
                 }
-                else if(transactionType.equals("Transaction")){
-                    Transaction newTransaction = new Transaction(accountId, receiverAccount, amount, false);
-                    transactions.add(newTransaction);
+                case "Deposit": {
+                    int accountToId = Integer.parseInt(userTransactions[3]);
+                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
+                    newTransaction = new Deposit(curUser.getAccount(accountToId), value);
+                    relevantAccs.add(curUser.getAccount((accountToId)));
+                    break;
                 }
-                else{
-                    System.out.println("Error"); //TODO: better error message
+                case "Transfer": {
+                    User userFrom = (User) Main.atm.getUser(userTransactions[2]);
+                    int accountFromId = Integer.parseInt(userTransactions[3]);
+                    User userTo = (User) Main.atm.getUser(userTransactions[4]);
+                    int accountToId = Integer.parseInt(userTransactions[5]);
+                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[6]));
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[7]);
+                    newTransaction = new Transfer(userFrom.getAccount(accountFromId), userTo.getAccount(accountToId), value);
+                    relevantAccs.add(userFrom.getAccount(accountFromId));
+                    relevantAccs.add(userTo.getAccount(accountToId));
+                    break;
                 }
+                case "Withdrawal": {
+                    int accountFromId = Integer.parseInt(userTransactions[3]);
+                    int value = Integer.parseInt(userTransactions[4]);
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
+                    newTransaction = new Withdrawal(curUser.getAccount(accountFromId), value);
+                    relevantAccs.add(curUser.getAccount(accountFromId));
+                    break;
+                }
+                default:
+                    System.out.println("transactions.txt has an invalid format");
+                    break;
             }
-
+            for(Account relevantAcc: relevantAccs){
+                relevantAcc.addTransaction(newTransaction);
+            }
         }
-        return transactions;
+
+
     }
-    private static void parseUsers(Scanner fileIn, ArrayList<Transaction> transactions) {
-        int maxAccountID = -1; //TODO: figure out what is happening with this stuff
-        while(fileIn.hasNext()){
+
+
+    private static void parseUsers(Scanner fileIn) {
+        int maxAccountID = -1; 
+        while (fileIn.hasNext()) {
             String[] personInput = fileIn.nextLine().split(",");
             String userType = personInput[0];
             String username = personInput[1];
             String password = personInput[2];
             atm.createPerson(userType, username, password);
-            if(userType.equals("User")){
+            if (userType.equals("User")) {
                 int defaultID = Integer.parseInt(personInput[3]);
                 String[] accounts = Arrays.copyOfRange(personInput, 4, personInput.length);
-                User newUser =((User)atm.getUser(username));
+                User newUser = ((User) atm.getUser(username));
                 newUser.removeAccount(0); //Removes the "primary account"
                 System.out.println(Arrays.toString(accounts));
                 int accountID = 0;
-                for(int i=0; i<accounts.length; i+=3){
+                for (int i = 0; i < accounts.length; i += 3) {
                     String accountType = accounts[i];
-                    BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i+1]));
+                    BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i + 1]));
                     System.out.println(balance);
-                    LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i+2]);
-
-                    ArrayList<Transaction> transactions1 = new ArrayList<>();
-                    for(Transaction t: transactions)
-                        if(t.getAccountFrom() == accountID ||t.getAccountTo() == accountID)
-                            transactions1.add(t);
-                    newUser.addAccount(accountType, accountID++, balance, dateOfCreation, transactions1);
+                    LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i + 2]);
+                    newUser.addAccount(accountType, accountID++, balance, dateOfCreation, new ArrayList<>());
                 }
                 newUser.setPrimary(defaultID);
                 newUser.accountFactory.setNextAccountId(maxAccountID);
             }
         }
     }
-    private static void generateUI(Scanner in){
-        while(!state.equals("Shutdown")) {
+
+    private static void generateUI(Scanner in) {
+        while (!state.equals("Shutdown")) {
             state = ih.handleInput(state, in);
             clearScreen(); //TODO: see if there's a more elegant way to do this
         }
         shutdownATM();
 //        reset();
     }
-    private static void clearScreen(){
-        for(int i=0; i<50; i++) {
+
+    private static void clearScreen() {
+        for (int i = 0; i < 50; i++) {
             System.out.println();
         }
     }
 
-    public static void overwriteRequests(){
+    public static void overwriteRequests() {
         try {
             PrintWriter writer = new PrintWriter(ACCOUNT_REQUESTS_FILE_NAME);
             writer.print("");
@@ -137,7 +163,7 @@ public class Main {
     //TODO: Check two methods below.
 
     // public static BigDecimal parseDeposits()
-    public static List<String> parseDeposits(){
+    public static List<String> parseDeposits() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
             String line;
@@ -168,75 +194,71 @@ public class Main {
         }
     }
 
-    private static void shutdownATM(){
+    private static void shutdownATM() {
         writeATM();
         writePeople();
         writeTransactions();
         //TODO: Write a whole bunch of other things too!
     }
 
-    private static void writeATM(){
-        try{
+    private static void writeATM() {
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(ATM_FILE_NAME), false));
             writer.write(atm.getDateTime().toString());
             writer.newLine();
 
-            for (CashObject cash : atm.cashHandler.getCash()){
+            for (CashObject cash : atm.cashHandler.getCash()) {
                 writer.write(cash.getCashValue() + "," + cash.getCount());
                 writer.newLine();
             }
             writer.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when writing atm cash amounts to atm.txt");
         }
     }
 
-    private static void writePeople(){
-        try{
+    private static void writePeople() {
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
 
-            for (Person person : atm.userHandler.users){
-                if(person instanceof BankDaddy){
+            for (Person person : atm.userHandler.users) {
+                if (person instanceof BankDaddy) {
                     writer.write("BankManager," + person.getUsername() + "," + person.getPassword());
                     writer.newLine();
-                }
-                else if (person instanceof User){
+                } else if (person instanceof User) {
                     User user = (User) person;
                     writer.write(user.writeUser());
                     writer.newLine();
                 }
             }
             writer.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when writing people to people.txt");
         }
     }
 
-    private static void writeTransactions(){
-        for (Person person : atm.userHandler.users){
-            if(person instanceof User){
+    private static void writeTransactions() {
+        for (Person person : atm.userHandler.users) {
+            if (person instanceof User) {
                 User user = (User) person;
                 user.writeTransactions();
             }
         }
     }
 
-    private static void reset(){
-        try{
+    private static void reset() {
+        try {
             String[] paths = {PEOPLE_FILE_NAME, DEPOSIT_FILE_NAME, OUTGOING_FILE_NAME,
                     ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME};
             BufferedWriter bw;
-            for (String path : paths){
-                bw = new BufferedWriter(new FileWriter(new File (path), false));
+            for (String path : paths) {
+                bw = new BufferedWriter(new FileWriter(new File(path), false));
                 bw.write("");
                 bw.close();
             }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when resetting the program.");
         }
