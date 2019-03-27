@@ -44,7 +44,7 @@ public class UserOptionsMethod implements InputMethod {
                     return "Logout";
                 case "view employee options":
                 case "f":
-                    if (isEmployee) return "EmployeeOptions";
+                    if (isEmployee) return "BankEmployeeOptions";
                     else return "UserOptions";
                 default:
                     System.out.println("Invalid option, please try again.");
