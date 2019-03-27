@@ -13,6 +13,16 @@ import java.util.regex.Pattern;
  * Contains methods to verify various input types
  */
 public class VerifyInputs {
+    static double verifyDouble(Scanner in){
+        try{
+            double input = in.nextDouble();
+            return input;
+        } catch(ClassCastException e){
+            System.out.println("Invalid amount, please try again.");
+            System.out.print(">");
+            return verifyDouble(in);
+        }
+    }
     static String verifyNewUsername(Scanner in){
         String username = in.nextLine();
         Pattern p = Pattern.compile("^[a-zA-Z0-9]*$");
@@ -31,6 +41,20 @@ public class VerifyInputs {
             return(verifyNewUsername(in));
         }
 
+    }
+    static int verifyAccountId(Scanner in, User curUser){
+        String input = in.nextLine();
+        int id;
+        try{
+            id = Integer.parseInt(input);
+            if(curUser.verifyID(id)) return id;
+            else return verifyAccountId(in, curUser);
+        } catch (ClassCastException e){
+            System.out.println("Invalid id");
+            System.out.println("Which account(id) would you like to deposit into?");
+            System.out.print(">");
+            return verifyAccountId(in, curUser);
+        }
     }
     static String verifyNewPassword(Scanner in){
         String password = in.nextLine();

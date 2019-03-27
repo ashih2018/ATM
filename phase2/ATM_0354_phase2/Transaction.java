@@ -44,7 +44,6 @@ public abstract class Transaction {
             System.out.println("Account unable to transfer money out.");
             return;
         }
-
         try{
             getAccountFrom().transferMoneyOut(getValue());
             getAccountFrom().addTransaction(this);

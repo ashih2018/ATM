@@ -56,6 +56,7 @@ public abstract class Account {
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
+        transaction.process();
     }
 
     public Transaction getLastTransaction() throws IndexOutOfBoundsException{

@@ -15,7 +15,7 @@ public class Loan extends Transaction {
     private BigDecimal price;
     private BigDecimal interest;
 
-    public Loan (@Nullable Account accountTo, BigDecimal value, BigDecimal interest) {
+    public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest) {
         super(accountTo, null, value);
         this.price = value;
         this.interest = interest;
@@ -25,11 +25,11 @@ public class Loan extends Transaction {
     //currently compounds every minute
     private void compound() {
         Timer timer = new Timer();
-        timer.schedule( new TimerTask() {
+        timer.schedule(new TimerTask() {
             public void run() {
                 price = price.multiply(interest);
             }
-        }, 0, 60*1000);
+        }, 0, 60 * 1000);
     }
 
     public BigDecimal getPrice() {
@@ -40,11 +40,10 @@ public class Loan extends Transaction {
         return interest;
     }
 
-    private void writeLoan(){
-        try(FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(bw))
-        {
+    private void writeLoan() {
+        try (FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter pw = new PrintWriter(bw)) {
             pw.println(this.toString());
         } catch (IOException e) {
             System.out.println("IOException writing to outgoing.txt");

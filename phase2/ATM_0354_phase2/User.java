@@ -138,6 +138,10 @@ public class User extends Person {
         return this.accounts.containsKey(id);
     }
 
+    public void payBill(String destination, Account account, BigDecimal amount){
+        account.addTransaction(new Bill(destination, account, amount));
+    }
+
     public void defaultTransferIn(BigDecimal amount) {
         try {
             getPrimaryAccount().transferMoneyIn(amount);

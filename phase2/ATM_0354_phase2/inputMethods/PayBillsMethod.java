@@ -1,6 +1,8 @@
 package ATM_0354_phase2.inputMethods;
 
 import ATM_0354_phase2.InputMethod;
+import ATM_0354_phase2.Main;
+import ATM_0354_phase2.User;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -9,26 +11,22 @@ public class PayBillsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("Who would you like to pay a bill to?\n>");
+        User curUser = (User)Main.atm.getCurUser();
         String destination = in.nextLine();
-
+        System.out.println("==== Your Accounts ====");
+        String accountSummary = Main.atm.viewCurAccounts();
+        System.out.println(accountSummary.equals("") ? "No accounts" : accountSummary);
+        if (accountSummary.equals("")) {
+            System.out.println("Input anything to go back.");
+            System.out.print(">");
+            in.nextLine();
+            return "UserOptions";
+        }
         System.out.println("Which account will you use to pay?\n>");
-        String accType;
-        while(true){
-            accType= in.nextLine();
-            break;
-        }
+        int id = VerifyInputs.verifyAccountId(in, curUser);
         System.out.println("How much will you pay?\n>");
-        BigDecimal amount;
-        while(true){
-            try{
-                amount = BigDecimal.valueOf(Double.parseDouble(in.nextLine()));
-                break;
-            }
-            catch(ClassCastException c){
-                System.out.println("Invalid amount, please try again.\n>");
-            }
-        }
-
+        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+        curUser.payBill(destination, curUser.getAccount(id), amount);
         return "UserOptions";
     }
 }
