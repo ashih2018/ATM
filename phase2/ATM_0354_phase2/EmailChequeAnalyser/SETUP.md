@@ -5,9 +5,8 @@
 # Install Required Libraries
 ```
 npm install googleapis@27 --save
-```
-```
 npm install tesseract.js --save
+npm install mongoose --save
 ```
 
 # Configure Flow in Intellij (For JS syntax highlighting, etc.)
