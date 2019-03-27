@@ -14,23 +14,29 @@ public class BankManagerOptionsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("======= Bank Manager Panel ========");
-        System.out.println("You can 'create users', 'approve account creation requests', 'refill cash', 'undo recent transactions', 'logout', or 'shutdown'");
+        System.out.println("Options:\nA. 'create users'\nB. 'approve account creation requests'\nC. 'refill cash'\nD. 'undo recent transactions'\nE. 'logout'\nF. 'shutdown'");
         System.out.println("What would you like to do?");
         System.out.print(">");
         String input = in.nextLine();
         while (true) {
-            switch (input) {
+            switch (input.toLowerCase()) {
                 case "create users":
+                case "a":
                     return "UserCreationScreen";
                 case "approve account creation requests":
+                case "b":
                     return "IndividualAccountApprove";
                 case "refill cash":
+                case "c":
                     return "RefillCash";
                 case "undo recent transactions":
+                case "d":
                     return "UndoTransaction";
                 case "logout":
+                case "e":
                     return "Logout";
                 case "shutdown":
+                case "f":
                     return "Shutdown";
                 default:
                     System.out.println("Invalid option, please try again.");

@@ -39,13 +39,6 @@ public class UserCreationScreenMethod implements InputMethod {
             System.out.println("What is the new user's password? Use only alphanumeric characters.");
             System.out.print(">");
             String password = VerifyInputs.verifyNewPassword(in);
-            Main.atm.createPerson("User", username, password, null);
-            String password = in.nextLine();
-            while (!p.matcher(password).matches()) {
-                System.out.println("Invalid character in password. Please only use alphanumeric characters (A-Z, a-z, 0-9)\n Please enter a different username");
-                System.out.print(">");
-                password = in.nextLine();
-            }
             Main.atm.createPerson(type, username, password, null);
             System.out.println("Would you like to create another user? (yes/no)");
             System.out.print(">");

@@ -24,9 +24,10 @@ public class WithdrawMoneyMethod implements InputMethod {
                 int money = askForMoney(in);
                 boolean success = Main.atm.withdraw((User) Main.atm.getCurUser(), money, id);
                 if(success) {
-                    System.out.println("Would you like to withdraw more money?");
+                    System.out.println("Would you like to withdraw more money? (Y/N)");
                     System.out.print(">");
-                    boolean cont = in.nextLine().equals("yes");
+                    String response = in.nextLine();
+                    boolean cont = response.equals("yes") || response.equalsIgnoreCase("Y");
                     if (!cont) {
                         return "UserOptions";
                     }
