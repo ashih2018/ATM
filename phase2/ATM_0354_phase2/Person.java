@@ -22,16 +22,16 @@ public abstract class Person {
     }
 
     public void setPassword(String password) {
-        salt = PasswordHash.getSalt().toString();
-        hash = PasswordHash.hashPassword(password, this.salt);
+        this.salt = PasswordHash.getSalt().toString();
+        this.hash = PasswordHash.hashPassword(password, this.salt);
     }
 
     public String getHash() {
-        return hash;
+        return this.hash;
     }
 
     String getSalt() {
-        return salt;
+        return this.salt;
     }
 
 }

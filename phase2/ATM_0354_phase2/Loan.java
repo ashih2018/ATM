@@ -40,7 +40,7 @@ public class Loan extends Transaction {
         return interest;
     }
 
-    private void writeBill(){
+    private void writeLoan(){
         try(FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw))
