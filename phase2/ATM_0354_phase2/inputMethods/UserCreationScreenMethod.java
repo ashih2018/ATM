@@ -13,11 +13,11 @@ public class    UserCreationScreenMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("========== User Creation ==========");
         while (true) {
-            System.out.println("What type of account are you creating?\nA. User\nB. Employee");
+            System.out.println("What type of user are you creating?\nA. Customer\nB. Employee");
             System.out.println(">");
             String type = in.nextLine();
             while(true){
-                if (type.equalsIgnoreCase("user") || type.equalsIgnoreCase("a")){
+                if (type.equalsIgnoreCase("customer") || type.equalsIgnoreCase("a")){
                     type = "User";
                     break;
                 }

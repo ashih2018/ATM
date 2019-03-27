@@ -18,6 +18,6 @@ public class ChequingAccount extends AssetAccount {
 
     @Override
     public String toString() {
-        return "Chequing Account: " + "\n" + super.toString();
+        return "Chequing Account " + "\n" + super.toString();
     }
 }

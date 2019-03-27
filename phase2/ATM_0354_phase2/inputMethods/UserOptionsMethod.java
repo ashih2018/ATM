@@ -11,14 +11,14 @@ public class UserOptionsMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("======= User Panel ========");
         boolean isEmployee = Main.atm.getCurUser() instanceof BankEmployee;
-        System.out.println("Your options are:");
+        System.out.println("Options:");
         if (!isEmployee) {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
                     "\nD. 'transfer money' \nE. 'logout'");
         }
         else{
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'logout'\nF. 'view employee options");
+                    "\nD. 'transfer money' \nE. 'logout'\nF. 'view employee options'");
         }
         System.out.println("What would you like to do?");
         System.out.print(">");

@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class LoginMethod implements InputMethod {
     public String run(Scanner in){
+        System.out.println("========== Login ==========");
         System.out.print("Username: ");
         String username = in.nextLine();
         System.out.print("Password: ");

@@ -17,6 +17,6 @@ public class CreditCardAccount extends DebtAccount {
 
     @Override
     public String toString() {
-        return "Credit Card Account: " + "\n" + super.toString();
+        return "Credit Card Account " + "\n" + super.toString();
     }
 }
