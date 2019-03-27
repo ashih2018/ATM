@@ -13,8 +13,6 @@ public abstract class Account {
     private boolean transferIn, transferOut;
     private String username;
 
-    // TODO: ask if all accounts have a minimum balance; currently only ChequingAccount does
-
     public Account(String username, int id) {
         this.username = username;
         this.transactions = new ArrayList<>();
@@ -131,7 +129,6 @@ public abstract class Account {
         try{
             String filepath = "phase2/ATM_0354_phase2/Files/transactions.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
-            //TODO: Format???
             for (Transaction transaction : transactions){
                 writer.write(username + "," + transaction.serialize());
                 writer.newLine();

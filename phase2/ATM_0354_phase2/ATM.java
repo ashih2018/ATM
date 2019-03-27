@@ -138,6 +138,10 @@ public class ATM {
         user.requestAccount(accountType);
     }
 
+    public void requestJointAccount(User curUser, User otherUser, String accountType){
+        curUser.requestJointAccount(otherUser, accountType);
+    }
+
     /**
      * Create a new Person
      * @param type The type of Person to create.

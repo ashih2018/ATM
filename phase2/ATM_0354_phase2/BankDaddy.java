@@ -34,8 +34,8 @@ public class BankDaddy extends BankEmployee {
         }
         if (transferOut instanceof AssetAccount) {
             transferOut.forceTransferOut(transaction.getValue());
-        } else if (transferOut instanceof DebtAccount) {
-            ((DebtAccount) transferOut).increaseDebt(transaction.getValue());
+        } else if (transferOut instanceof LineOfCreditAccount) {
+            ((LineOfCreditAccount) transferOut).increaseDebt(transaction.getValue());
         }
         transferIn.deleteSpecificTransaction(transaction);
         transferOut.deleteSpecificTransaction(transaction);

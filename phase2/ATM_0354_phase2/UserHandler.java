@@ -101,7 +101,7 @@ public class UserHandler {
         if (id < 0) return ((User)person).getPrimaryAccount();
         else return ((User)person).getAccount(id);
     }
-    boolean deposit(User user, BigDecimal money, int id) {
+    boolean deposit(User user, BigDecimal money, int id) throws MoneyTransferException{
         for (Person person: this.users)
             if (person == user) {
                 if (person instanceof User) {

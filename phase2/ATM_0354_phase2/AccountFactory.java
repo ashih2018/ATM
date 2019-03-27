@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class AccountFactory {
 
-    private int nextAccountId;
+    int nextAccountId;
 
     public AccountFactory() {
         // Starts with -1 because createAccount() adds 1 first

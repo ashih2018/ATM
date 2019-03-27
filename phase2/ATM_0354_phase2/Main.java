@@ -195,7 +195,6 @@ public class Main {
         writeATM();
         writePeople();
         writeTransactions();
-        //TODO: Write a whole bunch of other things too!
     }
 
     private static void writeATM() {

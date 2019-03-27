@@ -14,39 +14,66 @@ public class IndividualAccountApproveMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
 
-        String filePath = "phase1/ATM_0354_phase2/Files/account_creation_requests.txt";
-        try{
+        String filePath = "phase2/ATM_0354_phase2/Files/account_creation_requests.txt";
+        try {
             File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
-            while(line != null && !line.equals("")){
+            while (line != null && !line.equals("")) {
                 String[] strings = line.split(",");
-                String username = strings[0];
-                String accountType = strings[1];
-                String date = strings[2];
-                System.out.println("Approve a \"" + accountType + "\" Account for \"" + username + "\"?");
-                System.out.println("Press \'yes\'/\'no\'");
-                boolean approved;
-                while (true){
-                    try{
-                        approved = in.nextLine().equalsIgnoreCase("yes");
+                String user1 ="",user2="", accountType="", date="";
+                switch (strings[0]) {
+                    case "Joint": {
+                        user1 = strings[1];
+                        user2 = strings[2];
+                        accountType = strings[3];
+                        date = strings[4];
                         break;
                     }
-                    catch(ClassCastException e){
-                        System.out.println("Approve a \"" + accountType + "\" Account for \"" + username + "\"?");
-                        System.out.println("Press \'yes\'/\'no\'");
+                    case "Individual": {
+                        user1 = strings[1];
+                        accountType = strings[2];
+                        date = strings[3];
+                        break;
+                    }
+                    default:
+                        System.out.println("Error in reading account creation requests.");
+                        break;
+                }
+                boolean approved;
+                if(strings[0].equals("Joint")){
+                    System.out.println("("+date+")"+" Approve a '"+accountType+"' account for "+user1+" and "+user2 +"? ('yes'/'no')");
+                    System.out.print(">");
+                    approved = in.nextLine().equals("yes");
+                }
+                else {
+                    System.out.println("("+date+")"+" Approve a \"" + accountType + "\" account for \"" + user1 + "\"?");
+                    System.out.println("Press \'yes\'/\'no\'\n>");
+                    while (true) {
+                        try {
+                            approved = in.nextLine().equalsIgnoreCase("yes");
+                            break;
+                        } catch (ClassCastException e) {
+                            System.out.println("Approve a \"" + accountType + "\" Account for \"" + user1 + "\"?");
+                            System.out.println("Press \'yes\'/\'no\'\n>");
+                        }
                     }
                 }
-                if (approved){
-                    String accType = accountType.toUpperCase().replaceAll("\\s+","");
-                    System.out.println(accType);
-                    ((User) Main.atm.getUser(username)).addAccount(accType + "ACCOUNT");
+                if (approved) {
+                    if(strings[0].equals("Joint")) {
+                        String accType = accountType.toUpperCase().replaceAll("\\s+", "")+"ACCOUNT";
+                        int id = ((User) Main.atm.getUser(user1)).addAccount(accType);
+                        ((User) Main.atm.getUser(user2)).addAccount(((User)(Main.atm.getUser(user1))).getAccount(id));
+                    }
+                    else{
+                        String accType = accountType.toUpperCase().replaceAll("\\s+", "")+"ACCOUNT";
+                        ((User) Main.atm.getUser(user1)).addAccount(accType);
+                    }
                 }
                 line = reader.readLine();
             }
             Main.overwriteRequests();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException caught when reading file in IndividualAccountApproveMethod.");
         }

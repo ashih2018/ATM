@@ -24,7 +24,7 @@ public class LoginMethod implements InputMethod {
         }
         else{
             System.out.println("Incorrect Login, try again.");
-            return this.run(in); //TODO: verify that this won't StackOverflow under reasonable circumstances
+            return this.run(in);
         }
     }
 

@@ -10,7 +10,8 @@ import java.util.*;
 
 public class User extends Person {
 
-    private ArrayList<Account> accounts;
+    //    private ArrayList<Account> accounts;
+    private Map<Integer, Account> accounts;
     AccountFactory accountFactory;
     private Date creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -19,12 +20,12 @@ public class User extends Person {
 
     public User(String username, String password, String salt) {
         super(username, password, salt);
-        accounts = new ArrayList<>();
+        accounts = new HashMap<>();
         accountFactory = new AccountFactory();
         Account account = accountFactory.createAccount(getUsername(), "CHEQUINGACCOUNT");
         creationDate = new Date();
         primaryAccount = account;
-        accounts.add(account);
+        accounts.put(0, account);
         this.loanLimit = 50000;
     }
 
@@ -33,30 +34,36 @@ public class User extends Person {
     }
 
     public Account getAccount(int accountId) {
-        for (Account account : this.accounts) {
-            if (account.getId() == accountId) return account;
-        } return null;
+        return this.accounts.get(accountId);
     }
 
-    public int getNumAccounts(){
+    public int getNumAccounts() {
         return this.accounts.size();
     }
 
-    public void addAccount(String accountType) {
-        Account account = accountFactory.createAccount(getUsername(), accountType);
-        this.accounts.add(account);
+    public int addAccount(Account account) {
+        int id = accountFactory.nextAccountId + 1; //fix this
+        account.setId(id);
+        this.accounts.put(id, account);
+        return id;
     }
-    void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+
+    public int addAccount(String accountType) {
+        Account account = accountFactory.createAccount(getUsername(), accountType);
+        this.accounts.put(account.getId(), account);
+        return account.getId();
+    }
+
+    void addAccount(String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions) {
         Account account = accountFactory.createAccount(getUsername(), accountType, id, balance, dateOfCreation, transactions);
-        this.accounts.add(account);
+        this.accounts.put(id, account);
     }
 
     public boolean setPrimary(int accountID) {
-        for (Account account: this.accounts) {
-            if (account instanceof ChequingAccount && account.getId() == accountID) {
-                primaryAccount = account;
-                return true;
-            }
+        Account account = this.accounts.get(accountID);
+        if (account instanceof ChequingAccount) {
+            primaryAccount = account;
+            return true;
         }
         return false;
     }
@@ -71,26 +78,20 @@ public class User extends Person {
 
     public String getSummary() {
         StringBuilder summary = new StringBuilder();
-        for (Account account: this.accounts) {
-            if(account.getId() == this.getPrimaryAccountId()){
+        for (Integer id : this.accounts.keySet()) {
+            Account account = this.accounts.get(id);
+            if (id == this.getPrimaryAccountId())
                 summary.append("(Primary Account)\n");
-            }
             summary.append(account.toString());
             summary.append("\n");
         }
         return summary.toString();
     }
 
-    public void removeAccount(int id){
-        Iterator<Account> i = this.accounts.iterator();
-        while (i.hasNext()) {
-            Account acc = i.next();
-            if(acc.getId()== id) {
-                i.remove();
-                break;
-            }
-        }
+    public void removeAccount(int id) {
+        this.accounts.remove(id);
     }
+
     public Transaction getLastTransaction(int accountId) {
         Account account = this.getAccount(accountId);
         if (account == null) {
@@ -101,14 +102,16 @@ public class User extends Person {
             if (transaction == null) {
                 System.out.println("User could not get last transaction from account");
                 return null;
-            } return transaction;
+            }
+            return transaction;
         }
     }
 
     public boolean checkIfTransactionExists(Transaction transaction) {
-        for (Account account : accounts) {
-            if (account.doesTransactionExist(transaction)) return true;
-        } return false;
+        for (Integer id : accounts.keySet()) {
+            if (accounts.get(id).doesTransactionExist(transaction)) return true;
+        }
+        return false;
     }
 
     public LocalDateTime getAccountDate(int accountId) {
@@ -116,12 +119,14 @@ public class User extends Person {
         if (account == null) {
             System.out.println("Account does not exist");
             return null;
-        } return account.getDateOfCreation();
+        }
+        return account.getDateOfCreation();
     }
 
     public BigDecimal getAccountTotal() {
         BigDecimal total = new BigDecimal(0);
-        for (Account account: this.accounts) {
+        for (Integer id : this.accounts.keySet()) {
+            Account account = this.accounts.get(id);
             if (account instanceof AssetAccount) {
                 total = total.add(account.getBalance().setScale(2, BigDecimal.ROUND_HALF_UP));
             } else if (account instanceof DebtAccount) {
@@ -131,74 +136,58 @@ public class User extends Person {
         return total;
     }
 
-    public boolean verifyID(int id){
-        for (Account account : accounts){
-            if(account.getId() == id){
-                return true;
-            }
-        }
-        return false;
+    public boolean verifyID(int id) {
+        return this.accounts.containsKey(id);
     }
 
-    public void defaultTransferIn(BigDecimal amount){
-        try{
+    public void defaultTransferIn(BigDecimal amount) {
+        try {
             getPrimaryAccount().transferMoneyIn(amount);
-        }
-        catch(MoneyTransferException e){
+        } catch (MoneyTransferException e) {
             System.out.println("Money transfer exception when transferring between users. \n" +
                     "Why can't I transfer into my default deposit account?!");
         }
 
     }
 
-    /* Writes to account_creation_requests.txt
-     */
-    public void requestAccount(String accountType){
-        String filePath = "phase2/ATM_0354_phase2/Files/account_creation_requests.txt";
-        if(!(new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(accountType))){
-            System.out.println("Invalid account type for request!");
-            return;
-        }
-        String accountRequest = this.getUsername() + "," + accountType + "," + dateFormat.toString();
-        File file = new File(filePath);
-        try{
+    void requestAccount(String accountType) {
+        String accountRequest = "Individual," + this.getUsername() + "," + accountType + "," + dateFormat.toString();
+        writeLineToAccReq(accountRequest);
+    }
+
+    private void writeLineToAccReq(String accountRequest) {
+        File file = new File("phase2/ATM_0354_phase2/Files/account_creation_requests.txt");
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(accountRequest);
             writer.newLine();
             writer.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when requesting account, writing to txt file.");
         }
+    }
 
+    public void requestJointAccount(User otherUser, String accountType) {
+        String accountRequest = String.join(",", "Joint", this.getUsername(), otherUser.getUsername(), accountType, dateFormat.toString());
+        writeLineToAccReq(accountRequest);
     }
 
     /*
         For storage in people.txt
      */
-    public String writeUser(){
-<<<<<<< HEAD:phase2/ATM_0354_phase2/User.java
+    public String writeUser() {
         StringBuilder str = new StringBuilder("User," + getUsername() + "," + getHash() +
                 "," + getSalt() + "," + getPrimaryAccountId());
-=======
-        StringBuilder str = new StringBuilder("User," + getUsername() + "," + getPassword() +
-                "," + getPrimaryAccountId());
->>>>>>> d7cf3bbacc1ec3134463fda064abf28eec1df873:phase2/ATM_0354_phase2/User.java
-        for (Account account : accounts){
-            str.append(",");
-            str.append(account.getClass().getSimpleName());
-            str.append(",");
-            str.append(account.getBalance());
-            str.append(",");
-            str.append(account.getDateOfCreation().toString());
+
+        for (Integer id : accounts.keySet()) {
+            Account account = this.accounts.get(id);
+            str.append(String.join(",", "", account.getClass().getSimpleName(), account.getBalance().toString(), account.getDateOfCreation().toString()));
         }
         return str.toString();
     }
 
-    public void writeTransactions() {
-        for (Account account : accounts){
-            account.writeTransactions();
-        }
+    void writeTransactions() {
+        this.accounts.forEach((id, account) -> account.writeTransactions());
     }
 }
