@@ -27,7 +27,7 @@ public class UndoTransactionMethod implements InputMethod {
             }
 
             try {
-                ((BankDaddy) Main.atm.getCurUser()).undoRecentTransaction((User) currUser, accountId);
+                ((BankManager) Main.atm.getCurUser()).undoRecentTransaction((User) currUser, accountId);
             } catch (MoneyTransferException e) {
                 e.printStackTrace();
                 return "BankManagerOptions";

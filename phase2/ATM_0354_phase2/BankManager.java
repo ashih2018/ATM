@@ -1,8 +1,8 @@
 package ATM_0354_phase2;
 
-public class BankDaddy extends BankEmployee {
+public class BankManager extends Person {
 
-    public BankDaddy(String username, String password, String salt) {
+    public BankManager(String username, String password, String salt) {
         super(username, password, salt);
     }
 

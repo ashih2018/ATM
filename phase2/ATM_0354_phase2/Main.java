@@ -218,7 +218,7 @@ public class Main {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
             for (Person person : atm.userHandler.users){
-                if(person instanceof BankDaddy){
+                if(person instanceof BankManager){
                     writer.write("BankManager," + person.getUsername() + "," + person.getHash()
                             + "," + person.getSalt());
                     writer.newLine();

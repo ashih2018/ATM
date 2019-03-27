@@ -1,5 +1,7 @@
 package ATM_0354_phase2.inputMethods;
 
+import ATM_0354_phase2.ATM;
+import ATM_0354_phase2.BankManager;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
@@ -11,6 +13,25 @@ public class    UserCreationScreenMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("========== User Creation ==========");
         while (true) {
+            System.out.println("What type of account are you creating?\nA. User\nB. Employee");
+            System.out.println(">");
+            String type = in.nextLine();
+            while(true){
+                if (type.equalsIgnoreCase("user") || type.equalsIgnoreCase("a")){
+                    type = "User";
+                    break;
+                }
+                else if (type.equalsIgnoreCase("employee") || type.equalsIgnoreCase("b")){
+                    type = "BankEmployee";
+                    break;
+                }
+                else{
+                    System.out.println("That is not a valid type.");
+                    System.out.println("Please enter\nA. User\nB. Employee");
+                    System.out.println(">");
+                    type = in.nextLine();
+                }
+            }
             System.out.println("What is the new user's username? Use only alphanumeric characters.");
             System.out.print(">");
             String username = in.nextLine();
@@ -37,12 +58,15 @@ public class    UserCreationScreenMethod implements InputMethod {
                 System.out.print(">");
                 password = in.nextLine();
             }
-            Main.atm.createPerson("User", username, password, null);
+            Main.atm.createPerson(type, username, password, null);
             System.out.println("Would you like to create another user? (yes/no)");
             System.out.print(">");
             boolean anotherUser = in.nextLine().equals("yes");
             if (!anotherUser) break;
         }
-        return "BankManagerOptions";
+        if(Main.atm.getCurUser() instanceof BankManager)
+            return "BankManagerOptions";
+        else
+            return "BankEmployeeOptions";
     }
 }

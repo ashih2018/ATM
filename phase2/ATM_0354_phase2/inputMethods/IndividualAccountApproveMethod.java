@@ -1,5 +1,6 @@
 package ATM_0354_phase2.inputMethods;
 
+import ATM_0354_phase2.BankManager;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 import ATM_0354_phase2.User;
@@ -77,6 +78,9 @@ public class IndividualAccountApproveMethod implements InputMethod {
             System.out.println(e.toString());
             System.out.println("IOException caught when reading file in IndividualAccountApproveMethod.");
         }
-        return "BankManagerOptions";
+        if(Main.atm.getCurUser() instanceof BankManager)
+            return "BankManagerOptions";
+        else
+            return "BankEmployeeOptions";
     }
 }

@@ -1,5 +1,6 @@
 package ATM_0354_phase2.inputMethods;
 
+import ATM_0354_phase2.BankManager;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
@@ -49,7 +50,12 @@ public class RefillCashMethod implements InputMethod {
             System.out.println("Would you like to restock again?");
             System.out.println(">");
             boolean repeat = in.nextLine().equals("yes");
-            if (!repeat) return "BankManagerOptions";
+            if (!repeat) {
+                if(Main.atm.getCurUser() instanceof BankManager)
+                    return "BankManagerOptions";
+                else
+                    return "BankEmployeeOptions";
+            }
         }
     }
 }

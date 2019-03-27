@@ -46,7 +46,10 @@ public class UserHandler {
      */
     public void createUser(String type, String username, String password, String salt){
         if(type.equals("BankManager")){
-            users.add(new BankDaddy(username, password, salt));
+            users.add(new BankManager(username, password, salt));
+        }
+        else if(type.equals("BankEmployee")){
+            users.add(new BankEmployee(username, password, salt));
         }
         else{
             users.add(new User(username, password, salt));
