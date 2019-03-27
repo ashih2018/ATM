@@ -111,9 +111,9 @@ function listMessages(auth) {
                                 // Analyze attachment
                                 imageAs64bitString = res.data.data;
                                 buff = new Buffer(imageAs64bitString, 'base64');
-                                fs.writeFileSync('test.png', buff);
+                                fs.writeFileSync('image.png', buff);
 
-                                Tesseract.recognize('./test.png')
+                                Tesseract.recognize('./image.png')
                                     .then(function(res) {
                                         console.log(`The result is: \n${res.text}`)
 
