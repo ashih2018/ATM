@@ -22,7 +22,7 @@ public class ChangePasswordMethod implements InputMethod {
         }
         System.out.println("What would you like your new password to be?");
         System.out.print(">");
-        String password1 = in.nextLine();
+        String password1 = VerifyInputs.verifyNewPassword(in);
         Main.atm.getCurUser().setPassword(password1);
         return "UserOptions";
     }

@@ -33,7 +33,8 @@ public class Main {
         } else {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
-            atm.setDateTime(LocalDateTime.parse(date));
+            LocalDateTime curDate = LocalDateTime.parse(date).plusDays(1);
+            nextDay(curDate);
             ArrayList<CashObject> cash = new ArrayList<>();
             while (atmFileIn.hasNextLine()) { //update cash amounts
                 String[] lineInput = atmFileIn.nextLine().split(",");
@@ -47,7 +48,10 @@ public class Main {
 
         generateUI(new Scanner(System.in)); //Set up for console input
     }
-
+    private static void nextDay(LocalDateTime curDate){
+        atm.setDateTime(curDate);
+        //TODO: Add functionality for interest, month changing, etc
+    }
     private static void parseTransactions() throws IOException {
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         while (in.hasNextLine()) {
@@ -159,7 +163,6 @@ public class Main {
         }
     }
 
-    //TODO: Check two methods below.
     public static List<String> parseDeposits() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));

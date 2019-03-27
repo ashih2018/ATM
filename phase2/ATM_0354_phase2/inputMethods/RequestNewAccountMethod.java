@@ -30,11 +30,11 @@ public class RequestNewAccountMethod implements InputMethod {
             if (joint) {
                 System.out.println("Who would you like to open the account with?");
                 System.out.print(">");
-                otherUser = verifyUser(in);
+                otherUser = VerifyInputs.verifyUser(in);
             }
             System.out.println("What kind of account would you like? You can open a 'credit card' account, 'line of credit' account, 'chequing' account, or 'savings' account.");
             System.out.print(">");
-            String input = verifyAccountType(in);
+            String input = VerifyInputs.verifyAccountType(in);
             if (joint) Main.atm.requestJointAccount((User) Main.atm.getCurUser(), otherUser, input);
             else Main.atm.requestCurAccount(input);
             System.out.print("Would you like to request to open another account? (yes/no) \n>");
@@ -43,23 +43,4 @@ public class RequestNewAccountMethod implements InputMethod {
 
     }
 
-    private User verifyUser(Scanner in) {
-        String input = in.nextLine();
-        if (Main.atm.usernameExists(input) && Main.atm.getUser(input) instanceof User)
-            return (User) Main.atm.getUser(input);
-
-        System.out.println("Not a valid username.");
-        System.out.print(">");
-        return verifyUser(in);
-    }
-
-    private String verifyAccountType(Scanner in) {
-        String input = in.nextLine();
-        if (new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(input)) {
-            return input;
-        }
-        System.out.println("Invalid account type.");
-        System.out.print(">");
-        return verifyAccountType(in);
-    }
 }

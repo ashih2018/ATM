@@ -12,29 +12,10 @@ public class SetUpBankManagerMethod implements InputMethod {
         System.out.println("Create a login for the Bank Manager: ");
         System.out.println("Create a Username. Only use alphanumeric characters: ");
         System.out.print(">");
-        String username = in.nextLine();
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]*$");
-
-        while (!p.matcher(username).matches() || Main.atm.usernameExists(username)) {
-            if (!p.matcher(username).matches()) {
-                System.out.println("Invalid character in username. Please only use alphanumeric characters (A-Z, a-z, 0-9)\n Please enter a different username");
-                System.out.print(">");
-                username = in.nextLine();
-            } else if (Main.atm.usernameExists(username)) {
-                System.out.println("That username already exists or is invalid. \n Please enter a different username.");
-                System.out.print(">");
-                username = in.nextLine();
-            }
-        }
+        String username =VerifyInputs.verifyNewUsername(in);
         System.out.println("Create a Password. Only use alphanumeric characters: ");
         System.out.print(">");
-        String password = in.nextLine();
-        while (!p.matcher(password).matches()) {
-            System.out.println("Invalid character in password. Please only use alphanumeric characters (A-Z, a-z, 0-9)\n Please enter a different username");
-            System.out.print(">");
-            password = in.nextLine();
-        }
-
+        String password =VerifyInputs.verifyNewPassword(in);
         System.out.println("Your username is: " + username +" and your password is: "+password);
         Main.atm.createPerson("BankManager", username, password, null);
         return "Login";
