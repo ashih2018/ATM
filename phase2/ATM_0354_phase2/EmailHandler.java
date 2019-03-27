@@ -10,9 +10,8 @@ public class EmailHandler {
     private Session session;
 
     public EmailHandler() {
-        //TODO: create an email to use
-        this.email = "_________@gmail.com";
-        this.password = "________";
+        this.email = "CSC207.bank0354@gmail.com";
+        this.password = "bankdaddy1234";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");

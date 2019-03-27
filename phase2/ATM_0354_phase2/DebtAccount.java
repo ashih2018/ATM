@@ -17,10 +17,6 @@ public abstract class DebtAccount extends Account {
         this.setBalance(this.getBalance().subtract(value.setScale(2, BigDecimal.ROUND_HALF_UP)));
     }
 
-    public void increaseDebt(BigDecimal value) {
-        this.setBalance(this.getBalance().add(value.setScale(2, BigDecimal.ROUND_HALF_UP)));
-    }
-
     @Override
     public String toString() {
         return "Account ID: " + this.getId() + "\nAmount Owed: " + this.getBalance();

@@ -5,7 +5,6 @@ import ATM_0354_phase2.*;
 import java.util.Scanner;
 
 public class UndoTransactionMethod implements InputMethod {
-    //TODO: Complete this
     @Override
     public String run(Scanner in) {
         System.out.println("========== Undo Transaction ==========");
@@ -28,7 +27,7 @@ public class UndoTransactionMethod implements InputMethod {
             }
 
             try {
-                ((BankDaddy) Main.atm.getCurUser()).undoRecentTransaction((User) currUser, accountId);
+                ((BankManager) Main.atm.getCurUser()).undoRecentTransaction((User) currUser, accountId);
             } catch (MoneyTransferException e) {
                 e.printStackTrace();
                 return "BankManagerOptions";

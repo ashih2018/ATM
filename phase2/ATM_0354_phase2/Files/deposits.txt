@@ -1,1 +1,1 @@
-cash, 25
+cheque, 2000

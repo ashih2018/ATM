@@ -97,7 +97,7 @@ public class ATM {
      * @return A String representation of the current user's accounts.
      */
     public String viewCurAccounts(){
-        return this.viewAccount((User)this.curUser);
+        return this.viewAccounts((User)this.curUser);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ATM {
      * @param user The user whose account we want a summary of.
      * @return A String representation of the user's accounts.
      */
-    private String viewAccount(User user) {
+    private String viewAccounts(User user) {
         return user.getSummary();
     }
     /**
@@ -136,6 +136,10 @@ public class ATM {
      */
     public void requestAccount(User user, String accountType){
         user.requestAccount(accountType);
+    }
+
+    public void requestJointAccount(User curUser, User otherUser, String accountType){
+        curUser.requestJointAccount(otherUser, accountType);
     }
 
     /**

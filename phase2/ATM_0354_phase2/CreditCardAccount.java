@@ -14,15 +14,9 @@ public class CreditCardAccount extends DebtAccount {
         super(username, id, balance, dateOfCreation, transactions);
         this.setTransferOut(false);
     }
-    @Override
-    public void increaseDebt(BigDecimal value) throws UnsupportedOperationException{
-        // TODO: Remove increaseDebt from parent class and add it to children that need it i.e. LineOfCreditAccount
-        throw new UnsupportedOperationException(
-                "An ATM can't increase the debt on this class (" + this.getClass() + ")");
-    }
 
     @Override
     public String toString() {
-        return "Credit Card Account: " + "\n" + super.toString();
+        return "Credit Card Account " + "\n" + super.toString();
     }
 }

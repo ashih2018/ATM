@@ -19,6 +19,7 @@ public class InputHandler {
         inputMap.put("UndoTransaction", new UndoTransactionMethod());
 
         inputMap.put("UserOptions", new UserOptionsMethod());
+        inputMap.put("BankEmployeeOptions", new BankEmployeeOptionsMethod());
         //User Options
         inputMap.put("AccountView", new AccountViewMethod());
         inputMap.put("RequestNewAccount", new RequestNewAccountMethod());

@@ -33,7 +33,8 @@ public class Main {
         } else {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
-            atm.setDateTime(LocalDateTime.parse(date));
+            LocalDateTime curDate = LocalDateTime.parse(date).plusDays(1);
+            nextDay(curDate);
             ArrayList<CashObject> cash = new ArrayList<>();
             while (atmFileIn.hasNextLine()) { //update cash amounts
                 String[] lineInput = atmFileIn.nextLine().split(",");
@@ -47,7 +48,10 @@ public class Main {
 
         generateUI(new Scanner(System.in)); //Set up for console input
     }
-
+    private static void nextDay(LocalDateTime curDate){
+        atm.setDateTime(curDate);
+        //TODO: Add functionality for interest, month changing, etc
+    }
     private static void parseTransactions() throws IOException {
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         while (in.hasNextLine()) {
@@ -159,7 +163,6 @@ public class Main {
         }
     }
 
-    //TODO: Check two methods below.
     public static List<String> parseDeposits() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
@@ -178,7 +181,7 @@ public class Main {
         }
     }
 
-    public void outgoingHandlerThingy() {
+    public void outgoingHandler() {
         try {
             String outgoingPath = "phase2/ATM_0354_phase2/Files/outgoing.txt";
             BufferedWriter br = new BufferedWriter(new FileWriter(outgoingPath, true));
@@ -195,7 +198,6 @@ public class Main {
         writeATM();
         writePeople();
         writeTransactions();
-        //TODO: Write a whole bunch of other things too!
     }
 
     private static void writeATM() {
@@ -219,7 +221,7 @@ public class Main {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
             for (Person person : atm.userHandler.users){
-                if(person instanceof BankDaddy){
+                if(person instanceof BankManager){
                     writer.write("BankManager," + person.getUsername() + "," + person.getHash()
                             + "," + person.getSalt());
                     writer.newLine();

@@ -54,19 +54,23 @@ public class DepositMoneyMethod implements InputMethod {
                 }
 
                 System.out.println("Select a deposit by inputting 'deposit_type, amount': ");
+                System.out.println("=================================");
                 System.out.print(">");
-                String input;
+                in.nextLine(); //honestly don't know why this works but it does
 
+                String input = in.nextLine();
                 while (true) {
-                    input = in.nextLine();
+                    System.out.println("Input: "+input);
                     if (all_deposits.contains(input)) {
                         all_deposits.remove(input);
                         break;
                     }
                     else {
+                        System.out.println("input");
                         System.out.println("Invalid deposit.");
                         System.out.println("Select a deposit by inputting 'deposit_type, amount': ");
                         System.out.print(">");
+                        input = in.nextLine();
                     }
                 }
 
