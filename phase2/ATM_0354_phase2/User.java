@@ -9,8 +9,6 @@ import java.util.*;
 
 
 public class User extends Person {
-
-    //    private ArrayList<Account> accounts;
     private Map<Integer, Account> accounts;
     AccountFactory accountFactory;
     private Date creationDate;

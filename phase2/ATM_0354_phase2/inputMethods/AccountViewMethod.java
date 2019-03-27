@@ -10,15 +10,12 @@ public class AccountViewMethod implements InputMethod {
     public String run(Scanner in) {
         String accountSummary = Main.atm.viewCurAccounts();
         System.out.println("======= Account Summary =======");
-        System.out.println("Total: "+Main.atm.getCurMoney()+"\n");
+        System.out.println("Total: "+Main.atm.getCurMoney());
         System.out.println(accountSummary.equals("")?"No accounts":accountSummary);
-        // weird flex but ok sky.
         System.out.println("You can 'request account' or input anything else to go back");
         System.out.print(">");
         String input = in.nextLine();
-        if(input.equals("request account")){
-            return "RequestNewAccount";
-        }
+        if(input.equals("request account")) return "RequestNewAccount";
         return "UserOptions";
     }
 }
