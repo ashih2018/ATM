@@ -14,10 +14,10 @@ public class UserOptionsMethod implements InputMethod {
         System.out.println("Options:");
         if (!isEmployee) {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'logout'");
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'get an email account summary' \nG. 'logout'");
         } else {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'logout'\nG. 'view employee options'");
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'get an email account summary' \nG. 'logout'\nH. 'view employee options'");
         }
         System.out.println("What would you like to do?");
         System.out.print(">");
