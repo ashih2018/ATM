@@ -43,6 +43,7 @@ public class Main {
             atm.cashHandler = new CashHandler(cash);
             parseUsers(fileIn); //Also sets up accounts
             parseTransactions();
+            addInterest();
             state = "Login";
         }
 
@@ -66,7 +67,7 @@ public class Main {
                     int accountFromId = Integer.parseInt(userTransactions[3]);
                     BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
                     LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
-                    newTransaction = new Bill(curUser.getAccount(accountFromId), value);
+                    newTransaction = new Bill("", curUser.getAccount(accountFromId), value);
                     relevantAccs.add(curUser.getAccount(accountFromId));
                     break;
                 }
@@ -260,6 +261,22 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when resetting the program.");
+        }
+    }
+
+    private static void addInterest() {
+        if(atm.getDateTime().getDayOfMonth() == 1){
+            for (Person user : atm.userHandler.users){
+                if(user instanceof  User){
+                    for (int i = 0; i < ((User) user).getNumAccounts(); i++){
+                        Account account = ((User) user).getAccount(i);
+                        if (account instanceof  SavingsAccount){
+                            ((SavingsAccount) account).addInterest();
+                        }
+                    }
+                }
+
+            }
         }
     }
 }
