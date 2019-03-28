@@ -63,7 +63,8 @@ public class ChequeHandler {
                 amount = Double.parseDouble(amountString);
 
                 // TODO: send money to each account and send a request to the database to delete the cheque
-                // TODO: Make a delete request method
+
+                sendDelete(id);
             }
 
         } catch (Exception e) {
@@ -71,7 +72,7 @@ public class ChequeHandler {
         }
     }
 
-    private String sendGet() throws Exception{
+    private String sendGet() throws Exception {
         URL url = new URL(uri + "/all");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -80,7 +81,7 @@ public class ChequeHandler {
 
         int responseCode = connection.getResponseCode();
 
-        System.out.println("\nSending 'GET' request to URL : " + uri);
+        System.out.println("\nSending 'GET' request to URL: " + uri);
         System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -92,5 +93,19 @@ public class ChequeHandler {
         }
         in.close();
         return response.toString();
+    }
+
+    private void sendDelete(String id) throws Exception {
+        URL url = new URL(uri + id + "/delete");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("DELETE");
+        connection.setRequestProperty("Content-Type", "application/json");
+
+        int responseCode = connection.getResponseCode();
+
+        System.out.println("\nSending 'DELETE' request to URL: " + uri);
+        System.out.println("Response Code: " + responseCode);
+
     }
 }
