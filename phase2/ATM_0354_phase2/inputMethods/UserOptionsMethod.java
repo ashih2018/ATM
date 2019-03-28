@@ -39,11 +39,14 @@ public class UserOptionsMethod implements InputMethod {
                 case "pay bills":
                 case "e":
                     return "PayBills";
-                case "logout":
+                case "get an email account summary":
                 case "f":
+                    return "SendEmailSummary";
+                case "logout":
+                case "g":
                     return "Logout";
                 case "view employee options":
-                case "g":
+                case "h":
                     if (isEmployee) return "BankEmployeeOptions";
                     else return "UserOptions";
                 default:

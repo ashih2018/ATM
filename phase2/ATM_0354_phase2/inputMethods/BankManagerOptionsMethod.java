@@ -32,11 +32,14 @@ public class BankManagerOptionsMethod implements InputMethod {
                 case "undo recent transactions":
                 case "d":
                     return "UndoTransaction";
-                case "logout":
+                case "process email cheques":
                 case "e":
+                    return "ProcessEmailCheques";
+                case "logout":
+                case "f":
                     return "Logout";
                 case "shutdown":
-                case "f":
+                case "g":
                     return "Shutdown";
                 default:
                     System.out.println("Invalid option, please try again.");

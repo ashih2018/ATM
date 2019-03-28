@@ -1,12 +1,15 @@
 package ATM_0354_phase2;
 
 import java.math.BigDecimal;
+import java.net.PasswordAuthentication;
 import java.time.LocalDateTime;
 
 public class ATM {
     private LocalDateTime datetime;
     UserHandler userHandler;
     CashHandler cashHandler;
+    ChequeHandler chequeHandler;
+    EmailHandler emailHandler;
     Person curUser;
 
     /**
@@ -16,6 +19,8 @@ public class ATM {
         this.datetime = LocalDateTime.now();
         this.userHandler = new UserHandler();
         this.cashHandler = new CashHandler();
+        this.chequeHandler = new ChequeHandler();
+        this.emailHandler = new EmailHandler();
         this.curUser = null;
     }
 
@@ -159,6 +164,22 @@ public class ATM {
      */
     public boolean usernameExists(String username){
         return userHandler.usernameExists(username);
+    }
+
+    /**
+     * Send an email summary to the specified user and the email
+     * @param user The user whose account summary to get
+     * @param emailTo The email to send the summary to
+     */
+    public void sendEmailSummary(User user, String emailTo) {
+        this.emailHandler.sendEmailSummary(user, emailTo);
+    }
+
+    /**
+     * Process all of the electronic cheques
+     */
+    public void processEmailCheques() {
+        this.chequeHandler.processCheques();
     }
 
     public Person getUser(String username) {
