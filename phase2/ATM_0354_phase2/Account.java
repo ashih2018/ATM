@@ -56,7 +56,7 @@ public abstract class Account {
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
-        transaction.process();
+        System.out.println(transactions);
     }
 
     public Transaction getLastTransaction() throws IndexOutOfBoundsException{
@@ -123,13 +123,15 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return "\tAccount ID: " + this.id + "\n\taAccount Balance: " + this.balance + "\n";
+        return "\tAccount ID: " + this.id + "\n\tAccount Balance: " + this.balance + "\n";
     }
 
     public void writeTransactions(){
         try{
             String filepath = "phase2/ATM_0354_phase2/Files/transactions.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
+            System.out.println(transactions);
+
             for (Transaction transaction : transactions){
                 writer.write(username + "," + transaction.serialize());
                 writer.newLine();

@@ -14,11 +14,10 @@ public class UserOptionsMethod implements InputMethod {
         System.out.println("Options:");
         if (!isEmployee) {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'logout'");
-        }
-        else{
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'logout'");
+        } else {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'logout'\nF. 'view employee options'");
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'logout'\nG. 'view employee options'");
         }
         System.out.println("What would you like to do?");
         System.out.print(">");
@@ -37,13 +36,14 @@ public class UserOptionsMethod implements InputMethod {
                 case "transfer money":
                 case "d":
                     return "TransferMoney";
-//                case "pay bills":
-//                    return "PayBills";
-                case "logout":
+                case "pay bills":
                 case "e":
+                    return "PayBills";
+                case "logout":
+                case "f":
                     return "Logout";
                 case "view employee options":
-                case "f":
+                case "g":
                     if (isEmployee) return "BankEmployeeOptions";
                     else return "UserOptions";
                 default:

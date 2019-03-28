@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class PayBillsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
-        System.out.println("Who would you like to pay a bill to?\n>");
+        System.out.print("Who would you like to pay a bill to?\n>");
         User curUser = (User)Main.atm.getCurUser();
         String destination = in.nextLine();
         System.out.println("==== Your Accounts ====");
@@ -22,11 +22,12 @@ public class PayBillsMethod implements InputMethod {
             in.nextLine();
             return "UserOptions";
         }
-        System.out.println("Which account will you use to pay?\n>");
+        System.out.print("Which account will you use to pay?\n>");
         int id = VerifyInputs.verifyAccountId(in, curUser);
-        System.out.println("How much will you pay?\n>");
+        System.out.print("How much will you pay?\n>");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         curUser.payBill(destination, curUser.getAccount(id), amount);
+        in.nextLine();
         return "UserOptions";
     }
 }

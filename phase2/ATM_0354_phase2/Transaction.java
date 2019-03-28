@@ -15,8 +15,8 @@ public abstract class Transaction {
      * accountFrom can be null iff instanceof Deposit
      * accountTo can be null iff instanceof Bill or Withdrawal
      */
-    public Transaction(@Nullable Account accountFrom, @Nullable Account accountTo, BigDecimal value) {
-        this.date = LocalDateTime.now();
+    public Transaction(@Nullable Account accountFrom, @Nullable Account accountTo, BigDecimal value, LocalDateTime date) {
+        this.date = date;
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.value = value;
@@ -39,17 +39,16 @@ public abstract class Transaction {
         return value;
     }
 
-    public void process(){
-        if(!getAccountFrom().canTransferOut()){
-            System.out.println("Account unable to transfer money out.");
+    public void process() {
+        if (!getAccountFrom().canTransferOut()) {
+            System.out.println("Account unable to withdraw from.");
             return;
         }
-        try{
+        try {
             getAccountFrom().transferMoneyOut(getValue());
             getAccountFrom().addTransaction(this);
-        }
-        catch(MoneyTransferException e){
-            System.out.println(e.toString());
+        } catch (MoneyTransferException e) {
+            e.printStackTrace();
         }
     }
 

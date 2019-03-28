@@ -139,7 +139,7 @@ public class User extends Person {
     }
 
     public void payBill(String destination, Account account, BigDecimal amount){
-        account.addTransaction(new Bill(destination, account, amount));
+        new Bill(destination, account, amount).process();
     }
 
     public void defaultTransferIn(BigDecimal amount) {

@@ -3,10 +3,15 @@ package ATM_0354_phase2;
 import com.sun.istack.internal.NotNull;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Deposit extends Transaction {
     public Deposit (@NotNull Account accountTo, BigDecimal value) {
-        super(null, accountTo, value);
+        super(null, accountTo, value, LocalDateTime.now());
+    }
+
+    public Deposit (@NotNull Account accountTo, BigDecimal value, LocalDateTime date) {
+        super(null, accountTo, value, date);
     }
 
     @Override
@@ -15,7 +20,6 @@ public class Deposit extends Transaction {
             System.out.println("Account unable to transfer money in.");
             return;
         }
-
         try{
             getAccountTo().transferMoneyIn(getValue());
             getAccountTo().addTransaction(this);
@@ -24,12 +28,15 @@ public class Deposit extends Transaction {
             System.out.println(e.toString());
         }
     }
-
+    @Override
+    public String toString(){
+        return String.format("%s: $%f was deposited into %s's account number %d", this.getClass().getSimpleName(),
+                this.getValue().doubleValue(), this.getAccountTo().getUsername(), this.getAccountTo().getId());
+    }
     @Override
     public String serialize() {
-        return this.getClass().getSimpleName()
-                + "," + getAccountTo().getUsername() + "," + getAccountTo().getId()
-                + "," + getValue()
-                + "," + getDate();
+        return String.join(",",
+                this.getClass().getSimpleName(), ((Integer) this.getAccountTo().getId()).toString(),
+                this.getValue().toString(), this.getDate().toString());
     }
 }
