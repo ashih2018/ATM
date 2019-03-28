@@ -2,6 +2,7 @@ package ATM_0354_phase2;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,8 +63,21 @@ public class ChequeHandler {
                 amountString = amountString.replace("\"", "");
                 amount = Double.parseDouble(amountString);
 
-                // TODO: send money to each account and send a request to the database to delete the cheque
+                // send money to each account
+                Boolean bothUsersExist = Main.atm.usernameExists(from) &&  Main.atm.usernameExists(from);
 
+                if (bothUsersExist) {
+                    Account fromAccount = ((User) Main.atm.getUser(from)).getPrimaryAccount();
+                    Account toAccount = ((User) Main.atm.getUser(to)).getPrimaryAccount();
+                    BigDecimal chequeAmount = new BigDecimal(amount);
+
+                    Transaction cheque = new Transfer(fromAccount, toAccount, chequeAmount);
+                    cheque.process();
+                } else {
+                    System.out.println("One of the accounts does not exist, the cheque has been deleted");
+                }
+
+                // send a request to the database to delete the cheque
                 sendDelete(id);
             }
 
