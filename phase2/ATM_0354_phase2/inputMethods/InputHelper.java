@@ -1,9 +1,9 @@
 package ATM_0354_phase2.inputMethods;
 
 
-import ATM_0354_phase2.Main;
-import ATM_0354_phase2.User;
+import ATM_0354_phase2.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * Contains methods to verify various input types
  */
-public class VerifyInputs {
+class VerifyInputs {
     static double verifyDouble(Scanner in){
         try{
             double input = in.nextDouble();
@@ -85,5 +85,64 @@ public class VerifyInputs {
         System.out.println("Invalid account type.");
         System.out.print(">");
         return verifyAccountType(in);
+    }
+}
+class HelperFunctions {
+    static  void transferToOtherUser(int fromId, Scanner in){
+        System.out.println("What is the username of the user you would like to transfer to?");
+        String username;
+        while (true){
+            try{
+                username = in.nextLine();
+                boolean usernameExists = Main.atm.usernameExists(username);
+                if(usernameExists)
+                    break;
+                else{
+                    System.out.println("Username does not exist.");
+                    System.out.println("What is the username of the user you would like to transfer to?");
+                    System.out.println(">");
+                }
+            } catch (ClassCastException e){
+                System.out.println("Invalid username.");
+                System.out.println("What is the username of the user you would like to transfer to?");
+                System.out.println(">");
+            }
+        }
+        System.out.println("How much money would you like to transfer?");
+        System.out.println(">");
+        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+        Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId);
+        Account toAccount = ((User) Main.atm.getUser(username)).getPrimaryAccount();
+        Transaction transfer = new Transfer(fromAccount, toAccount, amount);
+        transfer.process();
+    }
+    static void transferToOwnAccount(int fromId, Scanner in){
+        System.out.println("Which account would you like to transfer to?");
+        System.out.print(">");
+        int id;
+        while(true) {
+            try {
+                id = in.nextInt();
+                boolean idExists = ((User) Main.atm.getCurUser()).verifyID(id);
+                boolean canTransferIn = ((User) Main.atm.getCurUser()).getAccount(id).canTransferIn();
+                if (idExists && canTransferIn)
+                    break;
+                else{
+                    System.out.println("That id is invalid.");
+                    System.out.println("Which account (id) would you like to transfer to?");
+                    System.out.println(">");
+                }
+            } catch (ClassCastException e) {
+                System.out.println("Invalid id");
+                System.out.println("Which account (id) would you like to transfer to?");
+                System.out.print(">");
+            }
+        }
+        System.out.println("How much money would you like to transfer?");
+        System.out.println(">");
+        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+        Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId), toAccount = ((User) Main.atm.getCurUser()).getAccount(id);
+        Transaction transfer = new Transfer(fromAccount, toAccount, amount);
+        transfer.process();
     }
 }

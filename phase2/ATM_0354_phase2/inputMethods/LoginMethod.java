@@ -16,7 +16,7 @@ public class LoginMethod implements InputMethod {
         String password = in.nextLine();
         Person curUser = Main.atm.signIn(username, password);
         if(curUser != null){
-            if(curUser instanceof BankManager){ //TODO: replace with a more sophisticated check if the user is a BankEmployee
+            if(curUser instanceof BankManager){
                 return "BankManagerOptions";
             }
             else{

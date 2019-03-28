@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,7 +17,13 @@ public class Loan extends Transaction {
     private BigDecimal interest;
 
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest) {
-        super(accountTo, null, value);
+        super(accountTo, null, value, LocalDateTime.now());
+        this.price = value;
+        this.interest = interest;
+        this.compound();
+    }
+    public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime date) {
+        super(accountTo, null, value, date);
         this.price = value;
         this.interest = interest;
         this.compound();

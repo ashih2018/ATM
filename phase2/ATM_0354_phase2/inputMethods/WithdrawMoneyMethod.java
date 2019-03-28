@@ -1,8 +1,6 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.InputMethod;
-import ATM_0354_phase2.Main;
-import ATM_0354_phase2.User;
+import ATM_0354_phase2.*;
 
 import java.util.Scanner;
 
@@ -13,6 +11,7 @@ public class WithdrawMoneyMethod implements InputMethod {
         while(true) {
             System.out.println("==== Your Accounts ====");
             String accountSummary = ((User) Main.atm.getCurUser()).getSummary();
+            User curUser = (User) Main.atm.getCurUser();
             System.out.println(accountSummary.equals("") ? "No accounts" : accountSummary); //I love ternary operators
             if (accountSummary.equals("")) {
                 System.out.println("Input anything to go back.");
@@ -20,34 +19,19 @@ public class WithdrawMoneyMethod implements InputMethod {
                 in.nextLine();
                 return "UserOptions";
             } else {
-                int id = askForID(in);
+                int id = VerifyInputs.verifyAccountId(in, curUser);
                 int money = askForMoney(in);
-                boolean success = Main.atm.withdraw((User) Main.atm.getCurUser(), money, id);
-                if(success) {
-                    System.out.println("Would you like to withdraw more money? (Y/N)");
-                    System.out.print(">");
-                    String response = in.nextLine();
-                    boolean cont = response.equals("yes") || response.equalsIgnoreCase("Y");
-                    if (!cont) {
-                        return "UserOptions";
-                    }
-                }
+                Transaction withdrawal = new Withdrawal(curUser.getAccount(id), money);
+                withdrawal.process();
+                System.out.println("Would you like to withdraw more money? (Y/N)");
+                System.out.print(">");
+                String response = in.nextLine();
+                boolean cont = response.equals("yes") || response.equalsIgnoreCase("Y");
+                if (!cont) return "UserOptions";
             }
         }
     }
-    private int askForID(Scanner in){
-        System.out.println("Which account (id) would you like to withdraw from?");
-        System.out.print(">");
-        int id = -1;
-        try {
-            id = in.nextInt();
-        } catch(ClassCastException e){
-            System.out.println("Invalid id");
-            return askForID(in);
-        }
-        //TODO: check if id is within an acceptable range
-        return id;
-    }
+
     private int askForMoney(Scanner in){
         System.out.println("How much money would you like to withdraw?");
         System.out.print(">");

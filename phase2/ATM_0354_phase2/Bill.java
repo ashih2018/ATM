@@ -1,16 +1,18 @@
 package ATM_0354_phase2;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Bill extends Transaction {
     String destination;
 
+    public Bill(String destination, Account accountFrom, BigDecimal value, LocalDateTime date) {
+        super(accountFrom, null, value, date);
+        this.destination = destination;
+    }
     public Bill(String destination, Account accountFrom, BigDecimal value) {
-        super(accountFrom, null, value);
+        super(accountFrom, null, value, LocalDateTime.now());
         this.destination = destination;
     }
 
@@ -22,10 +24,13 @@ public class Bill extends Transaction {
 
     private void writeBill() {
         try {
-            FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(bw);
+            System.out.println("printed to outgoing");
+//            FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
+//            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(new File("phase2/ATM_0354_phase2/Files/outgoing.txt"));
             pw.println(this.toString());
+            pw.close();
+            System.out.println("printed to outgoing");
         } catch (IOException e) {
             System.out.println("IOException writing to outgoing.txt");
         }
@@ -33,14 +38,11 @@ public class Bill extends Transaction {
 
     @Override
     public String serialize() {
-        return this.getClass().getSimpleName()
-                + "," + getAccountFrom().getUsername() + "," + getAccountFrom().getId()
-                + "," + getValue()
-                + "," + getDate();
+        return String.join(",", this.getClass().getSimpleName(), this.destination, ((Integer)this.getAccountFrom().getId()).toString(), this.getValue().toString(), this.getDate().toString());
     }
 
     @Override
     public String toString() {
-        return "Account ID Number " + getAccountFrom() + " paid a $" + getValue() + " bill to " + this.destination;
+        return "Account ID Number " + getAccountFrom().getId() + " paid a $" + getValue() + " bill to " + this.destination;
     }
 }
