@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public class CreditCardAccount extends DebtAccount {
 
     public CreditCardAccount(String username, int id) {
-        super(username, id);
+        super(username, id, new BigDecimal(1000));
         this.setTransferOut(false);
     }
     public CreditCardAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
-        super(username, id, balance, dateOfCreation, transactions);
+        super(username, id, balance, dateOfCreation, transactions, new BigDecimal(1000));
         this.setTransferOut(false);
     }
 

@@ -1,3 +1,2 @@
-cash, 100000
-cash, 100
-cheque, 50
+cash, 150
+cheque, 3000

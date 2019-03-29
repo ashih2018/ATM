@@ -11,18 +11,18 @@ public class SavingsAccount extends AssetAccount {
     public SavingsAccount(String username, int id) {
         super(username, id);
         this.setMinimumAllowedBalance(new BigDecimal(0));
-        this.interest = new BigDecimal(0.001);
+        this.interest = new BigDecimal(0.03);
     }
     public SavingsAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         super(username, id, balance, dateOfCreation, transactions);
         this.setMinimumAllowedBalance(new BigDecimal(0));
-        this.interest = new BigDecimal(0.001);
+        this.interest = new BigDecimal(0.03);
     }
 
-    public void addInterest() throws MoneyTransferException {
+    public void addInterest(){
         // TODO: Do we need to add this as a transaction???
         // TODO: ATM should add interest to each SavingsAccount on the 1st of every month?
-        this.transferMoneyIn(this.getBalance().multiply(this.interest));
+        this.setBalance(this.getBalance().multiply(interest.add(BigDecimal.ONE)));
     }
 
     @Override
