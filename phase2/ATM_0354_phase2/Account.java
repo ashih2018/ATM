@@ -89,8 +89,8 @@ public abstract class Account {
         return this.id;
     }
 
-    public Transaction undoTransaction() {
-        return this.transactions.remove(this.transactions.size() - 1);
+    public void undoTransaction(Transaction transaction) {
+        this.transactions.remove(transaction);
     }
 
     public boolean canTransferIn() {

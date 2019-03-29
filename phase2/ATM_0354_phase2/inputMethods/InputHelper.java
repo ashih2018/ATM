@@ -25,10 +25,18 @@ class VerifyInputs {
     }
     static int verifyInt(Scanner in){
         try{
-            return in.nextInt();
+            int input = in.nextInt();
+            if(input > 0)
+                return in.nextInt();
+            else {
+                System.out.println("Invalid number, please try again");
+                System.out.print(">");
+                return verifyInt(in);
+            }
+
         }catch (ClassCastException e){
             System.out.println("Invalid number, please try again");
-            System.out.println(">");
+            System.out.print(">");
             return verifyInt(in);
         }
     }
@@ -109,16 +117,16 @@ class HelperFunctions {
                 else{
                     System.out.println("Username does not exist.");
                     System.out.println("What is the username of the user you would like to transfer to?");
-                    System.out.println(">");
+                    System.out.print(">");
                 }
             } catch (ClassCastException e){
                 System.out.println("Invalid username.");
                 System.out.println("What is the username of the user you would like to transfer to?");
-                System.out.println(">");
+                System.out.print(">");
             }
         }
         System.out.println("How much money would you like to transfer?");
-        System.out.println(">");
+        System.out.print(">");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId);
         Account toAccount = ((User) Main.atm.getUser(username)).getPrimaryAccount();
@@ -156,7 +164,7 @@ class HelperFunctions {
                 else{
                     System.out.println("That id is invalid.");
                     System.out.println("Which account (id) would you like to transfer to?");
-                    System.out.println(">");
+                    System.out.print(">");
                 }
             } catch (ClassCastException e) {
                 System.out.println("Invalid id");
@@ -165,7 +173,7 @@ class HelperFunctions {
             }
         }
         System.out.println("How much money would you like to transfer?");
-        System.out.println(">");
+        System.out.print(">");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId), toAccount = ((User) Main.atm.getCurUser()).getAccount(id);
         Transaction transfer = new Transfer(fromAccount, toAccount, amount);

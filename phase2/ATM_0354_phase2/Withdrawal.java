@@ -22,4 +22,23 @@ public class Withdrawal extends Transaction {
                 this.getClass().getSimpleName(), ((Integer) this.getAccountTo().getId()).toString(),
                 this.getValue().toString(), this.getDate().toString());
     }
+
+    @Override
+    public String view() {
+        return String.format("Withdrawal of %f from %s's account %d", this.getValue().doubleValue(), this.getAccountFrom().getUsername(), this.getAccountFrom().getId());
+    }
+
+    @Override
+    public void undo() {
+        this.getAccountFrom().forceTransferIn(this.getValue());
+        this.getAccountFrom().undoTransaction(this);
+        int[] cashValues = {50, 20, 10, 5};
+        int money = this.getValue().intValue();
+        for(int value: cashValues){
+            int numBills = money / value;
+            money -= numBills*value;
+            Main.atm.cashHandler.addCash(value, numBills);
+        }
+
+    }
 }

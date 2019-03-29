@@ -14,7 +14,7 @@ public class UserCreationScreenMethod implements InputMethod {
         System.out.println("========== User Creation ==========");
         while (true) {
             System.out.println("What type of user are you creating?\nA. Customer\nB. Employee");
-            System.out.println(">");
+            System.out.print(">");
             String type = in.nextLine();
             while(true){
                 if (type.equalsIgnoreCase("customer") || type.equalsIgnoreCase("a")){
@@ -28,7 +28,7 @@ public class UserCreationScreenMethod implements InputMethod {
                 else{
                     System.out.println("That is not a valid type.");
                     System.out.println("Please enter\nA. User\nB. Employee");
-                    System.out.println(">");
+                    System.out.print(">");
                     type = in.nextLine();
                 }
             }

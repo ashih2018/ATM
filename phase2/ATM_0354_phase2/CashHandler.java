@@ -50,7 +50,6 @@ public class CashHandler{
             System.out.println("The ATM doesn't have that much money.");
             return false;
         }
-        int[] cashValues = {50, 20, 10, 5};
         this.cash.sort(Collections.reverseOrder());
         for(CashObject cash1: this.cash){
             int numBills = Math.min(money / cash1.getCashValue(), cash1.getCount());

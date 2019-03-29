@@ -207,7 +207,25 @@ public class User extends Person {
                 }
         }
     }
-
+    ArrayList<Transaction> getTransactions(){
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        for (Account account : this.accounts.values()) {
+            for (Transaction transaction : account.getTransactions()){
+                transactions.add(transaction);
+            }
+        }
+        transactions.sort(Comparator.comparing(Transaction::getDate));
+        Collections.reverse(transactions);
+        return transactions;
+    }
+    public String transactionHistory(){
+        StringBuilder out = new StringBuilder();
+        ArrayList<Transaction> transactions = getTransactions();
+        out.append(String.format("%d", transactions.size()));
+        for(int i=0; i<transactions.size(); i++)
+            out.append(String.format("%d: (%s) %s\n", i, transactions.get(i).getDate().toString(), transactions.get(i).view()));
+        return out.toString();
+    }
     public String loanSummary() {
         ArrayList<Loan> loans = getLoans();
         StringBuilder out = new StringBuilder();
@@ -215,7 +233,7 @@ public class User extends Person {
             Loan loan = loans.get(i);
             out.append(i);
             out.append(": ");
-            out.append(loan.viewLoan());
+            out.append(loan.view());
             out.append("\n");
         }
         out.insert(0, String.format("%d;", loans.size()));
@@ -237,5 +255,12 @@ public class User extends Person {
 
     void writeTransactions() {
         this.accounts.forEach((id, account) -> account.writeTransactions());
+    }
+
+    public void undoTransactions(int num) {
+        ArrayList<Transaction> transactions = this.getTransactions();
+        for(int i=0; i<num; i++){
+            transactions.get(i).undo();
+        }
     }
 }
