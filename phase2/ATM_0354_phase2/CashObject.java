@@ -1,6 +1,6 @@
 package ATM_0354_phase2;
 
-public class CashObject{
+public class CashObject implements Comparable{
 
     private final int cashValue;
     private int count;
@@ -23,5 +23,11 @@ public class CashObject{
     public boolean needsRestocking(){
         int restockLimit = 20;
         return count < restockLimit;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        CashObject other = (CashObject)o;
+        return other.getCashValue()-this.getCashValue();
     }
 }

@@ -20,6 +20,8 @@ public class InputHandler {
         inputMap.put("IndividualAccountApprove", new IndividualAccountApproveMethod());
         inputMap.put("RefillCash", new RefillCashMethod());
         inputMap.put("UndoTransaction", new UndoTransactionMethod());
+        inputMap.put("AdminPanel", new AdminPanelMethod());
+
 
         inputMap.put("ProcessEmailCheques", new ProcessEmailChequesMethod());
 

@@ -13,8 +13,8 @@ public class BankManagerOptionsMethod implements InputMethod {
      */
     @Override
     public String run(Scanner in) {
-        System.out.println("======= Bank Manager Panel ========");
-        System.out.println("Options:\nA. 'create users'\nB. 'approve account creation requests'\nC. 'refill cash'\nD. 'undo recent transactions'\nE. 'process email cheques'\nF. 'logout'\nG. 'shutdown'");
+        System.out.println("======= Bank Manager Panel =======");
+        System.out.println("Options:\nA. 'create users'\nB. 'approve account creation requests'\nC. 'refill cash'\nD. 'undo recent transactions'\nE. 'process email cheques'\nF. 'logout'\nG. 'view admin panel'\nH. 'shutdown'");
         System.out.println("What would you like to do?");
         System.out.print(">");
         String input = in.nextLine();
@@ -38,8 +38,11 @@ public class BankManagerOptionsMethod implements InputMethod {
                 case "logout":
                 case "f":
                     return "Logout";
-                case "shutdown":
+                case "view admin panel":
                 case "g":
+                    return "AdminPanel";
+                case "shutdown":
+                case "h":
                     return "Shutdown";
                 default:
                     System.out.println("Invalid option, please try again.");

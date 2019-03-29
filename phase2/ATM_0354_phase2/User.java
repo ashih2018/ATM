@@ -152,18 +152,8 @@ public class User extends Person {
         return this.accounts.containsKey(id);
     }
 
-    public void payBill(String destination, Account account, BigDecimal amount){
+    public void payBill(String destination, Account account, BigDecimal amount) {
         new Bill(destination, account, amount).process();
-    }
-
-    public void defaultTransferIn(BigDecimal amount) {
-        try {
-            getPrimaryAccount().transferMoneyIn(amount);
-        } catch (MoneyTransferException e) {
-            System.out.println("Money transfer exception when transferring between users. \n" +
-                    "Why can't I transfer into my default deposit account?!");
-        }
-
     }
 
     void requestAccount(String accountType) {
@@ -201,6 +191,15 @@ public class User extends Person {
             str.append(String.join(",", "", account.getClass().getSimpleName(), account.getBalance().toString(), account.getDateOfCreation().toString()));
         }
         return str.toString();
+    }
+
+    void newMonth(int deltaMonths) {
+        //TODO: loans
+        for (Account account : this.accounts.values())
+            if (account instanceof SavingsAccount)
+                for (int i = 0; i < deltaMonths; i++) ((SavingsAccount) account).addInterest();
+
+
     }
 
     void writeTransactions() {

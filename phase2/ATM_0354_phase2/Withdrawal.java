@@ -13,8 +13,7 @@ public class Withdrawal extends Transaction {
     }
 
     public void process() {
-        super.process();
-
+        if(Main.atm.cashHandler.withdrawCash(this.getValue().intValue())) super.process();
     }
 
     @Override
@@ -23,5 +22,4 @@ public class Withdrawal extends Transaction {
                 this.getClass().getSimpleName(), ((Integer) this.getAccountTo().getId()).toString(),
                 this.getValue().toString(), this.getDate().toString());
     }
-
 }
