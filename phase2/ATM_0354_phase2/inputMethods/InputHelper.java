@@ -6,6 +6,7 @@ import ATM_0354_phase2.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -118,14 +119,31 @@ class HelperFunctions {
     }
     static void transferToOwnAccount(int fromId, Scanner in){
         System.out.println("Which account would you like to transfer to?");
-        System.out.print(">");
-        int id;
+        int id = -1;
         while(true) {
             try {
-                id = in.nextInt();
+                boolean flag;
+                do {
+                    System.out.print(">");
+                    try
+                    {
+                        id = in.nextInt();
+                        flag=true;
+                    }
+                    catch (InputMismatchException exception)
+                    {
+                        System.out.println("Not a numerical value.");
+                        in.nextLine();
+                        flag = false;
+                    }
+                } while(!flag);
                 boolean idExists = ((User) Main.atm.getCurUser()).verifyID(id);
-                boolean canTransferIn = ((User) Main.atm.getCurUser()).getAccount(id).canTransferIn();
-                if (idExists && canTransferIn)
+                boolean canTransferOut = false;
+                Account userAccount = ((User) Main.atm.getCurUser()).getAccount(id);
+                if (userAccount != null) {
+                    canTransferOut = (((User) Main.atm.getCurUser()).getAccount(id).canTransferOut());
+                }
+                if (idExists && canTransferOut)
                     break;
                 else{
                     System.out.println("That id is invalid.");

@@ -21,7 +21,7 @@ public class Main {
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
     private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MoneyTransferException {
         atm = new ATM();
         ih = new InputHandler();
 
@@ -265,7 +265,7 @@ public class Main {
         }
     }
 
-    private static void addInterest() {
+    private static void addInterest() throws MoneyTransferException {
         if(atm.getDateTime().getDayOfMonth() == 1){
             for (Person user : atm.userHandler.users){
                 if(user instanceof  User){
