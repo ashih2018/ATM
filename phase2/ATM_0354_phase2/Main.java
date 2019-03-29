@@ -272,11 +272,7 @@ public class Main {
                     for (int i = 0; i < ((User) user).getNumAccounts(); i++){
                         Account account = ((User) user).getAccount(i);
                         if (account instanceof  SavingsAccount){
-                            try {
-                                ((SavingsAccount) account).addInterest();
-                            } catch (MoneyTransferException e) {
-                                e.printStackTrace();
-                            }
+                            ((SavingsAccount) account).addInterest();
                         }
                     }
                 }
