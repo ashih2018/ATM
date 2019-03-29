@@ -18,7 +18,7 @@ public class SavingsAccount extends AssetAccount {
         this.setMinimumAllowedBalance(new BigDecimal(0));
         this.interest = new BigDecimal(0.03);
     }
-    
+
     public void addInterest(){
         this.setBalance(this.getBalance().multiply(interest.add(BigDecimal.ONE)));
     }

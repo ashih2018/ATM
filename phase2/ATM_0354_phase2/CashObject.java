@@ -28,6 +28,6 @@ public class CashObject implements Comparable{
     @Override
     public int compareTo(Object o) {
         CashObject other = (CashObject)o;
-        return other.getCashValue()-this.getCashValue();
+        return this.getCashValue()-other.getCashValue();
     }
 }

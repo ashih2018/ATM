@@ -6,6 +6,7 @@ public class BankManager extends Person {
         super(username, password, salt);
     }
 
+    //TODO: Fix undotransactions
     public void undoRecentTransaction(User user, int accountId) throws MoneyTransferException {
         Transaction transaction = user.getAccount(accountId).getLastTransaction();
         if (!(transaction instanceof Bill)) {

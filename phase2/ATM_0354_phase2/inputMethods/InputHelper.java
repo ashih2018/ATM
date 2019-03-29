@@ -51,18 +51,18 @@ class VerifyInputs {
         }
 
     }
-    static int verifyAccountId(Scanner in, User curUser){
+    static int verifyAccountId(Scanner in, User curUser, String action){
         String input = in.nextLine();
         int id;
         try{
             id = Integer.parseInt(input);
             if(curUser.verifyID(id)) return id;
-            else return verifyAccountId(in, curUser);
+            else return verifyAccountId(in, curUser, action);
         } catch (ClassCastException e){
             System.out.println("Invalid id");
-            System.out.println("Which account(id) would you like to deposit into?");
+            System.out.println("Which account(id) would you like to "+action +"?");
             System.out.print(">");
-            return verifyAccountId(in, curUser);
+            return verifyAccountId(in, curUser, action);
         }
     }
     static String verifyNewPassword(Scanner in){

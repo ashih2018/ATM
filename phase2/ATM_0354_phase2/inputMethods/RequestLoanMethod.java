@@ -6,6 +6,7 @@ import ATM_0354_phase2.Main;
 import ATM_0354_phase2.User;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,40 +15,17 @@ public class RequestLoanMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("How much money would you like to loan out?");
         System.out.print(">");
-        BigDecimal loanAmount = new BigDecimal(in.nextInt());
+        BigDecimal loanAmount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+        System.out.println("How many months would you like to loan for?");
+        System.out.println(">");
+        int months = VerifyInputs.verifyInt(in);
         System.out.println("Which account (id) would you like to loan into?");
-        int id = -1;
-        while(true) {
-            try {
-                boolean flag;
-                do {
-                    System.out.print(">");
-                    try
-                    {
-                        id = in.nextInt();
-                        flag=true;
-                    }
-                    catch (InputMismatchException exception)
-                    {
-                        System.out.println("Not a numerical value.");
-                        in.nextLine();
-                        flag = false;
-                    }
-                } while(!flag);
-                boolean idExists = ((User) Main.atm.getCurUser()).verifyID(id);
-                if (idExists)
-                    break;
-                else{
-                    System.out.println("Invalid id");
-                    System.out.println("Which account (id) would you like to loan into?");
-                }
-            } catch (ClassCastException e) {
-                System.out.println("Invalid id");
-                System.out.println("Which account (id) would you like to loan into?");
-                System.out.print(">");
-            }
-        }
-        Loan loan = new Loan((((User) Main.atm.getCurUser()).getAccount(id)), loanAmount, new BigDecimal(4));
+        User curUser = (User) Main.atm.getCurUser();
+        int id = VerifyInputs.verifyAccountId(in,curUser, "loan into" );
+
+        LocalDateTime tmpDate = Main.atm.getDateTime().plusMonths(months+1);
+        LocalDateTime endDate = LocalDateTime.of(tmpDate.getYear(), tmpDate.getMonth(), 1,0, 0); //always ends on the first of the next month
+        Loan loan = new Loan(curUser.getAccount(id), loanAmount, new BigDecimal(4), endDate);
         loan.process();
         in.nextLine();
         return "UserOptions";

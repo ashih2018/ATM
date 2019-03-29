@@ -97,6 +97,14 @@ public class Main {
                     relevantAccs.add(curUser.getAccount(accountFromId));
                     break;
                 }
+                case "Loan":{
+                    int accountToId = Integer.parseInt(userTransactions[3]);
+                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
+                    BigDecimal interest = BigDecimal.valueOf(Double.parseDouble(userTransactions[5]));
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[6]);
+                    LocalDateTime endDate = LocalDateTime.parse(userTransactions[7]);
+                    newTransaction = new Loan(curUser.getAccount(accountToId), value, interest, date, endDate);
+                }
                 default:
                     System.out.println("transactions.txt has an invalid format");
                     break;

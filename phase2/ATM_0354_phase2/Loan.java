@@ -11,27 +11,50 @@ import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Loan extends Transaction {
+public class Loan extends Transaction implements Comparable<Loan>{
 
     private BigDecimal price;
     private BigDecimal interest;
-
-    public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest) {
+    private LocalDateTime endDate;
+    private boolean paidOff;
+    public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime endDate) {
         super(null, accountTo, value, LocalDateTime.now());
         this.price = value;
         this.interest = interest;
-//        this.compound();
+        this.endDate = endDate;
+        this.paidOff = false;
     }
 
-    public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime date) {
+    public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime date, LocalDateTime endDate) {
         super(null, accountTo, value, date);
         this.price = value;
         this.interest = interest;
+        this.endDate = endDate;
+        this.paidOff = false;
     }
 
-    private void compound(int days) {
-        price = price.multiply(interest.pow(days));
-
+    public void changeMonth(int deltaMonths){
+        if(isPaid()) return;
+        this.compound(deltaMonths);
+        this.setDate(this.getDate().plusMonths(deltaMonths));
+        int monthsLeft = (endDate.getYear()-this.getDate().getYear())*12 + endDate.getMonthValue()-this.getDate().getMonthValue();
+        if (monthsLeft <= 0) {
+            //TODO: Behavior when a loan expires
+        } else if(monthsLeft < 3){
+            //TODO: Send an email out
+        }
+    }
+    public boolean isPaid(){
+        return this.paidOff;
+    }
+    public boolean pay(BigDecimal amount){
+        if(amount.compareTo(price) > 0) return false;
+        this.price = this.price.subtract(amount);
+        if(price.compareTo(BigDecimal.ZERO) == 0) this.paidOff = true;
+        return true;
+    }
+    private void compound(int months) {
+        price = price.multiply(interest.pow(months));
     }
 
     public BigDecimal getPrice() {
@@ -40,16 +63,6 @@ public class Loan extends Transaction {
 
     public BigDecimal getInterest() {
         return interest;
-    }
-
-    private void writeLoan() {
-        try (FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter pw = new PrintWriter(bw)) {
-            pw.println(this.toString());
-        } catch (IOException e) {
-            System.out.println("IOException writing to outgoing.txt");
-        }
     }
 
     @Override
@@ -68,10 +81,12 @@ public class Loan extends Transaction {
 
     @Override
     public String serialize() {
-        return this.getClass().getSimpleName()
-                + "," + getAccountTo().getUsername() + "," + getAccountTo().getId()
-                + "," + getValue()
-                + "," + getDate();
+        return String.join(",",
+                this.getClass().getSimpleName(), ((Integer) this.getAccountTo().getId()).toString(),
+                this.getValue().toString(), this.interest.toString(), this.getDate().toString(), this.endDate.toString());
+    }
+    public String viewLoan(){
+        return String.format("Loan of %f due before %s %d", getValue().doubleValue(), this.endDate.getMonth().toString(), this.endDate.getYear());
     }
 
     @Override
@@ -79,4 +94,8 @@ public class Loan extends Transaction {
         return "The bank loaned $" + getValue() + " to account ID Number " + getAccountTo();
     }
 
+    @Override
+    public int compareTo(Loan o) {
+        return this.endDate.compareTo(o.endDate);
+    }
 }

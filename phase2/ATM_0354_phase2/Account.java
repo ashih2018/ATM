@@ -76,7 +76,7 @@ public abstract class Account {
         // Should only be used SOME times
         this.transactions.remove(transaction);
     }
-
+    ArrayList<Transaction> getTransactions(){return this.transactions;}
     public LocalDateTime getDateOfCreation() {
         return this.dateOfCreation;
     }
