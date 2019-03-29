@@ -1,8 +1,11 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.*;
+import ATM_0354_phase2.Account;
+import ATM_0354_phase2.InputMethod;
+import ATM_0354_phase2.Main;
+import ATM_0354_phase2.User;
 
-import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TransferMoneyMethod implements InputMethod {
@@ -20,13 +23,30 @@ public class TransferMoneyMethod implements InputMethod {
                 return "UserOptions";
             } else {
                 System.out.println("Which account (id) would you like to transfer from?");
-                System.out.print(">");
-                int id;
+                int id = -1;
                 while(true) {
                     try {
-                        id = in.nextInt();
+                        boolean flag;
+                        do {
+                            System.out.print(">");
+                            try
+                            {
+                                id = in.nextInt();
+                                flag=true;
+                            }
+                            catch (InputMismatchException exception)
+                            {
+                                System.out.println("Not a numerical value.");
+                                in.nextLine();
+                                flag = false;
+                            }
+                        } while(!flag);
                         boolean idExists = ((User) Main.atm.getCurUser()).verifyID(id);
-                        boolean canTransferOut = (((User) Main.atm.getCurUser()).getAccount(id).canTransferOut());
+                        boolean canTransferOut = false;
+                        Account userAccount = ((User) Main.atm.getCurUser()).getAccount(id);
+                        if (userAccount != null) {
+                            canTransferOut = (((User) Main.atm.getCurUser()).getAccount(id).canTransferOut());
+                        }
                         if (idExists && canTransferOut)
                             break;
                         else{
@@ -41,7 +61,7 @@ public class TransferMoneyMethod implements InputMethod {
                 }
 
                 System.out.println("Would you like to transfer to your own account or a different user's account?");
-                System.out.println("Press \'A\' for your own account. \n Press \'B\' for a different user's account.");
+                System.out.println("Press \'A\' for your own account. \nPress \'B\' for a different user's account.");
                 while(true) {
                     boolean valid = false;
                     String letter = "";

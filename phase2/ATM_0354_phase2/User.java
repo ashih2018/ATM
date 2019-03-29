@@ -32,7 +32,13 @@ public class User extends Person {
     }
 
     public Account getAccount(int accountId) {
-        return this.accounts.get(accountId);
+        Account account;
+        try {
+            account = this.accounts.get(accountId);
+        } catch (NullPointerException e) {
+            account = null;
+        }
+        return account;
     }
 
     public int getNumAccounts() {
