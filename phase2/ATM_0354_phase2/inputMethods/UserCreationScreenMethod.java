@@ -1,12 +1,10 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.ATM;
 import ATM_0354_phase2.BankManager;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class UserCreationScreenMethod implements InputMethod {
     @Override
