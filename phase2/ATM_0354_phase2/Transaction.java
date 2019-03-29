@@ -26,7 +26,9 @@ public abstract class Transaction {
     public LocalDateTime getDate() {
         return date;
     }
-
+    public void setDate(LocalDateTime newDate){
+        this.date = newDate;
+    }
     public Account getAccountFrom() {
         return accountFrom;
     }

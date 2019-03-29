@@ -2,6 +2,7 @@ package ATM_0354_phase2;
 
 import java.math.BigDecimal;
 import java.net.PasswordAuthentication;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ATM {
@@ -38,6 +39,16 @@ public class ATM {
         return curUser;
     }
 
+    public void newDate(LocalDateTime newDate){
+        if(this.datetime.compareTo(newDate) > 0){
+            System.out.println("Invalid date");
+            return;
+        }
+        if(newDate.getYear() > this.datetime.getYear() || newDate.getMonthValue()>this.datetime.getMonthValue()){ //new month
+            this.userHandler.newMonth((newDate.getYear()-this.datetime.getYear())*12 + newDate.getMonthValue()-this.datetime.getMonthValue());
+        }
+    }
+
     /**
      * Try to sign in a user
      *
@@ -52,35 +63,6 @@ public class ATM {
     public void signOut(){
         this.curUser = null;
     }
-    /**
-     * Withdraw money into a user's account.
-     *
-     * @param user  The user to withdraw money from
-     * @param money The amount of money to withdraw.
-     * @param id    The id of the account to withdraw from.
-     */
-    public boolean withdraw(User user, int money, int id) {
-        try {
-            boolean success = userHandler.withdraw(user, money, id);
-            if (success) {
-                withdrawCashFromATM(money);
-            }
-            return success;
-        } catch (MoneyTransferException e) {
-            System.out.println("Could not withdraw money!");
-        } return false;
-    }
-
-    private void withdrawCashFromATM(int money) {
-        if(money % 5 != 0)
-            System.out.println("invalid amount to withdraw");
-        int[] cashValues = {50, 20, 10, 5};
-        for(int cashValue: cashValues){
-            int numBills = money / cashValue;
-            money -= cashValue*numBills;
-            cashHandler.withdrawCash(cashValue, numBills);
-        }
-    }
 
     /**
      * Deposit money into a user's account.
@@ -91,11 +73,8 @@ public class ATM {
      * @return True if the deposit succeeds, false otherwise.
      */
     public boolean deposit(User user, BigDecimal money, int id) {
-        try {
-            return userHandler.deposit(user, money, id);
-        } catch (MoneyTransferException e) {
-            System.out.println("Could not deposit money!");
-        } return false;
+        return userHandler.deposit(user, money, id);
+
     }
 
     /**

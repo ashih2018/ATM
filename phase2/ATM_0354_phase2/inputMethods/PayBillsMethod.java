@@ -23,7 +23,7 @@ public class PayBillsMethod implements InputMethod {
             return "UserOptions";
         }
         System.out.print("Which account will you use to pay?\n>");
-        int id = VerifyInputs.verifyAccountId(in, curUser);
+        int id = VerifyInputs.verifyAccountId(in, curUser, "pay bills from");
         System.out.print("How much will you pay?\n>");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         curUser.payBill(destination, curUser.getAccount(id), amount);

@@ -30,18 +30,8 @@ public class DepositMoneyMethod implements InputMethod {
             } else {
                 System.out.println("Which account (id) would you like to deposit into?");
                 System.out.print(">");
-                int id;
-                while(true) {
-                    try {
-                        id = in.nextInt();
-                        break;
-                    } catch (ClassCastException e) {
-                        System.out.println("Invalid id");
-                        System.out.println("Which account (id) would you like to deposit into?");
-                        System.out.print(">");
-                        // todo error checking
-                    }
-                }
+                User curUser = (User)Main.atm.getCurUser();
+                int id = VerifyInputs.verifyAccountId(in, curUser, "deposit into");
 
                 //TODO: Figure out what's happening here
 

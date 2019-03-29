@@ -127,6 +127,14 @@ public class User extends Person {
         return account.getDateOfCreation();
     }
 
+    public int getLoanLimit() {
+        return loanLimit;
+    }
+
+    public void changeLoanLimit(int number) {
+        this.loanLimit += number;
+    }
+
     public BigDecimal getAccountTotal() {
         BigDecimal total = new BigDecimal(0);
         for (Integer id : this.accounts.keySet()) {
@@ -144,18 +152,8 @@ public class User extends Person {
         return this.accounts.containsKey(id);
     }
 
-    public void payBill(String destination, Account account, BigDecimal amount){
+    public void payBill(String destination, Account account, BigDecimal amount) {
         new Bill(destination, account, amount).process();
-    }
-
-    public void defaultTransferIn(BigDecimal amount) {
-        try {
-            getPrimaryAccount().transferMoneyIn(amount);
-        } catch (MoneyTransferException e) {
-            System.out.println("Money transfer exception when transferring between users. \n" +
-                    "Why can't I transfer into my default deposit account?!");
-        }
-
     }
 
     void requestAccount(String accountType) {
@@ -193,6 +191,48 @@ public class User extends Person {
             str.append(String.join(",", "", account.getClass().getSimpleName(), account.getBalance().toString(), account.getDateOfCreation().toString()));
         }
         return str.toString();
+    }
+
+    void newMonth(int deltaMonths) {
+        for (Account account : this.accounts.values()) {
+            if (account instanceof SavingsAccount)
+                for (int i = 0; i < deltaMonths; i++) ((SavingsAccount) account).addInterest();
+            for (Transaction transaction : account.getTransactions())
+                if (transaction instanceof Loan) {
+                    Loan loan = ((Loan) transaction);
+                    if (!loan.isPaid()) {
+                        loan.changeMonth(deltaMonths);
+                    }
+
+                }
+        }
+    }
+
+    public String loanSummary() {
+        ArrayList<Loan> loans = getLoans();
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < loans.size(); i++) {
+            Loan loan = loans.get(i);
+            out.append(i);
+            out.append(": ");
+            out.append(loan.viewLoan());
+            out.append("\n");
+        }
+        out.insert(0, String.format("%d;", loans.size()));
+        return out.toString();
+    }
+
+    public boolean payLoan(BigDecimal amount, int loanId) {
+        return getLoans().get(loanId).pay(amount);
+    }
+
+    public ArrayList<Loan> getLoans() {
+        ArrayList<Loan> loans = new ArrayList<>();
+        for (Account account : this.accounts.values())
+            for (Transaction transaction : account.getTransactions())
+                if (transaction instanceof Loan && !((Loan) transaction).isPaid()) loans.add((Loan) transaction);
+        loans.sort(Loan::compareTo);
+        return loans;
     }
 
     void writeTransactions() {

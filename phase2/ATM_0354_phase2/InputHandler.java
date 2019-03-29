@@ -20,6 +20,8 @@ public class InputHandler {
         inputMap.put("IndividualAccountApprove", new IndividualAccountApproveMethod());
         inputMap.put("RefillCash", new RefillCashMethod());
         inputMap.put("UndoTransaction", new UndoTransactionMethod());
+        inputMap.put("AdminPanel", new AdminPanelMethod());
+
 
         inputMap.put("ProcessEmailCheques", new ProcessEmailChequesMethod());
 
@@ -35,6 +37,7 @@ public class InputHandler {
         inputMap.put("RequestLoan", new RequestLoanMethod());
         inputMap.put("ChangePassword", new ChangePasswordMethod());
         inputMap.put("SendEmailSummary", new EmailSummaryMethod());
+        inputMap.put("PayLoans", new PayLoansMethod());
 
         inputMap.put("Logout", new LogoutMethod());
     }

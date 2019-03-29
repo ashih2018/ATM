@@ -19,7 +19,7 @@ public class WithdrawMoneyMethod implements InputMethod {
                 in.nextLine();
                 return "UserOptions";
             } else {
-                int id = VerifyInputs.verifyAccountId(in, curUser);
+                int id = VerifyInputs.verifyAccountId(in, curUser, "withdraw from");
                 int money = askForMoney(in);
                 Transaction withdrawal = new Withdrawal(curUser.getAccount(id), money);
                 withdrawal.process();
