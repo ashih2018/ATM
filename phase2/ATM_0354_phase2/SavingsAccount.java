@@ -20,8 +20,6 @@ public class SavingsAccount extends AssetAccount {
     }
 
     public void addInterest(){
-        // TODO: Do we need to add this as a transaction???
-        // TODO: ATM should add interest to each SavingsAccount on the 1st of every month?
         this.setBalance(this.getBalance().multiply(interest.add(BigDecimal.ONE)));
     }
 

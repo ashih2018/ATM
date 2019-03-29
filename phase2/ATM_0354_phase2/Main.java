@@ -265,7 +265,7 @@ public class Main {
         }
     }
 
-    private static void addInterest() throws MoneyTransferException {
+    private static void addInterest(){
         if(atm.getDateTime().getDayOfMonth() == 1){
             for (Person user : atm.userHandler.users){
                 if(user instanceof  User){
