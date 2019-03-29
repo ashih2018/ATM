@@ -22,6 +22,7 @@ public class ChequeHandler {
     public void processCheques() {
         try {
             String response = this.sendGet();
+            System.out.println("THIS IS THE RESPONSE: \n" + response.toString());
 
             ArrayList<List> itemList = new ArrayList<>();
 
@@ -35,36 +36,45 @@ public class ChequeHandler {
                 //List<String> cleanSplit = Arrays.asList(clean.split(","));
             }
 
-            String id;
-            String to;
-            String from;
-            Double amount;
+            String id = "";
+            String to = "";
+            String from = "";
+            Double amount = 0.0;
             for (List list : itemList) {
                 Pattern colonPattern = Pattern.compile(":.*");
 
                 m = colonPattern.matcher(list.get(0).toString());
-                id = m.group();
-                id = id.replace(":", "");
-                id = id.replace("\"", "");
+                if (m.find()) {
+                    id = m.group();
+                    id = id.replace(":", "");
+                    id = id.replace("\"", "");
+                }
 
                 m = colonPattern.matcher(list.get(1).toString());
-                to = m.group();
-                to = to.replace(":", "");
-                to = to.replace("\"", "");
+                if (m.find()) {
+                    to = m.group();
+                    to = to.replace(":", "");
+                    to = to.replace("\"", "");
+                }
 
                 m = colonPattern.matcher(list.get(2).toString());
-                from = m.group();
-                from = from.replace(":", "");
-                from = from.replace("\"", "");
+                if (m.find()) {
+                    from = m.group();
+                    from = from.replace(":", "");
+                    from = from.replace("\"", "");
+                }
 
                 m = colonPattern.matcher(list.get(3).toString());
-                String amountString = m.group();
-                amountString = amountString.replace(":", "");
-                amountString = amountString.replace("\"", "");
-                amount = Double.parseDouble(amountString);
+                if (m.find()) {
+                    String amountString = m.group();
+                    amountString = amountString.replace(":", "");
+                    amountString = amountString.replace("\"", "");
+                    amount = Double.parseDouble(amountString);
+                }
+
 
                 // send money to each account
-                Boolean bothUsersExist = Main.atm.usernameExists(from) &&  Main.atm.usernameExists(from);
+                Boolean bothUsersExist = Main.atm.usernameExists(from) &&  Main.atm.usernameExists(to);
 
                 if (bothUsersExist) {
                     Account fromAccount = ((User) Main.atm.getUser(from)).getPrimaryAccount();
