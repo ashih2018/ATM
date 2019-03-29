@@ -33,6 +33,7 @@ public class InputHandler {
         inputMap.put("TransferMoney", new TransferMoneyMethod());
         inputMap.put("PayBills", new PayBillsMethod());
         inputMap.put("RequestLoan", new RequestLoanMethod());
+        inputMap.put("PayLoan", new PayLoanMethod());
         inputMap.put("ChangePassword", new ChangePasswordMethod());
         inputMap.put("SendEmailSummary", new EmailSummaryMethod());
 

@@ -1,0 +1,14 @@
+package ATM_0354_phase2.inputMethods;
+
+import ATM_0354_phase2.InputMethod;
+
+import java.util.Scanner;
+
+public class PayLoanMethod implements InputMethod {
+    @Override
+    public String run(Scanner in) {
+
+        in.nextLine();
+        return "UserOptions";
+    }
+}

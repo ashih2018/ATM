@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class RequestLoanMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
+        System.out.println("You can loan out " + ((User)Main.atm.getCurUser()).getLoanLimit());
         System.out.println("How much money would you like to loan out?");
         System.out.print(">");
         BigDecimal loanAmount = new BigDecimal(in.nextInt());
@@ -49,6 +50,8 @@ public class RequestLoanMethod implements InputMethod {
         }
         Loan loan = new Loan((((User) Main.atm.getCurUser()).getAccount(id)), loanAmount, new BigDecimal(4));
         loan.process();
+        ((User)Main.atm.getCurUser()).changeLoanLimit(-1 * loanAmount.intValue());
+        System.out.println("The maximum amount you will be able to loan in the future is " + ((User)Main.atm.getCurUser()).getLoanLimit());
         in.nextLine();
         return "UserOptions";
     }

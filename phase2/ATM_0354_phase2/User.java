@@ -127,6 +127,14 @@ public class User extends Person {
         return account.getDateOfCreation();
     }
 
+    public int getLoanLimit() {
+        return loanLimit;
+    }
+
+    public void changeLoanLimit(int number) {
+        this.loanLimit += number;
+    }
+
     public BigDecimal getAccountTotal() {
         BigDecimal total = new BigDecimal(0);
         for (Integer id : this.accounts.keySet()) {
