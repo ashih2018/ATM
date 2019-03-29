@@ -1,8 +1,11 @@
 package ATM_0354_phase2;
 
 
-import java.util.*;
 import ATM_0354_phase2.inputMethods.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 public class InputHandler {
     private Map<String, InputMethod> inputMap;
 
@@ -31,6 +34,7 @@ public class InputHandler {
         inputMap.put("DepositMoney", new DepositMoneyMethod());
         inputMap.put("TransferMoney", new TransferMoneyMethod());
         inputMap.put("PayBills", new PayBillsMethod());
+        inputMap.put("RequestLoan", new RequestLoanMethod());
         inputMap.put("ChangePassword", new ChangePasswordMethod());
         inputMap.put("SendEmailSummary", new EmailSummaryMethod());
 

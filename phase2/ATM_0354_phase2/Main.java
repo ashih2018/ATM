@@ -21,7 +21,7 @@ public class Main {
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
     private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MoneyTransferException {
         atm = new ATM();
         ih = new InputHandler();
 
@@ -43,7 +43,6 @@ public class Main {
             atm.cashHandler = new CashHandler(cash);
             parseUsers(fileIn); //Also sets up accounts
             parseTransactions();
-            addInterest();
             state = "Login";
         }
 
@@ -250,26 +249,6 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when resetting the program.");
-        }
-    }
-
-    private static void addInterest() {
-        if (atm.getDateTime().getDayOfMonth() == 1) {
-            for (Person user : atm.userHandler.users) {
-                if (user instanceof User) {
-                    for (int i = 0; i < ((User) user).getNumAccounts(); i++) {
-                        Account account = ((User) user).getAccount(i);
-                        if (account instanceof SavingsAccount) {
-                            try {
-                                ((SavingsAccount) account).addInterest();
-                            } catch (MoneyTransferException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-
-            }
         }
     }
 }

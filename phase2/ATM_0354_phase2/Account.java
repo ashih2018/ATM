@@ -18,7 +18,7 @@ public abstract class Account {
         this.transactions = new ArrayList<>();
         this.balance = new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP);
         this.id = id;
-        this.dateOfCreation = LocalDateTime.now();
+        this.dateOfCreation = Main.atm.getDateTime();
         this.transferIn = true;
         this.transferOut = true;
     }

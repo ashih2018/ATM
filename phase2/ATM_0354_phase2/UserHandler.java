@@ -25,7 +25,6 @@ public class UserHandler {
             if (user.getUsername().equals(username)) {
                 if (!user.getHash().equals(PasswordHash.hashPassword(password, user.getSalt()))) {
                     System.out.println("Incorrect Password");
-                    System.out.println(user.getUsername() + " " + user.getHash() + " " + user.getSalt());
                     return null;
                 } else {
                     return user;

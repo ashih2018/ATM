@@ -16,6 +16,7 @@ Notes:
 - All storable information in the ATM is stored under Files.
 - Only the Bank Manager can shut off the ATM, and thus end the program; The user can only choose to log off from
 their account.
+- CreditCardAccount can incur up to $1000 in debt, while LineOfCreditAccount can incur up to $5000 in debt.
 
 Bank Manager Actions:
 - create users: Creates a new user with a unique username and password

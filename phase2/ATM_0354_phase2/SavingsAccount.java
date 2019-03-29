@@ -11,20 +11,16 @@ public class SavingsAccount extends AssetAccount {
     public SavingsAccount(String username, int id) {
         super(username, id);
         this.setMinimumAllowedBalance(new BigDecimal(0));
-        this.interest = new BigDecimal(0.001);
+        this.interest = new BigDecimal(0.03);
     }
     public SavingsAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         super(username, id, balance, dateOfCreation, transactions);
         this.setMinimumAllowedBalance(new BigDecimal(0));
-        this.interest = new BigDecimal(0.001);
+        this.interest = new BigDecimal(0.03);
     }
-
-    public void addInterest() {
-        try {
-            this.transferMoneyIn(this.getBalance().multiply(this.interest));
-        }catch(MoneyTransferException e){
-            e.printStackTrace();
-        }
+    
+    public void addInterest(){
+        this.setBalance(this.getBalance().multiply(interest.add(BigDecimal.ONE)));
     }
 
     @Override
