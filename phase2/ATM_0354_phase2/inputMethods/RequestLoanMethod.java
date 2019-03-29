@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class RequestLoanMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
+        System.out.println("You can loan out " + ((User)Main.atm.getCurUser()).getLoanLimit());
         System.out.println("How much money would you like to loan out?");
         System.out.print(">");
         BigDecimal loanAmount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
@@ -27,6 +28,8 @@ public class RequestLoanMethod implements InputMethod {
         LocalDateTime endDate = LocalDateTime.of(tmpDate.getYear(), tmpDate.getMonth(), 1,0, 0); //always ends on the first of the next month
         Loan loan = new Loan(curUser.getAccount(id), loanAmount, new BigDecimal(4), endDate);
         loan.process();
+        ((User)Main.atm.getCurUser()).changeLoanLimit(-1 * loanAmount.intValue());
+        System.out.println("The maximum amount you will be able to loan in the future is " + ((User)Main.atm.getCurUser()).getLoanLimit());
         in.nextLine();
         return "UserOptions";
     }

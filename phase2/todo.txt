@@ -1,4 +1,4 @@
-TODO (March 25th):
+TODO (March 29th):
 Refactor phase 1 code / retest all methods / codes
     Make sure all methods are used
     Fix data class code smells
@@ -10,5 +10,10 @@ Add email functionality
 Add Password Hashing
     Test password hashing
 Add loans system
+    Check if loan amount surpasses their loan limit
+    Add interest system
+    PayLoanMethod
     Test loans system
+    Write out their loan limit when shutdown is called
 Make sure the entire program is functional
+PayBill has error with strings

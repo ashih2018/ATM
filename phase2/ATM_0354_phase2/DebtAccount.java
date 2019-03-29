@@ -53,6 +53,10 @@ public abstract class DebtAccount extends Account {
         this.maxDebt = maxDebt;
     }
 
+    public void decreaseDebt(BigDecimal amountDebt) {
+
+    }
+
     @Override
     public String toString() {
         return "Account ID: " + this.getId() + "\nAmount Owed: " + this.getBalance();
