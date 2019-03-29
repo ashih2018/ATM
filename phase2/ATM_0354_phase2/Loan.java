@@ -2,14 +2,8 @@ package ATM_0354_phase2;
 
 import com.sun.istack.internal.Nullable;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Loan extends Transaction implements Comparable<Loan>{
 

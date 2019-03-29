@@ -1,12 +1,10 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.ATM;
 import ATM_0354_phase2.BankManager;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class UserCreationScreenMethod implements InputMethod {
     @Override
@@ -14,7 +12,7 @@ public class UserCreationScreenMethod implements InputMethod {
         System.out.println("========== User Creation ==========");
         while (true) {
             System.out.println("What type of user are you creating?\nA. Customer\nB. Employee");
-            System.out.println(">");
+            System.out.print(">");
             String type = in.nextLine();
             while(true){
                 if (type.equalsIgnoreCase("customer") || type.equalsIgnoreCase("a")){
@@ -28,7 +26,7 @@ public class UserCreationScreenMethod implements InputMethod {
                 else{
                     System.out.println("That is not a valid type.");
                     System.out.println("Please enter\nA. User\nB. Employee");
-                    System.out.println(">");
+                    System.out.print(">");
                     type = in.nextLine();
                 }
             }

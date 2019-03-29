@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class EmailSummaryMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
-        System.out.println("Type the email that you want the account summary sent to:\n>");
+        System.out.print("Type the email that you want the account summary sent to:\n>");
         String email = in.nextLine();
         System.out.println("Is " + email +" the correct email (y/n)?\n>");
         String answer = in.nextLine();
