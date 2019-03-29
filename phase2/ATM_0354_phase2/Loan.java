@@ -17,13 +17,13 @@ public class Loan extends Transaction {
     private BigDecimal interest;
 
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest) {
-        super(accountTo, null, value, LocalDateTime.now());
+        super(null, accountTo, value, LocalDateTime.now());
         this.price = value;
         this.interest = interest;
         this.compound();
     }
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime date) {
-        super(accountTo, null, value, date);
+        super(null, accountTo, value, date);
         this.price = value;
         this.interest = interest;
         this.compound();
@@ -54,6 +54,20 @@ public class Loan extends Transaction {
             pw.println(this.toString());
         } catch (IOException e) {
             System.out.println("IOException writing to outgoing.txt");
+        }
+    }
+
+    @Override
+    public void process() {
+        if (!getAccountTo().canTransferIn()) {
+            System.out.println("Accounts unable to transfer.");
+            return;
+        }
+        try {
+            getAccountTo().transferMoneyIn(getValue());
+            getAccountTo().addTransaction(this);
+        } catch (MoneyTransferException e) {
+            e.printStackTrace();
         }
     }
 
