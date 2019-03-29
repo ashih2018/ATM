@@ -15,12 +15,20 @@ import java.util.regex.Pattern;
 class VerifyInputs {
     static double verifyDouble(Scanner in){
         try{
-            double input = in.nextDouble();
-            return input;
+            return in.nextDouble();
         } catch(ClassCastException e){
             System.out.println("Invalid amount, please try again.");
             System.out.print(">");
             return verifyDouble(in);
+        }
+    }
+    static int verifyInt(Scanner in){
+        try{
+            return in.nextInt();
+        }catch (ClassCastException e){
+            System.out.println("Invalid number, please try again");
+            System.out.println(">");
+            return verifyInt(in);
         }
     }
     static String verifyNewUsername(Scanner in){

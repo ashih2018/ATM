@@ -19,10 +19,12 @@ public class SavingsAccount extends AssetAccount {
         this.interest = new BigDecimal(0.001);
     }
 
-    public void addInterest() throws MoneyTransferException {
-        // TODO: Do we need to add this as a transaction???
-        // TODO: ATM should add interest to each SavingsAccount on the 1st of every month?
-        this.transferMoneyIn(this.getBalance().multiply(this.interest));
+    public void addInterest() {
+        try {
+            this.transferMoneyIn(this.getBalance().multiply(this.interest));
+        }catch(MoneyTransferException e){
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -34,7 +34,7 @@ public class Main {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
             LocalDateTime curDate = LocalDateTime.parse(date).plusDays(1);
-            nextDay(curDate);
+            atm.newDate(curDate);
             ArrayList<CashObject> cash = new ArrayList<>();
             while (atmFileIn.hasNextLine()) { //update cash amounts
                 String[] lineInput = atmFileIn.nextLine().split(",");
@@ -49,10 +49,8 @@ public class Main {
 
         generateUI(new Scanner(System.in)); //Set up for console input
     }
-    private static void nextDay(LocalDateTime curDate){
-        atm.setDateTime(curDate);
-        //TODO: Add functionality for interest, month changing, etc
-    }
+
+
     private static void parseTransactions() throws IOException {
         Scanner in = new Scanner(new File(TRANSACTIONSFILE));
         while (in.hasNextLine()) {
@@ -104,7 +102,7 @@ public class Main {
                     System.out.println("transactions.txt has an invalid format");
                     break;
             }
-            for(Account relevantAcc: relevantAccs){
+            for (Account relevantAcc : relevantAccs) {
                 relevantAcc.addTransaction(newTransaction);
             }
         }
@@ -120,10 +118,10 @@ public class Main {
             String password = personInput[2];
             String salt = personInput[3];
             atm.createPerson(userType, username, password, salt);
-            if(userType.equals("User")){
+            if (userType.equals("User")) {
                 int defaultID = Integer.parseInt(personInput[4]);
                 String[] accounts = Arrays.copyOfRange(personInput, 5, personInput.length);
-                User newUser =((User)atm.getUser(username));
+                User newUser = ((User) atm.getUser(username));
                 newUser.removeAccount(0); //Removes the "primary account"
                 System.out.println(Arrays.toString(accounts));
                 int accountID = 0;
@@ -141,12 +139,14 @@ public class Main {
     }
 
     private static void generateUI(Scanner in) {
-        while (!state.equals("Shutdown")) {
+        while (!state.equals("Shutdown") && !state.equals("ShutdownReset")) {
             state = ih.handleInput(state, in);
             clearScreen();
         }
         shutdownATM();
-//        reset(); //Note: uncomment this for testing fresh startup
+        if (state.equals("ShutdownReset")) {
+            reset();
+        }
     }
 
     private static void clearScreen() {
@@ -183,18 +183,6 @@ public class Main {
         }
     }
 
-    public void writeBill(String destination, BigDecimal amount) {
-        try {
-            String outgoingPath = "phase2/ATM_0354_phase2/Files/outgoing.txt";
-            BufferedWriter br = new BufferedWriter(new FileWriter(outgoingPath, true));
-            //todo: find appropriate class and replace str with vars.
-            br.write("bill_name" + "," + "user" + "," + 555.55 + "," + "some LocalDateTime" + "\n");
-
-            br.close();
-        } catch (Exception e) {
-            System.out.println("File does not exist.");
-        }
-    }
 
     private static void shutdownATM() {
         writeATM();
@@ -222,8 +210,8 @@ public class Main {
     private static void writePeople() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
-            for (Person person : atm.userHandler.users){
-                if(person instanceof BankManager){
+            for (Person person : atm.userHandler.users) {
+                if (person instanceof BankManager) {
                     writer.write("BankManager," + person.getUsername() + "," + person.getHash()
                             + "," + person.getSalt());
                     writer.newLine();
@@ -249,7 +237,7 @@ public class Main {
         }
     }
 
-    private static void reset() {
+    public static void reset() {
         try {
             String[] paths = {PEOPLE_FILE_NAME, DEPOSIT_FILE_NAME, OUTGOING_FILE_NAME,
                     ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME};
@@ -266,12 +254,12 @@ public class Main {
     }
 
     private static void addInterest() {
-        if(atm.getDateTime().getDayOfMonth() == 1){
-            for (Person user : atm.userHandler.users){
-                if(user instanceof  User){
-                    for (int i = 0; i < ((User) user).getNumAccounts(); i++){
+        if (atm.getDateTime().getDayOfMonth() == 1) {
+            for (Person user : atm.userHandler.users) {
+                if (user instanceof User) {
+                    for (int i = 0; i < ((User) user).getNumAccounts(); i++) {
                         Account account = ((User) user).getAccount(i);
-                        if (account instanceof  SavingsAccount){
+                        if (account instanceof SavingsAccount) {
                             try {
                                 ((SavingsAccount) account).addInterest();
                             } catch (MoneyTransferException e) {

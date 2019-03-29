@@ -3,7 +3,7 @@ package ATM_0354_phase2;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.*;
 
 public class CashHandler{
 
@@ -34,22 +34,31 @@ public class CashHandler{
         this.cash.add(cashObject);
         updateRestockStatus();
     }
-
-    public void withdrawCash(int billValue, int count){
-        for(CashObject cashObject : cash){
-            if (cashObject.getCashValue() == billValue){
-                if (cashObject.getCount() < count){
-                    System.out.println("Not enough bills to withdraw " + count + " bills.");
-                    return;
-                }
-                else{
-                    cashObject.setCount(cashObject.getCount() - count);
-                    updateRestockStatus();
-                    return;
-                }
-            }
+    public int getTotalCash(){
+        int total = 0;
+        for (CashObject cash1 : this.cash) {
+            total += cash1.getCashValue() * cash1.getCount();
         }
-        System.out.println("Not an existing bill denomination: " + billValue);
+        return total;
+    }
+    public boolean withdrawCash(int money){
+        if(money%5 != 0){
+            System.out.println("Invalid amount to withdraw");
+            return false;
+        }
+        if(getTotalCash() < money){
+            System.out.println("The ATM doesn't have that much money.");
+            return false;
+        }
+        int[] cashValues = {50, 20, 10, 5};
+        this.cash.sort(Collections.reverseOrder());
+        for(CashObject cash1: this.cash){
+            int numBills = Math.min(money / cash1.getCashValue(), cash1.getCount());
+            money -= numBills*cash1.getCashValue();
+            cash1.setCount(cash1.getCount()-numBills);
+        }
+
+        return money == 0;
     }
 
     private void updateRestockStatus(){
@@ -65,6 +74,10 @@ public class CashHandler{
     }
 
     public boolean hasEnoughBills(){
+//        for(CashObject cash: bills.keySet()){
+//            int numBills = bills.get(cash);
+//            if(numBills > )
+//        }
         return hasEnoughBills;
     }
 

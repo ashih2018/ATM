@@ -20,23 +20,18 @@ public class Loan extends Transaction {
         super(accountTo, null, value, LocalDateTime.now());
         this.price = value;
         this.interest = interest;
-        this.compound();
+//        this.compound();
     }
+
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime date) {
         super(accountTo, null, value, date);
         this.price = value;
         this.interest = interest;
-        this.compound();
     }
 
-    //currently compounds every minute
-    private void compound() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-                price = price.multiply(interest);
-            }
-        }, 0, 60 * 1000);
+    private void compound(int days) {
+        price = price.multiply(interest.pow(days));
+
     }
 
     public BigDecimal getPrice() {
