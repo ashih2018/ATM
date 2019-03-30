@@ -171,69 +171,26 @@ class VerifyInputs {
 class HelperFunctions {
     static  void transferToOtherUser(int fromId, Scanner in){
         System.out.println("What is the username of the user you would like to transfer to?");
-        String username;
-        while (true){
-            try{
-                username = in.nextLine();
-                boolean usernameExists = Main.atm.usernameExists(username);
-                if(usernameExists)
-                    break;
-                else{
-                    System.out.println("Username does not exist.");
-                    System.out.println("What is the username of the user you would like to transfer to?");
-                    System.out.print(">");
-                }
-            } catch (ClassCastException e){
-                System.out.println("Invalid username.");
-                System.out.println("What is the username of the user you would like to transfer to?");
-                System.out.print(">");
-            }
-        }
+        User otherUser = VerifyInputs.verifyUser(in);
         System.out.println("How much money would you like to transfer?");
         System.out.print(">");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId);
-        Account toAccount = ((User) Main.atm.getUser(username)).getPrimaryAccount();
+        Account toAccount = otherUser.getPrimaryAccount();
         Transaction transfer = new Transfer(fromAccount, toAccount, amount);
         transfer.process();
     }
     static void transferToOwnAccount(int fromId, Scanner in){
         System.out.println("Which account would you like to transfer to?");
-        int id = -1;
-        //TODO: figure this out
-        while(true) {
-            try {
-                boolean flag;
-                do {
-                    System.out.print(">");
-                    try
-                    {
-                        id = in.nextInt();
-                        flag=true;
-                    }
-                    catch (InputMismatchException exception)
-                    {
-                        System.out.println("Not a numerical value.");
-                        in.nextLine();
-                        flag = false;
-                    }
-                } while(!flag);
-                boolean idExists = ((User) Main.atm.getCurUser()).verifyID(id);
-                boolean canTransferOut = false;
-                Account userAccount = ((User) Main.atm.getCurUser()).getAccount(id);
-                if (userAccount != null) {
-                    canTransferOut = (((User) Main.atm.getCurUser()).getAccount(id).canTransferOut());
-                }
-                if (idExists && canTransferOut)
-                    break;
-                else{
-                    System.out.println("That id is invalid.");
-                    System.out.println("Which account (id) would you like to transfer to?");
-                    System.out.print(">");
-                }
-            } catch (ClassCastException e) {
-                System.out.println("Invalid id");
-                System.out.println("Which account (id) would you like to transfer to?");
+        int id ;
+        User curUser = (User) Main.atm.getCurUser();
+        while(true){
+            id = VerifyInputs.verifyAccountId(in, curUser, "transfer to");
+            if(curUser.getAccount(id).canTransferIn()){
+                break;
+            }
+            else{
+                System.out.println("You can't transfer to that account. Please try again");
                 System.out.print(">");
             }
         }
