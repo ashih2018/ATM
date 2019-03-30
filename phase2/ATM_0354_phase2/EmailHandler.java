@@ -69,7 +69,17 @@ public class EmailHandler {
         int securityNum = random.nextInt(900000)+100000;
         return sendSecurityNumber(emailTo, securityNum, String.format("Email Verification Security Number for %s", user.getUsername()));
     }
-    public static int notifyLoan(){
-        return -1;
+    static void notifyLoan(String emailTo, Loan loan){
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+            message.setSubject("Loan payment due soon.");
+            String msg = String.format("You have a loan of %f due by %s.", loan.getValue(), loan.endMonth());
+            message.setText(msg);
+            Transport.send(message);
+        }catch(MessagingException e){
+            System.out.println("Couldn't send email.");
+        }
     }
 }
