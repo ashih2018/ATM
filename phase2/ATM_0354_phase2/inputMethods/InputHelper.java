@@ -26,9 +26,9 @@ class VerifyInputs {
     }
     static int verifyInt(Scanner in){
         try{
-            int input = in.nextInt();
-            in.nextLine();
-            if(input > 0) {
+
+            int input = Integer.parseInt(in.nextLine());
+            if(input >= 0) {
                 return input;
             }
             else {
@@ -37,7 +37,7 @@ class VerifyInputs {
                 return verifyInt(in);
             }
 
-        }catch (ClassCastException e){
+        }catch (ClassCastException | NumberFormatException e){
             System.out.println("Invalid number, please try again");
             System.out.print(">");
             return verifyInt(in);
@@ -63,10 +63,9 @@ class VerifyInputs {
 
     }
     static int verifyAccountId(Scanner in, User curUser, String action){
-        String input = in.nextLine();
-        int id;
+
+        int id = verifyInt(in);
         try{
-            id = Integer.parseInt(input);
             if(curUser.verifyID(id)) return id;
             else return verifyAccountId(in, curUser, action);
         } catch (ClassCastException e){
@@ -153,6 +152,7 @@ class HelperFunctions {
     static void transferToOwnAccount(int fromId, Scanner in){
         System.out.println("Which account would you like to transfer to?");
         int id = -1;
+        //TODO: figure this out
         while(true) {
             try {
                 boolean flag;

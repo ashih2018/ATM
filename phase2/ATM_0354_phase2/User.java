@@ -210,9 +210,7 @@ public class User extends Person {
     ArrayList<Transaction> getTransactions(){
         ArrayList<Transaction> transactions = new ArrayList<>();
         for (Account account : this.accounts.values()) {
-            for (Transaction transaction : account.getTransactions()){
-                transactions.add(transaction);
-            }
+            transactions.addAll(account.getTransactions());
         }
         transactions.sort(Comparator.comparing(Transaction::getDate));
         Collections.reverse(transactions);
@@ -221,9 +219,10 @@ public class User extends Person {
     public String transactionHistory(){
         StringBuilder out = new StringBuilder();
         ArrayList<Transaction> transactions = getTransactions();
-        out.append(String.format("%d", transactions.size()));
-        for(int i=0; i<transactions.size(); i++)
+        out.append(String.format("%d;", transactions.size()));
+        for(int i=0; i<transactions.size(); i++) {
             out.append(String.format("%d: (%s) %s\n", i, transactions.get(i).getDate().toString(), transactions.get(i).view()));
+        }
         return out.toString();
     }
     public String loanSummary() {

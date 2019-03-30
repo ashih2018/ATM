@@ -2,4 +2,3 @@ cash, 1000
 cash, 1000
 cash, 1000
 cash, 1000
-cash, 1000

@@ -46,7 +46,7 @@ public class DepositMoneyMethod implements InputMethod {
                 System.out.println("Select a deposit by inputting 'deposit_type, amount': ");
                 System.out.println("=================================");
                 System.out.print(">");
-                in.nextLine();
+//                in.nextLine();
 
                 String input = in.nextLine();
                 while (true) {

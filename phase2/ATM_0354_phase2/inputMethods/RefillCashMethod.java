@@ -15,8 +15,7 @@ public class RefillCashMethod implements InputMethod {
                 try {
                     System.out.println("What denomination would you like to restock?");
                     System.out.print(">");
-                    denomination = in.nextInt();
-                    in.nextLine();
+                    denomination = Integer.parseInt(in.nextLine());
                     if (denomination <= 0) {
                         System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
                         System.out.print(">");
@@ -34,8 +33,7 @@ public class RefillCashMethod implements InputMethod {
                 try {
                     System.out.println("How many of those bills would you like to add?");
                     System.out.print(">");
-                    int count = in.nextInt();
-                    in.nextLine();
+                    int count = Integer.parseInt(in.nextLine());
                     if (count <= 0) {
                         System.out.println("Please enter a positive number of bills.");
                         System.out.print(">");

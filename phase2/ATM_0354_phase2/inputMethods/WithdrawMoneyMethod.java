@@ -37,8 +37,7 @@ public class WithdrawMoneyMethod implements InputMethod {
         System.out.print(">");
         int money;
         try{
-            money = in.nextInt();
-            in.nextLine();
+            money = Integer.parseInt(in.nextLine());
         } catch(ClassCastException e){
             System.out.println("Invalid amount");
             return askForMoney(in);

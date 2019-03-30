@@ -130,12 +130,10 @@ public class Main {
                 String[] accounts = Arrays.copyOfRange(personInput, 5, personInput.length);
                 User newUser = ((User) atm.getUser(username));
                 newUser.removeAccount(0); //Removes the "primary account"
-                System.out.println(Arrays.toString(accounts));
                 int accountID = 0;
                 for (int i = 0; i < accounts.length; i += 3) {
                     String accountType = accounts[i];
                     BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i + 1]));
-                    System.out.println(balance);
                     LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i + 2]);
                     newUser.addAccount(accountType, accountID++, balance, dateOfCreation, new ArrayList<>());
                 }

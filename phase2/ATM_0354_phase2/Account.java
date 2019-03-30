@@ -56,7 +56,6 @@ public abstract class Account {
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
-        System.out.println(transactions);
     }
 
     public Transaction getLastTransaction() throws IndexOutOfBoundsException{
@@ -130,8 +129,6 @@ public abstract class Account {
         try{
             String filepath = "phase2/ATM_0354_phase2/Files/transactions.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filepath), true));
-            System.out.println(transactions);
-
             for (Transaction transaction : transactions){
                 writer.write(username + "," + transaction.serialize());
                 writer.newLine();
