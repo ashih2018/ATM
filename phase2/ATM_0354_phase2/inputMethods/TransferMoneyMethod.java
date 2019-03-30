@@ -85,7 +85,7 @@ public class TransferMoneyMethod implements InputMethod {
                         else{
                             System.out.println("Please enter \'A\' for your own account or \'B\' for a different " +
                                     "user's account.");
-                            System.out.println(">");
+                            System.out.print(">");
                         }
                     }
 

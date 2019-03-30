@@ -12,7 +12,7 @@ public class ATM {
     ChequeHandler chequeHandler;
     EmailHandler emailHandler;
     StockHandler stockHandler;
-    Person curUser;
+    private Person curUser;
 
     /**
      * Initialize an empty ATM whose time is set to the current time;
@@ -153,7 +153,7 @@ public class ATM {
      * @param emailTo The email to send the summary to
      */
     public void sendEmailSummary(User user, String emailTo) {
-        this.emailHandler.sendEmailSummary(user, emailTo);
+        EmailHandler.sendEmailSummary(user, emailTo);
     }
 
     /**

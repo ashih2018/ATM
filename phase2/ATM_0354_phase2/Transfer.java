@@ -40,7 +40,20 @@ public class Transfer extends Transaction {
     }
 
     @Override
+    public String view() {
+        return String.format("Transfer of %f from %s's account %d to %s's account %d.", getValue().doubleValue(), getAccountFrom().getUsername(), getAccountFrom().getId(), getAccountTo().getUsername(), getAccountTo().getId());
+    }
+
+    @Override
     public String toString() {
         return super.getAccountFrom() + " sent $" + getValue() + " to " + super.getAccountTo();
+    }
+
+    @Override
+    public void undo() {
+        getAccountFrom().forceTransferIn(getValue());
+        getAccountTo().forceTransferOut(getValue());
+        getAccountFrom().undoTransaction(this);
+        getAccountTo().undoTransaction(this);
     }
 }

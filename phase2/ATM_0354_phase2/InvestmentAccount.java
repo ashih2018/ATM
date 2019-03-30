@@ -27,9 +27,12 @@ public class InvestmentAccount extends AssetAccount {
         return value;
     }
 
-    public void addStock(String key, String name, int quantity){
+    /*Todo get rid of the name in stockhandler
+     *
+     */
+    public void buyStock(String key, int quantity){
         if(!Main.atm.stockHandler.getKeys().contains(key)){
-            Main.atm.stockHandler.addStock(key, name);
+            Main.atm.stockHandler.addStock(key, "uh");
             Main.atm.stockHandler.updateStock(key);
         }
         try{
@@ -48,18 +51,24 @@ public class InvestmentAccount extends AssetAccount {
     }
 
     public void sellStock(String key, int quantity){
-        try{
-            transferMoneyIn(Main.atm.stockHandler.getPrice(key).multiply(new BigDecimal(quantity)));
-            if(stocks.get(key) == quantity){
-                stocks.remove(key);
+        if(stocks.keySet().contains(key) && stocks.get(key) >= quantity){
+            try{
+                transferMoneyIn(Main.atm.stockHandler.getPrice(key).multiply(new BigDecimal(quantity)));
+                if(stocks.get(key) == quantity){
+                    stocks.remove(key);
+                }
+                else{
+                    stocks.put(key, (stocks.get(key) - quantity));
+                }
             }
-            else{
-                stocks.put(key, (stocks.get(key) - quantity));
+            catch(MoneyTransferException e){
+                System.out.println(e.toString());
             }
         }
-        catch(MoneyTransferException e){
-            System.out.println(e.toString());
+        else{
+            System.out.println("Insufficient stocks to sell.");
         }
+
     }
 
     public String getInvestmentPortfolio(){

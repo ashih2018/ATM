@@ -1,2 +1,4 @@
-cash, 150
-cheque, 3000
+cash, 1000
+cash, 1000
+cash, 1000
+cash, 1000

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -25,10 +26,20 @@ class VerifyInputs {
     }
     static int verifyInt(Scanner in){
         try{
-            return in.nextInt();
-        }catch (ClassCastException e){
+
+            int input = Integer.parseInt(in.nextLine());
+            if(input >= 0) {
+                return input;
+            }
+            else {
+                System.out.println("Invalid number, please try again");
+                System.out.print(">");
+                return verifyInt(in);
+            }
+
+        }catch (ClassCastException | NumberFormatException e){
             System.out.println("Invalid number, please try again");
-            System.out.println(">");
+            System.out.print(">");
             return verifyInt(in);
         }
     }
@@ -52,10 +63,9 @@ class VerifyInputs {
 
     }
     static int verifyAccountId(Scanner in, User curUser, String action){
-        String input = in.nextLine();
-        int id;
+
+        int id = verifyInt(in);
         try{
-            id = Integer.parseInt(input);
             if(curUser.verifyID(id)) return id;
             else return verifyAccountId(in, curUser, action);
         } catch (ClassCastException e){
@@ -95,6 +105,20 @@ class VerifyInputs {
         System.out.print(">");
         return verifyAccountType(in);
     }
+    static String verifyEmailFormat(Scanner in){
+        String input = in.nextLine();
+        //Taken from emailregex.com
+        Pattern pattern = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+        Matcher m = pattern.matcher(input);
+        if(m.matches()){
+            return input;
+        }
+        else{
+            System.out.println("Invalid email, please try again.");
+            System.out.print(">");
+            return verifyEmailFormat(in);
+        }
+    }
 
     static boolean verifyConfirmation(Scanner in){
         String input = in.nextLine().toLowerCase();
@@ -107,6 +131,21 @@ class VerifyInputs {
         System.out.println("Invalid response.");
         System.out.println(">");
         return verifyConfirmation(in);
+    }
+
+    static String verifyStockSymbol(Scanner in){
+        String input = in.nextLine().toUpperCase();
+        if (new HashSet<>(Arrays.asList("PSXP", "SOI", "BERY", "SAVE", "MTOR",
+                "MTZ", "ISRG", "EPRT", "MIDD", "LPLA", "FAST", "NMIH", "DIN", "MTCH", "REXR", "AMT",
+        "BAH", "TDG", "TGE", "AMZN", "XLNX", "KEYS", "ALXN", "V", "WLTW", "AWI",
+                "EDU", "PRAH", "LULU", "INTU", "PYPL", "WWD", "STOR", "MGP", "ESNT",
+                "CTRE", "FIVE", "PAGS", "FTNT", "ATHM", "PAYC", "ANET", "ULTA", "PLNT",
+                "SSNC", "PANW", "VEEV", "UBNT", "KL", "TEAM", "KO", "AAPL", "MSFT")).contains(input)) {
+            return input;
+        }
+        System.out.println("Invalid symbol.");
+        System.out.print(">");
+        return verifyStockSymbol(in);
     }
 }
 class HelperFunctions {
@@ -122,16 +161,16 @@ class HelperFunctions {
                 else{
                     System.out.println("Username does not exist.");
                     System.out.println("What is the username of the user you would like to transfer to?");
-                    System.out.println(">");
+                    System.out.print(">");
                 }
             } catch (ClassCastException e){
                 System.out.println("Invalid username.");
                 System.out.println("What is the username of the user you would like to transfer to?");
-                System.out.println(">");
+                System.out.print(">");
             }
         }
         System.out.println("How much money would you like to transfer?");
-        System.out.println(">");
+        System.out.print(">");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId);
         Account toAccount = ((User) Main.atm.getUser(username)).getPrimaryAccount();
@@ -141,6 +180,7 @@ class HelperFunctions {
     static void transferToOwnAccount(int fromId, Scanner in){
         System.out.println("Which account would you like to transfer to?");
         int id = -1;
+        //TODO: figure this out
         while(true) {
             try {
                 boolean flag;
@@ -169,7 +209,7 @@ class HelperFunctions {
                 else{
                     System.out.println("That id is invalid.");
                     System.out.println("Which account (id) would you like to transfer to?");
-                    System.out.println(">");
+                    System.out.print(">");
                 }
             } catch (ClassCastException e) {
                 System.out.println("Invalid id");
@@ -178,7 +218,7 @@ class HelperFunctions {
             }
         }
         System.out.println("How much money would you like to transfer?");
-        System.out.println(">");
+        System.out.print(">");
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId), toAccount = ((User) Main.atm.getCurUser()).getAccount(id);
         Transaction transfer = new Transfer(fromAccount, toAccount, amount);

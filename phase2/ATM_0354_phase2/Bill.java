@@ -25,8 +25,6 @@ public class Bill extends Transaction {
     private void writeBill() {
         try {
             System.out.println("printed to outgoing");
-//            FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
-//            BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(new File("phase2/ATM_0354_phase2/Files/outgoing.txt"));
             pw.println(this.toString());
             pw.close();
@@ -42,7 +40,18 @@ public class Bill extends Transaction {
     }
 
     @Override
+    public String view() {
+        return String.format("Bill of %f paid by %s's account %d", this.getValue().doubleValue(), this.getAccountFrom().getUsername(), this.getAccountFrom().getId());
+    }
+
+    @Override
     public String toString() {
         return "Account ID Number " + getAccountFrom().getId() + " paid a $" + getValue() + " bill to " + this.destination;
+    }
+
+    @Override
+    public void undo() {
+        this.getAccountFrom().forceTransferIn(this.getValue());
+        this.getAccountFrom().undoTransaction(this);
     }
 }

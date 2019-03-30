@@ -29,6 +29,7 @@ public class InputHandler {
         inputMap.put("BankEmployeeOptions", new BankEmployeeOptionsMethod());
         //User Options
         inputMap.put("AccountView", new AccountViewMethod());
+        inputMap.put("AddEmail", new AddEmailMethod());
         inputMap.put("RequestNewAccount", new RequestNewAccountMethod());
         inputMap.put("WithdrawMoney", new WithdrawMoneyMethod());
         inputMap.put("DepositMoney", new DepositMoneyMethod());
@@ -38,6 +39,7 @@ public class InputHandler {
         inputMap.put("ChangePassword", new ChangePasswordMethod());
         inputMap.put("SendEmailSummary", new EmailSummaryMethod());
         inputMap.put("PayLoans", new PayLoansMethod());
+        inputMap.put("InvestmentPortfolio", new InvestmentPortfolioMethod());
 
         inputMap.put("Logout", new LogoutMethod());
     }

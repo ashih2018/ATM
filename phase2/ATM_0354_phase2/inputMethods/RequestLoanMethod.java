@@ -18,7 +18,7 @@ public class RequestLoanMethod implements InputMethod {
         System.out.print(">");
         BigDecimal loanAmount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
         System.out.println("How many months would you like to loan for?");
-        System.out.println(">");
+        System.out.print(">");
         int months = VerifyInputs.verifyInt(in);
         System.out.println("Which account (id) would you like to loan into?");
         User curUser = (User) Main.atm.getCurUser();
