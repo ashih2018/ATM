@@ -5,7 +5,7 @@ import ATM_0354_phase2.*;
 import java.util.Scanner;
 
 public class LoginMethod implements InputMethod {
-    private EmailHandler emailHandler = new EmailHandler();
+
     public String run(Scanner in){
         System.out.println("========== Login ==========");
         System.out.println("Type 'Forgot Password' to reset your password.");
@@ -14,7 +14,7 @@ public class LoginMethod implements InputMethod {
         if (username.toLowerCase().equals("forgot password")) {
             System.out.print("Enter email: ");
             String email = in.nextLine();
-            int securityNum = this.emailHandler.resetPassword(((User)Main.atm.getCurUser()), email);
+            int securityNum = EmailHandler.resetPassword((Main.atm.getCurUser()), email);
             if (securityNum == -1) {
                 System.out.println("Unable to send email.");
             }

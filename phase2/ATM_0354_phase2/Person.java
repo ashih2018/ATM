@@ -5,6 +5,7 @@ public abstract class Person {
     private String username;
     private String hash;
     private String salt;
+    protected String email;
 
     public Person(String username, String password, String salt) {
         this.username = username;
@@ -19,6 +20,13 @@ public abstract class Person {
 
     public String getUsername() {
         return username;
+    }
+    public boolean hasEmail(){
+        return !this.email.equals("");
+    }
+
+    public void setEmail(String email){
+        this.email = email;
     }
 
     public void setPassword(String password) {

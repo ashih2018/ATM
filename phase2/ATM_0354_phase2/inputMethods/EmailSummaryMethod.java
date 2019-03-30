@@ -14,6 +14,7 @@ public class EmailSummaryMethod implements InputMethod {
         System.out.println("Is " + email +" the correct email (y/n)?\n>");
         String answer = in.nextLine();
         if (answer.equals("y")) {
+            System.out.println(email);
             Main.atm.sendEmailSummary((User) Main.atm.getCurUser(), email);
             System.out.println("Email sent!");
             return "UserOptions";

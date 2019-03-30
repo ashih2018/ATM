@@ -14,10 +14,10 @@ public class UserOptionsMethod implements InputMethod {
         System.out.println("Options:");
         if (!isEmployee) {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \nH. 'get an email account summary' \nX. 'logout'");
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \nH. 'get an email account summary' \nI. 'add email' \nX. 'logout'");
         } else {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \nH. 'get an email account summary' \nI. 'view employee options'" +
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \nH. 'get an email account summary' \nI. 'add email' \nJ. 'view employee options'" +
                     "\nX. 'logout");
         }
         System.out.println("What would you like to do?");
@@ -52,8 +52,11 @@ public class UserOptionsMethod implements InputMethod {
                 case "logout":
                 case "x":
                     return "Logout";
-                case "view employee options":
+                case "add email":
                 case "i":
+                    return "AddEmail";
+                case "view employee options":
+                case "j":
                     if (isEmployee) return "BankEmployeeOptions";
                     else return "UserOptions";
                 default:

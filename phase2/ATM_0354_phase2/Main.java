@@ -21,10 +21,10 @@ public class Main {
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
     private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
 
-    public static void main(String[] args) throws IOException, MoneyTransferException {
+    public static void main(String[] args) throws IOException{
         atm = new ATM();
         ih = new InputHandler();
-
+        new EmailHandler();
         Scanner fileIn = new Scanner(new File(PEOPLE_FILE_NAME));
         boolean firstTime = !fileIn.hasNext();
         if (firstTime) {
