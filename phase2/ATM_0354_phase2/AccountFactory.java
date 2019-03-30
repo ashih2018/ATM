@@ -24,10 +24,15 @@ public class AccountFactory {
             case "LINEOFCREDITACCOUNT": return new LineOfCreditAccount(username, this.nextAccountId);
             case "CHEQUINGACCOUNT": return new ChequingAccount(username, this.nextAccountId);
             case "SAVINGSACCOUNT": return new SavingsAccount(username, this.nextAccountId);
+            case "INVESTMENTACCOUNT": return new InvestmentAccount(username, this.nextAccountId);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }
 
+
+    /* Todo setup investment account
+
+     */
     //for setup
     public Account createAccount(String username, String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         switch (accountType) {

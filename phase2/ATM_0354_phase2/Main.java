@@ -47,6 +47,10 @@ public class Main {
             atm.cashHandler = new CashHandler(cash);
             parseUsers(fileIn); //Also sets up accounts
             parseTransactions();
+            /*
+             * Todo create stock accounts, update stockHandler
+             */
+            updatestocks();
             state = "Login";
         }
 
@@ -192,6 +196,10 @@ public class Main {
         }
     }
 
+    private static void updatestocks(){
+        atm.stockHandler.updateStocks();
+    }
+
 
     private static void shutdownATM() {
         writeATM();
@@ -261,4 +269,5 @@ public class Main {
             System.out.println("IOException when resetting the program.");
         }
     }
+
 }
