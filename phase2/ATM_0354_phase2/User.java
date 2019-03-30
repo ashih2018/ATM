@@ -31,6 +31,15 @@ public class User extends Person {
         return dateFormat.format(creationDate);
     }
 
+    public BigDecimal maxAccountTotal(){
+        BigDecimal max = new BigDecimal(-1);
+        for(Account acc: this.accounts.values()){
+            if(acc.getBalance().compareTo(max) > 0){
+                max = acc.getBalance();
+            }
+        }
+        return max;
+    }
     public Account getAccount(int accountId) {
         Account account;
         try {

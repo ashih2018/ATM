@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 class VerifyInputs {
     static double verifyDouble(Scanner in){
         try{
-            return in.nextDouble();
-        } catch(ClassCastException e){
+            return Double.parseDouble(in.nextLine());
+        } catch(ClassCastException|NumberFormatException e){
             System.out.println("Invalid amount, please try again.");
             System.out.print(">");
             return verifyDouble(in);
@@ -82,7 +82,12 @@ class VerifyInputs {
         int id = verifyInt(in);
         try{
             if(curUser.verifyID(id)) return id;
-            else return verifyAccountId(in, curUser, action);
+            else {
+                System.out.println("Invalid ID, please try again.");
+                System.out.println("Which account(id) would you like to "+action +"?");
+                System.out.print(">");
+                return verifyAccountId(in, curUser, action);
+            }
         } catch (ClassCastException e){
             System.out.println("Invalid id");
             System.out.println("Which account(id) would you like to "+action +"?");

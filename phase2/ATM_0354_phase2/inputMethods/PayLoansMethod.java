@@ -1,8 +1,6 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.InputMethod;
-import ATM_0354_phase2.Main;
-import ATM_0354_phase2.User;
+import ATM_0354_phase2.*;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -13,28 +11,56 @@ public class PayLoansMethod implements InputMethod {
         System.out.println("======= Pay Loans ======");
         User curUser = (User) Main.atm.getCurUser();
         String summary = curUser.loanSummary();
-        if(summary.equals("")){
+        int numLoans = Integer.parseInt(summary.split(";")[0]);
+        if(numLoans == 0){
             System.out.println("No loans! Input anything to go back.");
             System.out.print(">");
             in.nextLine();
             return "UserOptions";
         }
-        int numLoans = Integer.parseInt(summary.split(";")[0]);
         summary = summary.split(";")[1];
         System.out.println(summary);
-        System.out.println("What loan would you like to pay off?");
+        System.out.println("What loan would you like to pay off? Input 9999 to go back.");
         System.out.print(">");
         int loanId;
         do {
             loanId = VerifyInputs.verifyInt(in);
         } while (loanId >= numLoans);
-        System.out.println("How much would you like to pay back?");
-        System.out.print(">");
-        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
-        while (!curUser.payLoan(amount, loanId)) {
-            System.out.println("How much would you like to pay back?");
+        if(loanId == 9999){
+            return "UserOptions";
+        }
+        while(true) {
+            System.out.println("How much would you like to pay back? Input a negative number to cancel.");
             System.out.print(">");
-            amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+            BigDecimal amount;
+            while (true) {
+                amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+                if(amount.signum()==-1) return "UserOptions";
+                if (curUser.maxAccountTotal().compareTo(amount) < 0) {
+                    System.out.println("You don't have enough in one account to pay that much! Please try again.");
+                    System.out.print(">");
+                } else break;
+            }
+            System.out.println(curUser.getSummary());
+            System.out.println("What account (id) would you like to pay back from?");
+            System.out.print(">");
+            int accountID = VerifyInputs.verifyAccountId(in, curUser, "pay back from");
+            if (curUser.getAccount(accountID).canTransferOut()) {
+                if (curUser.getAccount(accountID).getBalance().compareTo(amount) < 0) {
+                    System.out.println("You don't have enough in that account!");
+                } else {
+                    while (!curUser.payLoan(amount, loanId)) {
+                        System.out.println("How much would you like to pay back?");
+                        System.out.print(">");
+                        amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+                    }
+                    curUser.getAccount(accountID).forceTransferOut(amount);
+                    break;
+                }
+            }
+            else{
+                System.out.println("You can't pay back loans from that account!");
+            }
         }
         System.out.println("Would you like to pay back more loans?");
         System.out.print(">");
