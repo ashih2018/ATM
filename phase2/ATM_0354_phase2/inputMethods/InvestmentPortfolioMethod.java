@@ -15,7 +15,7 @@ public class InvestmentPortfolioMethod implements InputMethod {
             if(! user.hasInvestmentAccount()){
                 System.out.println("You do not have an investment account. Would you like to request one? (Y/N)");
                 if(VerifyInputs.verifyConfirmation(in)){
-                    Main.atm.requestCurAccount("investment");
+                    Main.atm.requestAccount(user, "investment");
                     System.out.println("Investment account requested successfully.\n" +
                             "Input anything to go back.");
                     System.out.println(">");
