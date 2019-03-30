@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ProcessEmailChequesMethod  implements InputMethod {
     @Override
     public String run(Scanner in) {
-        System.out.println("Would you like to process the cheques that have been sent electronically (y/n)?\n>");
+        System.out.print("Would you like to process the cheques that have been sent electronically (y/n)?\n>");
         String answer = in.nextLine();
         if (answer.equals("y")) {
             Main.atm.processEmailCheques();

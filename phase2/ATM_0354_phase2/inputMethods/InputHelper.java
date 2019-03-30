@@ -24,6 +24,23 @@ class VerifyInputs {
             return verifyDouble(in);
         }
     }
+    static int verifyDenomination(Scanner in){
+        try {
+            int denomination = Integer.parseInt(in.nextLine());
+            if (!new HashSet<>(Arrays.asList(5, 10, 20, 50)).contains(denomination)) {
+                System.out.println("That is not a valid denomination. \n Please enter a new denomination.");
+                System.out.print(">");
+                return verifyDenomination(in);
+            } else {
+                return denomination;
+            }
+        } catch (ClassCastException e) {
+            System.out.println("Invalid denomination.");
+            System.out.println("What denomination would you like to restock?");
+            System.out.print(">");
+            return verifyDenomination(in);
+        }
+    }
     static int verifyInt(Scanner in){
         try{
 

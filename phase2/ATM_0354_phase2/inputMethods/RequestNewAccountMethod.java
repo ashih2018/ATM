@@ -26,7 +26,6 @@ public class RequestNewAccountMethod implements InputMethod {
                 joint = response.equals("joint");
             }
             User otherUser = null;
-            System.out.println(joint);
             if (joint) {
                 System.out.println("Who would you like to open the account with?");
                 System.out.print(">");
@@ -36,7 +35,7 @@ public class RequestNewAccountMethod implements InputMethod {
             System.out.print(">");
             String input = VerifyInputs.verifyAccountType(in);
             if (joint) Main.atm.requestJointAccount((User) Main.atm.getCurUser(), otherUser, input);
-            else Main.atm.requestCurAccount(input);
+            else Main.atm.requestAccount((User) Main.atm.getCurUser(), input);
             System.out.print("Would you like to request to open another account? (yes/no) \n>");
         } while (in.nextLine().equals("yes"));
         return "UserOptions";

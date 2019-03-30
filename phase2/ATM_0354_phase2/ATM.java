@@ -102,14 +102,6 @@ public class ATM {
     private BigDecimal getMoney(User user){
         return user.getAccountTotal();
     }
-    /**
-     * Request a new account for the current user
-     * Precondition: this.curUser != null && this.curUser instanceof User
-     * @param accountType The type of account to request.
-     */
-    public void requestCurAccount(String accountType){
-        this.requestAccount((User)this.curUser, accountType);
-    }
 
     /**
      * Request a new account for {user} of type {accountType}.
@@ -165,5 +157,9 @@ public class ATM {
 
     public void addCash(int billValue, int count){
         cashHandler.addCash(billValue, count);
+    }
+
+    public String getCashSummary(){
+        return this.cashHandler.getSummary();
     }
 }

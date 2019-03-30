@@ -49,14 +49,14 @@ public class IndividualAccountApproveMethod implements InputMethod {
                 }
                 else {
                     System.out.println("("+date+")"+" Approve a \"" + accountType + "\" account for \"" + user1 + "\"?");
-                    System.out.println("Press \'yes\'/\'no\'\n>");
+                    System.out.print("Press \'yes\'/\'no\'\n>");
                     while (true) {
                         try {
                             approved = in.nextLine().equalsIgnoreCase("yes");
                             break;
                         } catch (ClassCastException e) {
                             System.out.println("Approve a \"" + accountType + "\" Account for \"" + user1 + "\"?");
-                            System.out.println("Press \'yes\'/\'no\'\n>");
+                            System.out.print("Press \'yes\'/\'no\'\n>");
                         }
                     }
                 }

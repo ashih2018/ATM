@@ -8,11 +8,13 @@ public abstract class DebtAccount extends Account {
     private BigDecimal maxDebt;
     // Debt accounts display a POSITIVE balance when user OWES money and vice versa
 
-    public DebtAccount(String username, int id, BigDecimal maxDebt) {
+    DebtAccount(String username, int id, BigDecimal maxDebt) {
         super(username, id);
+        this.maxDebt = maxDebt;
     }
-    public DebtAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions, BigDecimal maxDebt){
+    DebtAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions, BigDecimal maxDebt){
         super(username, id, balance, dateOfCreation, transactions);
+        this.maxDebt = maxDebt;
     }
     //decreases debt
     @Override
@@ -26,7 +28,6 @@ public abstract class DebtAccount extends Account {
     //increases debt
     @Override
     public void transferMoneyOut(BigDecimal value) throws MoneyTransferException {
-        // Note: Balance can be negative after using this method
         if (canTransferOut()) {
             if(!underMaxDebt(value)){
                 System.out.println("Not enough funds to transfer.");
@@ -47,14 +48,6 @@ public abstract class DebtAccount extends Account {
 
     public BigDecimal getMaxDebt() {
         return maxDebt;
-    }
-
-    public void setMaxDebt(BigDecimal maxDebt){
-        this.maxDebt = maxDebt;
-    }
-
-    public void decreaseDebt(BigDecimal amountDebt) {
-
     }
 
     @Override

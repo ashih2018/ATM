@@ -19,9 +19,9 @@ public class Main {
     private static final String ALERTS_FILE_NAME = "phase2/ATM_0354_phase2/Files/alerts.txt";
     private static final String OUTGOING_FILE_NAME = "phase2/ATM_0354_phase2/Files/outgoing.txt";
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
-    private static final String TRANSACTIONSFILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
+    private static final String TRANSACTIONS_FILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         atm = new ATM();
         ih = new InputHandler();
         new EmailHandler();
@@ -30,6 +30,10 @@ public class Main {
         if (firstTime) {
             atm.setDateTime(LocalDateTime.now());
             state = "SetUpBankManager";
+            atm.cashHandler.addCash(50, 100);
+            atm.cashHandler.addCash(20, 100);
+            atm.cashHandler.addCash(10, 100);
+            atm.cashHandler.addCash(5, 100);
         } else {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
@@ -51,7 +55,7 @@ public class Main {
 
 
     private static void parseTransactions() throws IOException {
-        Scanner in = new Scanner(new File(TRANSACTIONSFILE));
+        Scanner in = new Scanner(new File(TRANSACTIONS_FILE));
         while (in.hasNextLine()) {
             String[] userTransactions = in.nextLine().split(",");
             String username = userTransactions[0];
@@ -97,7 +101,7 @@ public class Main {
                     relevantAccs.add(curUser.getAccount(accountFromId));
                     break;
                 }
-                case "Loan":{
+                case "Loan": {
                     int accountToId = Integer.parseInt(userTransactions[3]);
                     BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
                     BigDecimal interest = BigDecimal.valueOf(Double.parseDouble(userTransactions[5]));
@@ -109,9 +113,9 @@ public class Main {
                     System.out.println("transactions.txt has an invalid format");
                     break;
             }
-            for (Account relevantAcc : relevantAccs) {
+            for (Account relevantAcc : relevantAccs)
                 relevantAcc.addTransaction(newTransaction);
-            }
+
         }
     }
 
@@ -245,7 +249,7 @@ public class Main {
     public static void reset() {
         try {
             String[] paths = {PEOPLE_FILE_NAME, DEPOSIT_FILE_NAME, OUTGOING_FILE_NAME,
-                    ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME};
+                    ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME, TRANSACTIONS_FILE};
             BufferedWriter bw;
             for (String path : paths) {
                 bw = new BufferedWriter(new FileWriter(new File(path), false));

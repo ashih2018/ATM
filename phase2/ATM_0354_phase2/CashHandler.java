@@ -73,10 +73,6 @@ public class CashHandler{
     }
 
     public boolean hasEnoughBills(){
-//        for(CashObject cash: bills.keySet()){
-//            int numBills = bills.get(cash);
-//            if(numBills > )
-//        }
         return hasEnoughBills;
     }
 
@@ -100,5 +96,12 @@ public class CashHandler{
     public ArrayList<CashObject> getCash(){
         return cash;
     }
+    String getSummary(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== Bill Count =====\n");
+        for(CashObject cash1: this.cash)
+            sb.append(String.format("%d: %d\n", cash1.getCashValue(), cash1.getCount()));
 
+        return sb.toString();
+    }
 }

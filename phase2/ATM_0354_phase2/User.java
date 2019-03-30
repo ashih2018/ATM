@@ -96,27 +96,6 @@ public class User extends Person {
         this.accounts.remove(id);
     }
 
-    public Transaction getLastTransaction(int accountId) {
-        Account account = this.getAccount(accountId);
-        if (account == null) {
-            System.out.println("Account with id " + accountId + " doesn't exist ");
-            return null;
-        } else {
-            Transaction transaction = account.getLastTransaction();
-            if (transaction == null) {
-                System.out.println("User could not get last transaction from account");
-                return null;
-            }
-            return transaction;
-        }
-    }
-
-    public boolean checkIfTransactionExists(Transaction transaction) {
-        for (Integer id : accounts.keySet()) {
-            if (accounts.get(id).doesTransactionExist(transaction)) return true;
-        }
-        return false;
-    }
 
     public LocalDateTime getAccountDate(int accountId) {
         Account account = this.getAccount(accountId);
@@ -157,7 +136,7 @@ public class User extends Person {
     }
 
     void requestAccount(String accountType) {
-        String accountRequest = "Individual," + this.getUsername() + "," + accountType + "," + dateFormat.toString();
+        String accountRequest = "Individual," + this.getUsername() + "," + accountType + "," + this.getCreationDate();
         writeLineToAccReq(accountRequest);
     }
 
@@ -174,8 +153,8 @@ public class User extends Person {
         }
     }
 
-    public void requestJointAccount(User otherUser, String accountType) {
-        String accountRequest = String.join(",", "Joint", this.getUsername(), otherUser.getUsername(), accountType, dateFormat.toString());
+    void requestJointAccount(User otherUser, String accountType) {
+        String accountRequest = String.join(",", "Joint", this.getUsername(), otherUser.getUsername(), accountType, this.getCreationDate());
         writeLineToAccReq(accountRequest);
     }
 

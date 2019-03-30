@@ -11,7 +11,7 @@ public class EmailSummaryMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.print("Type the email that you want the account summary sent to:\n>");
         String email = in.nextLine();
-        System.out.println("Is " + email +" the correct email (y/n)?\n>");
+        System.out.print("Is " + email +" the correct email (y/n)?\n>");
         String answer = in.nextLine();
         if (answer.equals("y")) {
             System.out.println(email);
