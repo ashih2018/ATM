@@ -95,6 +95,19 @@ class VerifyInputs {
         System.out.print(">");
         return verifyAccountType(in);
     }
+
+    static boolean verifyConfirmation(Scanner in){
+        String input = in.nextLine().toLowerCase();
+        if(new HashSet<>(Arrays.asList("yes", "y")).contains(input)){
+            return true;
+        }
+        else if(new HashSet<>(Arrays.asList("no", "n")).contains(input)){
+            return false;
+        }
+        System.out.println("Invalid response.");
+        System.out.println(">");
+        return verifyConfirmation(in);
+    }
 }
 class HelperFunctions {
     static  void transferToOtherUser(int fromId, Scanner in){

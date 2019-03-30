@@ -238,4 +238,22 @@ public class User extends Person {
     void writeTransactions() {
         this.accounts.forEach((id, account) -> account.writeTransactions());
     }
+
+    public boolean hasInvestmentAccount(){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getInvestmentPortfolio(){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                return ((InvestmentAccount) accounts.get(i)).getInvestmentPortfolio();
+            }
+        }
+        return "No investment portfolio found.";
+    }
 }
