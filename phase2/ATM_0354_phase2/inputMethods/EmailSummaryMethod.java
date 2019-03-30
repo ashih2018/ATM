@@ -11,12 +11,11 @@ public class EmailSummaryMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.print("Type the email that you want the account summary sent to:\n>");
         String email = in.nextLine();
-        System.out.print("Is " + email +" the correct email (y/n)?\n>");
+        System.out.print("Is " + email +" the correct email (yes/no)?\n>");
         String answer = in.nextLine();
-        if (answer.equals("y")) {
-            System.out.println(email);
+        if (answer.equals("yes")) {
+            System.out.println("Sending email to " + email);
             Main.atm.sendEmailSummary((User) Main.atm.getCurUser(), email);
-            System.out.println("Email sent!");
             return "UserOptions";
         } else {
             System.out.println("Lets try again");

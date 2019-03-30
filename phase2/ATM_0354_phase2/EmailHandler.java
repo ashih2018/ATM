@@ -39,9 +39,9 @@ public class EmailHandler {
             message.setSubject("User summary for: " + user.getUsername());
             message.setText(user.getSummary());
             Transport.send(message);
-            System.out.println("DONE");
+            System.out.println("Email has been sent!");
         } catch (MessagingException e) {
-            System.out.println("Could't send email: " + e.toString());
+            System.out.println("Couldn't send email!");
         }
     }
 

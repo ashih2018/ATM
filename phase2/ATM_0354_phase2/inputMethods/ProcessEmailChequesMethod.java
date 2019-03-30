@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class ProcessEmailChequesMethod  implements InputMethod {
     @Override
     public String run(Scanner in) {
-        System.out.print("Would you like to process the cheques that have been sent electronically (y/n)?\n>");
+        System.out.print("Would you like to process the cheques that have been sent electronically (yes/no)?\n>");
         String answer = in.nextLine();
-        if (answer.equals("y")) {
+        if (answer.equals("yes")) {
             Main.atm.processEmailCheques();
             return "BankManagerOptions";
-        } else if (answer.equals("n")) {
+        } else if (answer.equals("no")) {
             return "BankManagerOptions";
         } else {
             System.out.println("Not a valid input. Try again.");
