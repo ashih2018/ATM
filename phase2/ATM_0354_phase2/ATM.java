@@ -10,6 +10,8 @@ public class ATM {
     UserHandler userHandler;
     CashHandler cashHandler;
     ChequeHandler chequeHandler;
+    EmailHandler emailHandler;
+    StockHandler stockHandler;
     private Person curUser;
 
     /**
@@ -20,6 +22,8 @@ public class ATM {
         this.userHandler = new UserHandler();
         this.cashHandler = new CashHandler();
         this.chequeHandler = new ChequeHandler();
+        this.emailHandler = new EmailHandler();
+        this.stockHandler = new StockHandler();
         this.curUser = null;
     }
 

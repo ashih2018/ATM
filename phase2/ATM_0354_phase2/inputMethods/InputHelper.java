@@ -136,6 +136,34 @@ class VerifyInputs {
             return verifyEmailFormat(in);
         }
     }
+
+    static boolean verifyConfirmation(Scanner in){
+        String input = in.nextLine().toLowerCase();
+        if(new HashSet<>(Arrays.asList("yes", "y")).contains(input)){
+            return true;
+        }
+        else if(new HashSet<>(Arrays.asList("no", "n")).contains(input)){
+            return false;
+        }
+        System.out.println("Invalid response.");
+        System.out.println(">");
+        return verifyConfirmation(in);
+    }
+
+    static String verifyStockSymbol(Scanner in){
+        String input = in.nextLine().toUpperCase();
+        if (new HashSet<>(Arrays.asList("PSXP", "SOI", "BERY", "SAVE", "MTOR",
+                "MTZ", "ISRG", "EPRT", "MIDD", "LPLA", "FAST", "NMIH", "DIN", "MTCH", "REXR", "AMT",
+        "BAH", "TDG", "TGE", "AMZN", "XLNX", "KEYS", "ALXN", "V", "WLTW", "AWI",
+                "EDU", "PRAH", "LULU", "INTU", "PYPL", "WWD", "STOR", "MGP", "ESNT",
+                "CTRE", "FIVE", "PAGS", "FTNT", "ATHM", "PAYC", "ANET", "ULTA", "PLNT",
+                "SSNC", "PANW", "VEEV", "UBNT", "KL", "TEAM", "KO", "AAPL", "MSFT")).contains(input)) {
+            return input;
+        }
+        System.out.println("Invalid symbol.");
+        System.out.print(">");
+        return verifyStockSymbol(in);
+    }
 }
 class HelperFunctions {
     static  void transferToOtherUser(int fromId, Scanner in){

@@ -235,6 +235,40 @@ public class User extends Person {
         this.accounts.forEach((id, account) -> account.writeTransactions());
     }
 
+    public boolean hasInvestmentAccount(){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getInvestmentPortfolio(){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                return ((InvestmentAccount) accounts.get(i)).getInvestmentPortfolio();
+            }
+        }
+        return "No investment portfolio found.";
+    }
+
+    public void buyStock(String symbol, int quantity){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                ((InvestmentAccount) accounts.get(i)).buyStock(symbol, quantity);
+            }
+        }
+    }
+
+    public void sellStock(String symbol, int quantity){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                ((InvestmentAccount) accounts.get(i)).sellStock(symbol, quantity);
+            }
+        }
+    }
+
     public void undoTransactions(int num) {
         ArrayList<Transaction> transactions = this.getTransactions();
         for(int i=0; i<num; i++){

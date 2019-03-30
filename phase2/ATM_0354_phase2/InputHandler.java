@@ -39,6 +39,7 @@ public class InputHandler {
         inputMap.put("ChangePassword", new ChangePasswordMethod());
         inputMap.put("SendEmailSummary", new EmailSummaryMethod());
         inputMap.put("PayLoans", new PayLoansMethod());
+        inputMap.put("InvestmentPortfolio", new InvestmentPortfolioMethod());
 
         inputMap.put("Logout", new LogoutMethod());
     }

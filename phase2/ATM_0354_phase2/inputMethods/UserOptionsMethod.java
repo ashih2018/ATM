@@ -14,10 +14,12 @@ public class UserOptionsMethod implements InputMethod {
         System.out.println("Options:");
         if (!isEmployee) {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \nH. 'get an email account summary' \nI. 'add email' \nX. 'logout'");
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \n" +
+                    "H. 'get an email account summary' \nI. 'add email' \nJ. 'view investment portfolio' \nX. 'logout'");
         } else {
             System.out.println("A. 'view accounts'\nB. 'withdraw money'\nC. 'deposit money' " +
-                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \nH. 'get an email account summary' \nI. 'add email' \nJ. 'view employee options'" +
+                    "\nD. 'transfer money' \nE. 'pay bills' \nF. 'request a loan' \nG. 'pay back loans' \n" +
+                    "H. 'get an email account summary' \nI. 'add email' \nJ. 'view investment portfolio' \nK. 'view employee options'" +
                     "\nX. 'logout");
         }
         System.out.println("What would you like to do?");
@@ -55,8 +57,11 @@ public class UserOptionsMethod implements InputMethod {
                 case "add email":
                 case "i":
                     return "AddEmail";
-                case "view employee options":
+                case "view investment portfolio":
                 case "j":
+                    return "InvestmentPortfolio";
+                case "view employee options":
+                case "k":
                     if (isEmployee) return "BankEmployeeOptions";
                     else return "UserOptions";
                 default:
