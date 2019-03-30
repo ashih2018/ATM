@@ -15,16 +15,17 @@ import java.util.regex.Pattern;
  * Contains methods to verify various input types
  */
 class VerifyInputs {
-    static double verifyDouble(Scanner in){
-        try{
+    static double verifyDouble(Scanner in) {
+        try {
             return Double.parseDouble(in.nextLine());
-        } catch(ClassCastException|NumberFormatException e){
+        } catch (ClassCastException | NumberFormatException e) {
             System.out.println("Invalid amount, please try again.");
             System.out.print(">");
             return verifyDouble(in);
         }
     }
-    static int verifyDenomination(Scanner in){
+
+    static int verifyDenomination(Scanner in) {
         try {
             int denomination = Integer.parseInt(in.nextLine());
             if (!new HashSet<>(Arrays.asList(5, 10, 20, 50)).contains(denomination)) {
@@ -41,81 +42,82 @@ class VerifyInputs {
             return verifyDenomination(in);
         }
     }
-    static int verifyInt(Scanner in){
-        try{
+
+    static int verifyInt(Scanner in) {
+        try {
             int input = Integer.parseInt(in.nextLine());
-            if(input >= 0) {
+            if (input >= 0) {
                 return input;
-            }
-            else {
+            } else {
                 System.out.println("Invalid number, please try again");
                 System.out.print(">");
                 return verifyInt(in);
             }
 
-        }catch (ClassCastException | NumberFormatException e){
+        } catch (ClassCastException | NumberFormatException e) {
             System.out.println("Invalid number, please try again");
             System.out.print(">");
             return verifyInt(in);
         }
     }
-    static String verifyNewUsername(Scanner in){
+
+    static String verifyNewUsername(Scanner in) {
         String username = in.nextLine();
         Pattern p = Pattern.compile("^[a-zA-Z0-9]*$");
 
-        if(p.matcher(username).matches() &&!Main.atm.usernameExists(username)){
+        if (p.matcher(username).matches() && !Main.atm.usernameExists(username)) {
             return username;
-        }
-        else if(!p.matcher(username).matches()) {
+        } else if (!p.matcher(username).matches()) {
             System.out.println("Invalid character in username. Please only use alphanumeric characters (A-Z, a-z, 0-9)\n Please enter a different username");
             System.out.print(">");
             return verifyNewUsername(in);
-        }
-        else {
+        } else {
             System.out.println("That username already exists or is invalid. \n Please enter a different username.");
             System.out.print(">");
-            return(verifyNewUsername(in));
+            return (verifyNewUsername(in));
         }
 
     }
-    static int verifyAccountId(Scanner in, User curUser, String action){
+
+    static int verifyAccountId(Scanner in, User curUser, String action) {
         int id = verifyInt(in);
-        try{
-            if(curUser.verifyID(id)) return id;
+        try {
+            if (curUser.verifyID(id)) return id;
             else {
                 System.out.println("Invalid ID, please try again.");
-                System.out.println("Which account(id) would you like to "+action +"?");
+                System.out.println("Which account(id) would you like to " + action + "?");
                 System.out.print(">");
                 return verifyAccountId(in, curUser, action);
             }
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             System.out.println("Invalid id");
-            System.out.println("Which account(id) would you like to "+action +"?");
+            System.out.println("Which account(id) would you like to " + action + "?");
             System.out.print(">");
             return verifyAccountId(in, curUser, action);
         }
     }
-    static String verifyNewPassword(Scanner in){
+
+    static String verifyNewPassword(Scanner in) {
         String password = in.nextLine();
         Pattern p = Pattern.compile("^[a-zA-Z0-9]*$");
-        if(p.matcher(password).matches()){
+        if (p.matcher(password).matches()) {
             return password;
-        }
-        else{
+        } else {
             System.out.println("Invalid character in password. Please only use alphanumeric characters (A-Z, a-z, 0-9)\n Please enter a different username");
             System.out.print(">");
             return verifyNewPassword(in);
         }
     }
+
     static User verifyUser(Scanner in) {
         String input = in.nextLine();
         if (Main.atm.usernameExists(input) && Main.atm.getUser(input) instanceof User)
             return (User) Main.atm.getUser(input);
-
         System.out.println("Not a valid username.");
         System.out.print(">");
         return verifyUser(in);
     }
+
     static String verifyAccountType(Scanner in) {
         String input = in.nextLine().toLowerCase();
         if (new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(input)) {
@@ -125,27 +127,26 @@ class VerifyInputs {
         System.out.print(">");
         return verifyAccountType(in);
     }
-    static String verifyEmailFormat(Scanner in){
+
+    static String verifyEmailFormat(Scanner in) {
         String input = in.nextLine();
         //Taken from emailregex.com
         Pattern pattern = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
         Matcher m = pattern.matcher(input);
-        if(m.matches()){
+        if (m.matches()) {
             return input;
-        }
-        else{
+        } else {
             System.out.println("Invalid email, please try again.");
             System.out.print(">");
             return verifyEmailFormat(in);
         }
     }
 
-    static boolean verifyConfirmation(Scanner in){
+    static boolean verifyConfirmation(Scanner in) {
         String input = in.nextLine().toLowerCase();
-        if(new HashSet<>(Arrays.asList("yes", "y")).contains(input)){
+        if (new HashSet<>(Arrays.asList("yes", "y")).contains(input)) {
             return true;
-        }
-        else if(new HashSet<>(Arrays.asList("no", "n")).contains(input)){
+        } else if (new HashSet<>(Arrays.asList("no", "n")).contains(input)) {
             return false;
         }
         System.out.println("Invalid response.");
@@ -153,11 +154,11 @@ class VerifyInputs {
         return verifyConfirmation(in);
     }
 
-    static String verifyStockSymbol(Scanner in){
+    static String verifyStockSymbol(Scanner in) {
         String input = in.nextLine().toUpperCase();
         if (new HashSet<>(Arrays.asList("PSXP", "SOI", "BERY", "SAVE", "MTOR",
                 "MTZ", "ISRG", "EPRT", "MIDD", "LPLA", "FAST", "NMIH", "DIN", "MTCH", "REXR", "AMT",
-        "BAH", "TDG", "TGE", "AMZN", "XLNX", "KEYS", "ALXN", "V", "WLTW", "AWI",
+                "BAH", "TDG", "TGE", "AMZN", "XLNX", "KEYS", "ALXN", "V", "WLTW", "AWI",
                 "EDU", "PRAH", "LULU", "INTU", "PYPL", "WWD", "STOR", "MGP", "ESNT",
                 "CTRE", "FIVE", "PAGS", "FTNT", "ATHM", "PAYC", "ANET", "ULTA", "PLNT",
                 "SSNC", "PANW", "VEEV", "UBNT", "KL", "TEAM", "KO", "AAPL", "MSFT")).contains(input)) {
@@ -167,37 +168,49 @@ class VerifyInputs {
         System.out.print(">");
         return verifyStockSymbol(in);
     }
+
+    static BigDecimal verifyMoney(Scanner in) {
+        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+        if (amount.signum() == -1) {
+            System.out.println("Invalid amount.");
+            System.out.print(">");
+            return verifyMoney(in);
+        }
+        return amount;
+
+    }
 }
+
 class HelperFunctions {
-    static  void transferToOtherUser(int fromId, Scanner in){
+    static void transferToOtherUser(int fromId, Scanner in) {
         System.out.println("What is the username of the user you would like to transfer to?");
         User otherUser = VerifyInputs.verifyUser(in);
         System.out.println("How much money would you like to transfer?");
         System.out.print(">");
-        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
-        Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId);
+        BigDecimal amount = VerifyInputs.verifyMoney(in);
+        Account fromAccount = ((User) Main.atm.getCurUser()).getAccount(fromId);
         Account toAccount = otherUser.getPrimaryAccount();
         Transaction transfer = new Transfer(fromAccount, toAccount, amount);
         transfer.process();
     }
-    static void transferToOwnAccount(int fromId, Scanner in){
+
+    static void transferToOwnAccount(int fromId, Scanner in) {
         System.out.println("Which account would you like to transfer to?");
-        int id ;
+        int id;
         User curUser = (User) Main.atm.getCurUser();
-        while(true){
+        while (true) {
             id = VerifyInputs.verifyAccountId(in, curUser, "transfer to");
-            if(curUser.getAccount(id).canTransferIn()){
+            if (curUser.getAccount(id).canTransferIn()) {
                 break;
-            }
-            else{
+            } else {
                 System.out.println("You can't transfer to that account. Please try again");
                 System.out.print(">");
             }
         }
         System.out.println("How much money would you like to transfer?");
         System.out.print(">");
-        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
-        Account fromAccount =((User) Main.atm.getCurUser()).getAccount(fromId), toAccount = ((User) Main.atm.getCurUser()).getAccount(id);
+        BigDecimal amount = VerifyInputs.verifyMoney(in);
+        Account fromAccount = ((User) Main.atm.getCurUser()).getAccount(fromId), toAccount = ((User) Main.atm.getCurUser()).getAccount(id);
         Transaction transfer = new Transfer(fromAccount, toAccount, amount);
         transfer.process();
     }
