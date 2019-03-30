@@ -10,12 +10,12 @@ public class InvestmentPortfolioMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         if(Main.atm.getCurUser() instanceof User){
-            User user = (User) Main.atm.getCurUser();
+            User curUser = (User) Main.atm.getCurUser();
             System.out.println("======= Investment Portfolio =======");
-            if(! user.hasInvestmentAccount()){
+            if(!curUser.hasInvestmentAccount()){
                 System.out.println("You do not have an investment account. Would you like to request one? (Y/N)");
                 if(VerifyInputs.verifyConfirmation(in)){
-                    Main.atm.requestCurAccount("investment");
+                    Main.atm.requestAccount(curUser, "investment");
                     System.out.println("Investment account requested successfully.\n" +
                             "Input anything to go back.");
                     System.out.println(">");
@@ -25,7 +25,7 @@ public class InvestmentPortfolioMethod implements InputMethod {
                 return "UserOptions";
             }
             else{
-                System.out.println(user.getInvestmentPortfolio());
+                System.out.println(curUser.getInvestmentPortfolio());
                 System.out.println("Would you like to trade stocks? (Y/N)");
                 if(VerifyInputs.verifyConfirmation(in)){
                     tradeStocks(in);

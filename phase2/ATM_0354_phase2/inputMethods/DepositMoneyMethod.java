@@ -33,21 +33,23 @@ public class DepositMoneyMethod implements InputMethod {
                 User curUser = (User)Main.atm.getCurUser();
                 int id = VerifyInputs.verifyAccountId(in, curUser, "deposit into");
 
-                //TODO: Figure out what's happening here
-
                 List<String> all_deposits = Main.parseDeposits();
                 displayDeposits(all_deposits);
                 if (all_deposits.size() == 0) {
+                    System.out.println("No deposits available.");
                     System.out.println("Returning to user options...");
                     updateDeposits(all_deposits);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     return "UserOptions";
                 }
 
                 System.out.println("Select a deposit by inputting 'deposit_type, amount': ");
                 System.out.println("=================================");
                 System.out.print(">");
-//                in.nextLine();
-
                 String input = in.nextLine();
                 while (true) {
                     System.out.println("Input: "+input);
@@ -67,26 +69,31 @@ public class DepositMoneyMethod implements InputMethod {
                 String[] items = input.split(", "); // what about cheque/cash (i.e. items[0])?
                 BigDecimal money = new BigDecimal(items[1]);
                 Main.atm.deposit((User) Main.atm.getCurUser(), money, id);
-
+                updateDeposits(all_deposits);
                 displayDeposits(all_deposits);
                 if (all_deposits.size() == 0) {
+                    System.out.println("No deposits remaining.");
                     System.out.println("Returning to user options...");
-                    updateDeposits(all_deposits);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     return "UserOptions";
                 } else {
-                    System.out.println("Would you like to deposit more money?");
+                    System.out.println("Would you like to deposit more money? ('yes'/other)");
                     System.out.print(">");
                 }
                 boolean cont = in.nextLine().equals("yes");
+
                 if (!cont) {
-                    updateDeposits(all_deposits);
                     return "UserOptions";
                 }
             }
         }
     }
 
-    public void displayDeposits(List<String> deposits){
+    private void displayDeposits(List<String> deposits){
         System.out.println("==== Available Deposits ====");
         if (deposits.size() == 0)
             System.out.println("No available deposits.");
@@ -97,10 +104,9 @@ public class DepositMoneyMethod implements InputMethod {
         }
     }
 
-    public void updateDeposits(List<String> deposits){
+    private void updateDeposits(List<String> deposits){
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(DEPOSIT_FILE_NAME), false));
-
             for (String deposit: deposits){
                 writer.write(deposit);
                 writer.newLine();

@@ -43,7 +43,6 @@ class VerifyInputs {
     }
     static int verifyInt(Scanner in){
         try{
-
             int input = Integer.parseInt(in.nextLine());
             if(input >= 0) {
                 return input;
@@ -80,7 +79,6 @@ class VerifyInputs {
 
     }
     static int verifyAccountId(Scanner in, User curUser, String action){
-
         int id = verifyInt(in);
         try{
             if(curUser.verifyID(id)) return id;
@@ -114,7 +112,7 @@ class VerifyInputs {
         return verifyUser(in);
     }
     static String verifyAccountType(Scanner in) {
-        String input = in.nextLine();
+        String input = in.nextLine().toLowerCase();
         if (new HashSet<>(Arrays.asList("credit card", "line of credit", "chequing", "savings")).contains(input)) {
             return input;
         }

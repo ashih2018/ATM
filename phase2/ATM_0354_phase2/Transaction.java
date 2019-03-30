@@ -50,7 +50,7 @@ public abstract class Transaction {
             getAccountFrom().transferMoneyOut(getValue());
             getAccountFrom().addTransaction(this);
         } catch (MoneyTransferException e) {
-            e.printStackTrace();
+            System.out.println("You can't withdraw that amount from this account. Try again.");
         }
     }
 

@@ -14,12 +14,13 @@ public class Withdrawal extends Transaction {
 
     public void process() {
         if(Main.atm.cashHandler.withdrawCash(this.getValue().intValue())) super.process();
+        else System.out.println("Can't withdraw this amount, there's not enough cash.");
     }
 
     @Override
     public String serialize() {
         return String.join(",",
-                this.getClass().getSimpleName(), ((Integer) this.getAccountTo().getId()).toString(),
+                this.getClass().getSimpleName(), ((Integer) this.getAccountFrom().getId()).toString(),
                 this.getValue().toString(), this.getDate().toString());
     }
 

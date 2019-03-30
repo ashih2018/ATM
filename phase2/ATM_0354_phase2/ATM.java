@@ -27,6 +27,10 @@ public class ATM {
         this.curUser = null;
     }
 
+    public int numUsers(){
+        return this.userHandler.users.size();
+    }
+
     void setDateTime(LocalDateTime datetime) {
         this.datetime = datetime;
     }

@@ -14,22 +14,33 @@ public class RequestNewAccountMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("======= New Account Request =======");
         do {
-
-            System.out.println("Would you like to open a joint account or an individual account? (joint/individual)");
-            System.out.print(">");
-            String response = in.nextLine();
-            boolean joint = response.equals("joint");
-            while (!response.equals("joint") && !response.equals("individual")) {
+            boolean joint = false;
+            if (Main.atm.numUsers() > 1) {
                 System.out.println("Would you like to open a joint account or an individual account? (joint/individual)");
                 System.out.print(">");
-                response = in.nextLine();
+                String response = in.nextLine();
                 joint = response.equals("joint");
+                while (!response.equals("joint") && !response.equals("individual")) {
+                    System.out.println("Would you like to open a joint account or an individual account? (joint/individual)");
+                    System.out.print(">");
+                    response = in.nextLine();
+                    joint = response.equals("joint");
+                }
+
             }
+            User curUser = (User) Main.atm.getCurUser();
             User otherUser = null;
             if (joint) {
-                System.out.println("Who would you like to open the account with?");
-                System.out.print(">");
-                otherUser = VerifyInputs.verifyUser(in);
+                while(true) {
+                    System.out.println("Who would you like to open the account with?");
+                    System.out.print(">");
+                    otherUser = VerifyInputs.verifyUser(in);
+                    if (otherUser == curUser) {
+                        System.out.println("You can't open a joint account with yourself! Please try again.");
+                    }else{
+                        break;
+                    }
+                }
             }
             System.out.println("What kind of account would you like? You can open a 'credit card' account, 'line of credit' account, 'chequing' account, or 'savings' account.");
             System.out.print(">");

@@ -186,9 +186,9 @@ public class Main {
             br.close();
             return all_deposits;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("No Deposits.");
-            return null;
+            return new ArrayList<>();
         }
     }
 
