@@ -46,7 +46,7 @@ public class User extends Person {
     }
 
     public int addAccount(Account account) {
-        int id = accountFactory.nextAccountId + 1; //fix this
+        int id = ++accountFactory.nextAccountId; //fix this
         account.setId(id);
         this.accounts.put(id, account);
         return id;
@@ -54,6 +54,7 @@ public class User extends Person {
 
     public int addAccount(String accountType) {
         Account account = accountFactory.createAccount(getUsername(), accountType);
+        System.out.println(account.getId());
         this.accounts.put(account.getId(), account);
         return account.getId();
     }

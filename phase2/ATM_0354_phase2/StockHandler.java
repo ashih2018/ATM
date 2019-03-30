@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class StockHandler {
     private HashMap<String, BigDecimal> prices;
     private HashMap<String, String> names;
-
+    private final String API_KEY = "KJFQFRS9IL1YVZ9B";
     public StockHandler() {
         prices = new HashMap<>();
         names = new HashMap<>();
@@ -51,43 +51,18 @@ public class StockHandler {
     public void updateStocks() {
         LocalDateTime date = Main.atm.getDateTime();
         String formattedDate = "" + (date.getYear() - 5) + "-" + date.getMonth() + "-" + date.getDayOfMonth();
-        String apiKey = "KJFQFRS9IL1YVZ9B";
         for (String key : prices.keySet()) {
-            try {
-                URL url = new URL(
-                        "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&" +
-                                "symbol=" + key + "&outputsize=full&apikey=" + apiKey);
-                try {
-                    URLConnection connection = url.openConnection();
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(connection.getInputStream()));
-                    StringBuilder input = new StringBuilder();
-                    String inputLine;
-                    while ((inputLine = br.readLine()) != null) {
-                        input.append(inputLine);
-                    }
-                    br.close();
-                    JSONObject obj = new JSONObject(input.toString());
-                    BigDecimal closingValue = (BigDecimal)
-                            obj.getJSONObject("Time Series (Daily)").getJSONObject(formattedDate).get("4. close");
-                    prices.put(key, closingValue);
-                } catch (IOException e) {
-                    System.out.println(e.toString());
-                }
-            } catch (MalformedURLException e) {
-                System.out.println(e.toString());
-            }
+            updateStock(key);
         }
     }
 
     public void updateStock(String key) {
         LocalDateTime date = Main.atm.getDateTime();
         String formattedDate = "" + (date.getYear() - 5) + "-" + date.getMonth() + "-" + date.getDayOfMonth();
-        String apiKey = "KJFQFRS9IL1YVZ9B";
         try {
             URL url = new URL(
                     "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&" +
-                            "symbol=" + key + "&outputsize=full&apikey=" + apiKey);
+                            "symbol=" + key + "&outputsize=full&apikey=" + API_KEY);
             try {
                 URLConnection connection = url.openConnection();
                 BufferedReader br = new BufferedReader(

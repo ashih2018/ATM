@@ -13,6 +13,11 @@ public class InvestmentAccount extends AssetAccount {
         setMinimumAllowedBalance(BigDecimal.ZERO);
     }
 
+    @Override
+    String summary(int id) {
+        return null;
+    }
+
     public InvestmentAccount(String username, int id, HashMap<String, Integer> stocks){
         super(username, id);
         this.stocks = stocks;

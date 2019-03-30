@@ -124,7 +124,10 @@ public abstract class Account {
     public String toString() {
         return "\tAccount ID: " + this.id + "\n\tAccount Balance: " + this.balance + "\n";
     }
-
+    //for display through users.
+    String summary(int id){
+        return "\tAccount ID: " + id + "\n\tAccount Balance: "+this.balance+"\n";
+    }
     public void writeTransactions(){
         try{
             String filepath = "phase2/ATM_0354_phase2/Files/transactions.txt";

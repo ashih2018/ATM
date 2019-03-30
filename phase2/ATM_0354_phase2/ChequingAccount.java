@@ -20,4 +20,7 @@ public class ChequingAccount extends AssetAccount {
     public String toString() {
         return "Chequing Account " + "\n" + super.toString();
     }
+    String summary(int id){
+        return "Chequing Account \n" + super.summary(id);
+    }
 }

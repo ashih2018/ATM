@@ -125,7 +125,6 @@ public class Main {
 
 
     private static void parseUsers(Scanner fileIn) {
-        int maxAccountID = -1;
         while (fileIn.hasNext()) {
             String[] personInput = fileIn.nextLine().split(",");
             String userType = personInput[0];
@@ -146,7 +145,7 @@ public class Main {
                     newUser.addAccount(accountType, accountID++, balance, dateOfCreation, new ArrayList<>());
                 }
                 newUser.setPrimary(defaultID);
-                newUser.accountFactory.setNextAccountId(maxAccountID);
+                newUser.accountFactory.setNextAccountId(accountID-1);
             }
         }
     }
