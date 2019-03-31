@@ -122,7 +122,9 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return "\tAccount ID: " + this.id + "\n\tAccount Balance: " + this.balance + "\n";
+        return "\tAccount ID: " + this.id +
+                "\n\tAccount Balance: " + this.balance + "\n" +
+                "\n\tDate of Creation: " + this.dateOfCreation + "\n";
     }
     //for display through users.
     String summary(int id){
