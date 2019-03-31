@@ -6,7 +6,6 @@ import ATM_0354_phase2.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -141,6 +140,7 @@ class VerifyInputs {
             return verifyEmailFormat(in);
         }
     }
+
 
     static boolean verifyConfirmation(Scanner in) {
         String input = in.nextLine().toLowerCase();

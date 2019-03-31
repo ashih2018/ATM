@@ -42,12 +42,10 @@ public class TransferMoneyMethod implements InputMethod {
                         System.out.print(">");
                     }
                 }
-                System.out.println("Would you like to transfer more money?");
+                System.out.println("Would you like to transfer more money? (yes/no)");
                 System.out.print(">");
-                boolean cont = in.nextLine().equals("yes");
-                if (!cont) {
-                    return "UserOptions";
-                }
+                if (!VerifyInputs.verifyConfirmation(in)) return "UserOptions";
+
             }
         }
     }

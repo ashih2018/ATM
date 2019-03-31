@@ -40,8 +40,7 @@ public class UserCreationScreenMethod implements InputMethod {
             Main.atm.createPerson(type, username, password, null);
             System.out.println("Would you like to create another user? (yes/no)");
             System.out.print(">");
-            boolean anotherUser = in.nextLine().equals("yes");
-            if (!anotherUser) break;
+            if (!VerifyInputs.verifyConfirmation(in)) break;
         }
         if(Main.atm.getCurUser() instanceof BankManager)
             return "BankManagerOptions";

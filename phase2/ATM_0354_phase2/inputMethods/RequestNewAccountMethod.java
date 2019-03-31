@@ -48,7 +48,7 @@ public class RequestNewAccountMethod implements InputMethod {
             if (joint) Main.atm.requestJointAccount((User) Main.atm.getCurUser(), otherUser, input);
             else Main.atm.requestAccount((User) Main.atm.getCurUser(), input);
             System.out.print("Would you like to request to open another account? (yes/no) \n>");
-        } while (in.nextLine().equals("yes"));
+        } while (VerifyInputs.verifyConfirmation(in));
         return "UserOptions";
 
     }

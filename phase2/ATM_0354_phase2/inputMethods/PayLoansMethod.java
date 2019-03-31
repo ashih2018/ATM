@@ -56,8 +56,7 @@ public class PayLoansMethod implements InputMethod {
         }
         System.out.println("Would you like to pay back more loans?");
         System.out.print(">");
-        boolean cont = in.nextLine().equalsIgnoreCase("yes");
-        if(cont) return run(in);
+        if(VerifyInputs.verifyConfirmation(in)) return run(in);
         return "UserOptions";
     }
 }

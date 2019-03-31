@@ -23,8 +23,7 @@ public class RefillCashMethod implements InputMethod {
             System.out.println("Added " + count + " bills of denomination " + denomination);
             System.out.println("Would you like to restock again? ('yes'/other)");
             System.out.print(">");
-            boolean repeat = in.nextLine().equalsIgnoreCase("yes");
-            if (!repeat) {
+            if (!VerifyInputs.verifyConfirmation(in)) {
                 if(Main.atm.getCurUser() instanceof BankManager)
                     return "BankManagerOptions";
                 else
