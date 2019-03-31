@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,53 +17,51 @@ import java.util.HashMap;
 
 public class StockHandler {
     private HashMap<String, BigDecimal> prices;
-    private HashMap<String, String> names;
     private final String API_KEY = "KJFQFRS9IL1YVZ9B";
     public StockHandler() {
         prices = new HashMap<>();
-        names = new HashMap<>();
-    }
-
-    public StockHandler(HashMap<String, BigDecimal> prices, HashMap<String, String> names) {
-        this.prices = prices;
-        this.names = names;
     }
 
     public BigDecimal getPrice(String key) {
         return prices.get(key);
     }
 
-    public String getName(String key) {
-        return names.get(key);
-    }
 
     public ArrayList<String> getKeys() {
         return new ArrayList<>(prices.keySet());
     }
 
-    public void addStock(String key, String name) {
-        prices.put(key, null);
-        names.put(key, name);
+    public void addStock(String key) {
+        prices.put(key, BigDecimal.ZERO);
     }
 
     /**
      * Updates the price of each stock based on the closing value of the stock 5 years before the ATM's date.
      */
     public void updateStocks() {
-        LocalDateTime date = Main.atm.getDateTime();
-        String formattedDate = "" + (date.getYear() - 5) + "-" + date.getMonth() + "-" + date.getDayOfMonth();
         for (String key : prices.keySet()) {
             updateStock(key);
         }
     }
 
     public void updateStock(String key) {
-        LocalDateTime date = Main.atm.getDateTime();
-        String formattedDate = "" + (date.getYear() - 5) + "-" + date.getMonth() + "-" + date.getDayOfMonth();
+        LocalDateTime date = Main.atm.getDateTime().minusMonths(3);
+        if(date.getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+            date = date.minusDays(1);
+        }
+        else if(date.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+            date = date.minusDays(2);
+        }
+        int monthValue = date.getMonthValue();
+        String month = "" + date.getMonthValue();
+        if (monthValue + 1 <10){
+            month  = "0" + monthValue;
+        }
+        String formattedDate = "" + date.getYear() + "-" + month + "-" + date.getDayOfMonth();
         try {
             URL url = new URL(
                     "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&" +
-                            "symbol=" + key + "&outputsize=full&apikey=" + API_KEY);
+                            "symbol=" + key + "&apikey=" + API_KEY);
             try {
                 URLConnection connection = url.openConnection();
                 BufferedReader br = new BufferedReader(
@@ -74,8 +73,8 @@ public class StockHandler {
                 }
                 br.close();
                 JSONObject obj = new JSONObject(input.toString());
-                BigDecimal closingValue = (BigDecimal)
-                        obj.getJSONObject("Time Series (Daily)").getJSONObject(formattedDate).get("4. close");
+                BigDecimal closingValue = new BigDecimal((String) obj.getJSONObject("Time Series (Daily)")
+                        .getJSONObject(formattedDate).get("4. close"));
                 prices.put(key, closingValue);
             } catch (IOException e) {
                 System.out.println(e.toString());

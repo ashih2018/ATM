@@ -1,6 +1,8 @@
 package ATM_0354_phase2;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InvestmentAccount extends AssetAccount {
@@ -12,10 +14,32 @@ public class InvestmentAccount extends AssetAccount {
         super(username, id);
         setMinimumAllowedBalance(BigDecimal.ZERO);
     }
+    public InvestmentAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
+        super(username, id, balance, dateOfCreation, transactions);
+        this.setMinimumAllowedBalance(BigDecimal.ZERO);
+    }
 
     @Override
     String summary(int id) {
-        return null;
+        return getInvestmentPortfolio();
+    }
+
+    public String writeInvestmentAccount(){
+        StringBuilder str = new StringBuilder(getId());
+        for (String key: stocks.keySet()){
+            str.append(",");
+            str.append(key);
+            str.append(",");
+            str.append(stocks.get(key));
+        }
+        return str.toString();
+    }
+
+    /**
+     * For startup purposes
+     */
+    public void setupStock(String key, int quantity){
+        stocks.put(key, quantity);
     }
 
     public InvestmentAccount(String username, int id, HashMap<String, Integer> stocks){
@@ -37,7 +61,7 @@ public class InvestmentAccount extends AssetAccount {
      */
     public void buyStock(String key, int quantity){
         if(!Main.atm.stockHandler.getKeys().contains(key)){
-            Main.atm.stockHandler.addStock(key, "uh");
+            Main.atm.stockHandler.addStock(key);
             Main.atm.stockHandler.updateStock(key);
         }
         try{
@@ -80,7 +104,7 @@ public class InvestmentAccount extends AssetAccount {
         String str = "Investment Portfolio:\n" +
                 "Balance: " + getBalance() + "\n" +
                 "Total Asset Value: " + getTotalValue() + "\n" +
-                "------------------------------";
+                "------------------------------\n";
         StringBuilder sb = new StringBuilder(str);
         for (String key : stocks.keySet()){
             sb.append(key);
@@ -91,6 +115,11 @@ public class InvestmentAccount extends AssetAccount {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Investment Account " + "\n" + super.toString();
     }
 
 
