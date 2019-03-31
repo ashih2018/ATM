@@ -98,9 +98,9 @@ public class Main {
                     break;
                 }
                 case "Withdrawal": {
-                    int accountFromId = Integer.parseInt(userTransactions[3]);
-                    int value = Integer.parseInt(userTransactions[4]);
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
+                    int accountFromId = Integer.parseInt(userTransactions[2]);
+                    int value = Integer.parseInt(userTransactions[3]);
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[4]);
                     newTransaction = new Withdrawal(curUser.getAccount(accountFromId), value, date);
                     relevantAccs.add(curUser.getAccount(accountFromId));
                     break;
