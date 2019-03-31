@@ -2,6 +2,8 @@ package ATM_0354_phase2;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Properties;
 import java.util.Random;
 
@@ -38,6 +40,20 @@ public class EmailHandler {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
             message.setSubject("User summary for: " + user.getUsername());
             message.setText(user.getSummary());
+            Transport.send(message);
+            System.out.println("Email has been sent!");
+        } catch (MessagingException e) {
+            System.out.println("Couldn't send email!");
+        }
+    }
+
+    public static void sendLoanEmail(User user, String emailTo, LocalDateTime date, BigDecimal loan) {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+            message.setSubject("Loan Payment Update");
+            message.setText("You have until " + date.toString() + " to pay your loan of " + loan.doubleValue() + ".");
             Transport.send(message);
             System.out.println("Email has been sent!");
         } catch (MessagingException e) {

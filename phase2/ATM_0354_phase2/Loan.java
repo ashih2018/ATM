@@ -12,6 +12,8 @@ public class Loan extends Transaction implements Comparable<Loan>{
     private LocalDateTime endDate;
     private boolean paidOff;
     private BigDecimal original;
+
+
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime endDate) {
         super(null, accountTo, value, LocalDateTime.now());
         this.original = value;
@@ -38,7 +40,7 @@ public class Loan extends Transaction implements Comparable<Loan>{
         if (monthsLeft <= 0) {
             //TODO: Behavior when a loan expires
         } else if(monthsLeft < 3){
-            //TODO: Send an email out
+            EmailHandler.sendLoanEmail((User)Main.atm.getCurUser(), "", this.endDate, this.price);
         }
     }
     public boolean isPaid(){
@@ -54,13 +56,6 @@ public class Loan extends Transaction implements Comparable<Loan>{
         price = price.multiply(interest.pow(months));
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public BigDecimal getInterest() {
-        return interest;
-    }
 
     @Override
     public void process() {

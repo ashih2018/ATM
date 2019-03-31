@@ -100,12 +100,12 @@ public abstract class Account {
         return transferOut;
     }
 
-    public void setTransferIn(boolean cantransferIn) {
-        this.transferIn = cantransferIn;
+    public void setTransferIn(boolean canTransferIn) {
+        this.transferIn = canTransferIn;
     }
 
-    public void setTransferOut(boolean cantransferOut) {
-        this.transferOut = cantransferOut;
+    public void setTransferOut(boolean canTransferOut) {
+        this.transferOut = canTransferOut;
     }
 
     public void setBalance(BigDecimal newBalance) {
