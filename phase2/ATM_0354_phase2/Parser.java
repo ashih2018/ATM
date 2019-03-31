@@ -140,6 +140,10 @@ public class Parser {
         }
     }
 
+    public void updateStocks(){
+        Main.atm.stockHandler.updateStocks();
+    }
+
     public List<String> parseDeposits() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));

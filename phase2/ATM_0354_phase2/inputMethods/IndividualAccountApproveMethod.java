@@ -1,9 +1,6 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.BankManager;
-import ATM_0354_phase2.InputMethod;
-import ATM_0354_phase2.Main;
-import ATM_0354_phase2.User;
+import ATM_0354_phase2.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +14,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
 
         String filePath = "phase2/ATM_0354_phase2/Files/account_creation_requests.txt";
         try {
+            Writer writer = new Writer();
             File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
@@ -65,7 +63,7 @@ public class IndividualAccountApproveMethod implements InputMethod {
                 }
                 line = reader.readLine();
             }
-            Main.overwriteRequests();
+            writer.overwriteRequests();
         } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException caught when reading file in IndividualAccountApproveMethod.");

@@ -48,7 +48,7 @@ public class Main {
             parser.parseUsers(fileIn); //Also sets up accounts
             parser.parseTransactions();
             parser.parseStocks();
-            updatestocks();
+            parser.updateStocks();
             state = "Login";
         }
 
@@ -72,94 +72,13 @@ public class Main {
         }
     }
 
-    public static void overwriteRequests() {
-        try {
-            PrintWriter writer = new PrintWriter(ACCOUNT_REQUESTS_FILE_NAME);
-            writer.print("");
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("IOException with Account Creation Requests file");
-        }
-    }
-
-    private static void updatestocks(){
-        atm.stockHandler.updateStocks();
-    }
-
 
     private static void shutdownATM() {
-        writeATM();
-        writePeople();
-        writeTransactions();
-        writeStocks();
-    }
-
-    private static void writeATM() {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(ATM_FILE_NAME), false));
-            writer.write(atm.getDateTime().toString());
-            writer.newLine();
-
-            for (CashObject cash : atm.cashHandler.getCash()) {
-                writer.write(cash.getCashValue() + "," + cash.getCount());
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            System.out.println("IOException when writing atm cash amounts to atm.txt");
-        }
-    }
-
-    private static void writePeople() {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PEOPLE_FILE_NAME), false));
-            for (Person person : atm.userHandler.users) {
-                if (person instanceof BankManager) {
-                    writer.write("BankManager," + person.getUsername() + "," + person.getHash()
-                            + "," + person.getSalt());
-                    writer.newLine();
-                } else if (person instanceof User) {
-                    User user = (User) person;
-                    writer.write(user.writeUser());
-                    writer.newLine();
-                }
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            System.out.println("IOException when writing people to people.txt");
-        }
-    }
-
-    private static void writeTransactions() {
-        for (Person person : atm.userHandler.users) {
-            if (person instanceof User) {
-                User user = (User) person;
-                user.writeTransactions();
-            }
-        }
-    }
-
-    private static void writeStocks() {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(STOCKS_FILE_NAME), false));
-            String keys = atm.stockHandler.getKeys().toString();
-            keys = keys.substring(1, keys.length() - 1).replaceAll(" ", "");
-            writer.write(keys);
-            writer.newLine();
-            for (Person person : atm.userHandler.users) {
-                if (person instanceof User) {
-                    User user = (User) person;
-                    writer.write(user.writeInvestmentPortfolio());
-                    writer.newLine();
-                }
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            System.out.println("IOException when writing people to stocks.txt");
-        }
+        Writer writer = new Writer();
+        writer.writeATM();
+        writer.writePeople();
+        writer.writeTransactions();
+        writer.writeStocks();
     }
 
     public static void reset() {
