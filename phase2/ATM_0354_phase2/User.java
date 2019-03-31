@@ -98,7 +98,6 @@ public class User extends Person {
             if (id == this.getPrimaryAccountId())
                 summary.append("(Primary Account)\n");
             summary.append(account.toString());
-            summary.append("\n");
         }
         return summary.toString();
     }
