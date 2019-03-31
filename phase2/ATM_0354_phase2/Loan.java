@@ -61,6 +61,9 @@ public class Loan extends Transaction implements Comparable<Loan>{
         price = price.multiply(interest.pow(months));
     }
 
+    public void recordLoan() {
+        getAccountTo().addTransaction(this);
+    }
 
     @Override
     public void process() {

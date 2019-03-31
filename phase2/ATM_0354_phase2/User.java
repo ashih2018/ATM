@@ -40,6 +40,7 @@ public class User extends Person {
         }
         return max;
     }
+
     public Account getAccount(int accountId) {
         Account account;
         try {
@@ -196,6 +197,7 @@ public class User extends Person {
                 }
         }
     }
+
     ArrayList<Transaction> getTransactions(){
         ArrayList<Transaction> transactions = new ArrayList<>();
         for (Account account : this.accounts.values()) {
@@ -205,6 +207,7 @@ public class User extends Person {
         Collections.reverse(transactions);
         return transactions;
     }
+
     public String transactionHistory(){
         StringBuilder out = new StringBuilder();
         ArrayList<Transaction> transactions = getTransactions();
@@ -214,6 +217,7 @@ public class User extends Person {
         }
         return out.toString();
     }
+
     public String loanSummary() {
         ArrayList<Loan> loans = getLoans();
         StringBuilder out = new StringBuilder();

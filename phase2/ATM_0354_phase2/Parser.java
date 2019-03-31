@@ -71,6 +71,8 @@ public class Parser {
                     LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
                     LocalDateTime endDate = LocalDateTime.parse(userTransactions[6]);
                     newTransaction = new Loan(curUser.getAccount(accountToId), value, interest, date, endDate);
+                    ((Loan) newTransaction).recordLoan();
+                    curUser.changeLoanLimit(-1 * value.intValue());
                     break;
                 }
                 default:
@@ -79,7 +81,6 @@ public class Parser {
             }
             for (Account relevantAcc : relevantAccs)
                 relevantAcc.addTransaction(newTransaction);
-
         }
     }
 
