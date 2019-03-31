@@ -43,6 +43,7 @@ public class RequestLoanMethod implements InputMethod {
         loan.process();
         ((User) Main.atm.getCurUser()).changeLoanLimit(-1 * loanAmount.intValue());
         System.out.println("The maximum amount you will be able to loan in the future is " + ((User) Main.atm.getCurUser()).getLoanLimit());
+        System.out.println("Press any key to return");
         System.out.print(">");
         in.nextLine();
         return "UserOptions";
