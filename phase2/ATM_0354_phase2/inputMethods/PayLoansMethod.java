@@ -24,7 +24,7 @@ public class PayLoansMethod implements InputMethod {
         System.out.print(">");
         int loanId;
         do {
-            loanId = VerifyInputs.verifyInt(in);
+            loanId = VerifyInputs.verifyInt(in, false);
         } while (loanId >= numLoans && loanId != 9999);
         if(loanId == 9999){
             return "UserOptions";

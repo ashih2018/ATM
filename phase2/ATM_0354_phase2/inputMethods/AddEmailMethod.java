@@ -28,7 +28,7 @@ public class AddEmailMethod implements InputMethod {
             while (true) {
                 System.out.println("Input your security number.");
                 System.out.print(">");
-                int attempt = VerifyInputs.verifyInt(in);
+                int attempt = VerifyInputs.verifyInt(in, false);
                 if (securityNum == attempt) {
                     System.out.println("Correct security number. Your email has been verified.");
                     Main.atm.getCurUser().setEmail(email);

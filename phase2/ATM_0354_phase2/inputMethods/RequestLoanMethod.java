@@ -7,7 +7,6 @@ import ATM_0354_phase2.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class RequestLoanMethod implements InputMethod {
@@ -15,20 +14,25 @@ public class RequestLoanMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("You can loan out " + ((User) Main.atm.getCurUser()).getLoanLimit());
         System.out.println("How much money would you like to loan out?");
+        System.out.println("Input 9999 to go back");
         System.out.print(">");
         BigDecimal loanAmount;
         while (true) {
             loanAmount = VerifyInputs.verifyMoney(in);
-            if (loanAmount.compareTo(BigDecimal.valueOf(((User) Main.atm.getCurUser()).getLoanLimit())) > 0) {
+            if (loanAmount.intValue() == 9999) {
+                return "UserOptions";
+            }
+            else if (loanAmount.compareTo(BigDecimal.valueOf(((User) Main.atm.getCurUser()).getLoanLimit())) > 0) {
                 System.out.println("You can't loan out that much!");
                 System.out.print(">");
-            } else {
+            }
+            else {
                 break;
             }
         }
         System.out.println("How many months would you like to loan for?");
         System.out.print(">");
-        int months = VerifyInputs.verifyInt(in);
+        int months = VerifyInputs.verifyInt(in, true);
         System.out.println("Which account (id) would you like to loan into?");
         System.out.print(">");
         User curUser = (User) Main.atm.getCurUser();

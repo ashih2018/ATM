@@ -1,8 +1,8 @@
 package ATM_0354_phase2.inputMethods;
 
-import ATM_0354_phase2.*;
+import ATM_0354_phase2.InputMethod;
+import ATM_0354_phase2.User;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class UndoTransactionMethod implements InputMethod {
@@ -26,7 +26,7 @@ public class UndoTransactionMethod implements InputMethod {
         System.out.print(">");
         int num;
         while(true) {
-            num = VerifyInputs.verifyInt(in);
+            num = VerifyInputs.verifyInt(in, true);
             if(num <= amount) break;
             else{
                 System.out.println("Invalid transaction number. Please try again.");
