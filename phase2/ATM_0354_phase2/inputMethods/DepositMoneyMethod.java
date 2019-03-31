@@ -2,6 +2,7 @@ package ATM_0354_phase2.inputMethods;
 
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
+import ATM_0354_phase2.Parser;
 import ATM_0354_phase2.User;
 
 import java.io.BufferedWriter;
@@ -33,8 +34,8 @@ public class DepositMoneyMethod implements InputMethod {
                 System.out.print(">");
                 User curUser = (User) Main.atm.getCurUser();
                 int id = VerifyInputs.verifyAccountId(in, curUser, "deposit into");
-
-                List<String> all_deposits = Main.parseDeposits();
+                Parser parser = new Parser();
+                List<String> all_deposits = parser.parseDeposits();
                 displayDeposits(all_deposits);
                 if (all_deposits.size() == 0) {
                     System.out.println("No deposits available.");

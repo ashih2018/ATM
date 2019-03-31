@@ -12,6 +12,8 @@ public class Loan extends Transaction implements Comparable<Loan>{
     private LocalDateTime endDate;
     private boolean paidOff;
     private BigDecimal original;
+
+
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime endDate) {
         super(null, accountTo, value, LocalDateTime.now());
         this.original = value;
@@ -59,13 +61,6 @@ public class Loan extends Transaction implements Comparable<Loan>{
         price = price.multiply(interest.pow(months));
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public BigDecimal getInterest() {
-        return interest;
-    }
 
     @Override
     public void process() {

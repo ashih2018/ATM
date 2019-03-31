@@ -1,5 +1,6 @@
 package ATM_0354_phase2;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -76,7 +77,7 @@ public class StockHandler {
                 BigDecimal closingValue = new BigDecimal((String) obj.getJSONObject("Time Series (Daily)")
                         .getJSONObject(formattedDate).get("4. close"));
                 prices.put(key, closingValue);
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 System.out.println(e.toString());
             }
         } catch (MalformedURLException e) {
