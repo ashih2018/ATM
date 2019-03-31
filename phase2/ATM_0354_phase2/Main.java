@@ -20,6 +20,8 @@ public class Main {
     private static final String OUTGOING_FILE_NAME = "phase2/ATM_0354_phase2/Files/outgoing.txt";
     private static final String ATM_FILE_NAME = "phase2/ATM_0354_phase2/Files/atm.txt";
     private static final String TRANSACTIONS_FILE = "phase2/ATM_0354_phase2/Files/transactions.txt";
+    private static final String STOCKS_FILE_NAME = "phase2/ATM_0354_phase2/Files/stocks.txt";
+
 
     public static void main(String[] args) throws IOException {
         atm = new ATM();
@@ -47,9 +49,7 @@ public class Main {
             atm.cashHandler = new CashHandler(cash);
             parseUsers(fileIn); //Also sets up accounts
             parseTransactions();
-            /*
-             * Todo create stock accounts, update stockHandler
-             */
+            parseStocks();
             updatestocks();
             state = "Login";
         }
@@ -106,12 +106,13 @@ public class Main {
                     break;
                 }
                 case "Loan": {
-                    int accountToId = Integer.parseInt(userTransactions[3]);
-                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
-                    BigDecimal interest = BigDecimal.valueOf(Double.parseDouble(userTransactions[5]));
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[6]);
-                    LocalDateTime endDate = LocalDateTime.parse(userTransactions[7]);
+                    int accountToId = Integer.parseInt(userTransactions[2]);
+                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[3]));
+                    BigDecimal interest = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
+                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
+                    LocalDateTime endDate = LocalDateTime.parse(userTransactions[6]);
                     newTransaction = new Loan(curUser.getAccount(accountToId), value, interest, date, endDate);
+                    break;
                 }
                 default:
                     System.out.println("transactions.txt has an invalid format");
@@ -147,6 +148,36 @@ public class Main {
                 newUser.setPrimary(defaultID);
                 newUser.accountFactory.setNextAccountId(accountID-1);
             }
+        }
+    }
+
+    private static void parseStocks(){
+        try{
+            Scanner in = new Scanner(new File(STOCKS_FILE_NAME));
+
+            if(in.hasNextLine()){   //if there have ever been any stock purchases
+                String[] keys = in.nextLine().split(",");
+                for(String key: keys){
+                    atm.stockHandler.addStock(key);
+                }
+            }
+            while(in.hasNextLine()){ //if someone currently owns stock
+                String[] stockInfo = in.nextLine().split(",");
+                if(stockInfo.length > 1){
+                    String username = stockInfo[0];
+                    for(int i = 1; i < stockInfo.length - 1; i+=2){
+                        String symbol = stockInfo[i];
+                        int quantity = Integer.parseInt(stockInfo[i+1]);
+                        User user = ((User) atm.userHandler.getUser(username));
+                        int id = user.getInvestmentAccountId();
+                        ((InvestmentAccount) user.getAccount(id)).setupStock(symbol, quantity);
+                    }
+                }
+
+            }
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
         }
     }
 
@@ -204,6 +235,7 @@ public class Main {
         writeATM();
         writePeople();
         writeTransactions();
+        writeStocks();
     }
 
     private static void writeATM() {
@@ -253,10 +285,31 @@ public class Main {
         }
     }
 
+    private static void writeStocks() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(STOCKS_FILE_NAME), false));
+            String keys = atm.stockHandler.getKeys().toString();
+            keys = keys.substring(1, keys.length() - 1).replaceAll(" ", "");
+            writer.write(keys);
+            writer.newLine();
+            for (Person person : atm.userHandler.users) {
+                if (person instanceof User) {
+                    User user = (User) person;
+                    writer.write(user.writeInvestmentPortfolio());
+                    writer.newLine();
+                }
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            System.out.println("IOException when writing people to stocks.txt");
+        }
+    }
+
     public static void reset() {
         try {
             String[] paths = {PEOPLE_FILE_NAME, DEPOSIT_FILE_NAME, OUTGOING_FILE_NAME,
-                    ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME, TRANSACTIONS_FILE};
+                    ATM_FILE_NAME, ALERTS_FILE_NAME, ACCOUNT_REQUESTS_FILE_NAME, TRANSACTIONS_FILE, STOCKS_FILE_NAME};
             BufferedWriter bw;
             for (String path : paths) {
                 bw = new BufferedWriter(new FileWriter(new File(path), false));

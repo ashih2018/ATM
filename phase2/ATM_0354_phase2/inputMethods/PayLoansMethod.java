@@ -32,15 +32,7 @@ public class PayLoansMethod implements InputMethod {
         while(true) {
             System.out.println("How much would you like to pay back? Input a negative number to cancel.");
             System.out.print(">");
-            BigDecimal amount;
-            while (true) {
-                amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
-                if(amount.signum()==-1) return "UserOptions";
-                if (curUser.maxAccountTotal().compareTo(amount) < 0) {
-                    System.out.println("You don't have enough in one account to pay that much! Please try again.");
-                    System.out.print(">");
-                } else break;
-            }
+            BigDecimal amount = VerifyInputs.verifyMoney(in);
             System.out.println(curUser.getSummary());
             System.out.println("What account (id) would you like to pay back from?");
             System.out.print(">");
@@ -52,7 +44,7 @@ public class PayLoansMethod implements InputMethod {
                     while (!curUser.payLoan(amount, loanId)) {
                         System.out.println("How much would you like to pay back?");
                         System.out.print(">");
-                        amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+                        amount = VerifyInputs.verifyMoney(in);
                     }
                     curUser.getAccount(accountID).forceTransferOut(amount);
                     break;
@@ -64,8 +56,7 @@ public class PayLoansMethod implements InputMethod {
         }
         System.out.println("Would you like to pay back more loans?");
         System.out.print(">");
-        boolean cont = in.nextLine().equalsIgnoreCase("yes");
-        if(cont) return run(in);
+        if(VerifyInputs.verifyConfirmation(in)) return run(in);
         return "UserOptions";
     }
 }

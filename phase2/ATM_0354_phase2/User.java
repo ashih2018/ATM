@@ -285,4 +285,23 @@ public class User extends Person {
             transactions.get(i).undo();
         }
     }
+
+    public String writeInvestmentPortfolio(){
+        StringBuilder str = new StringBuilder(getUsername());
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                str.append(((InvestmentAccount) accounts.get(i)).writeInvestmentAccount());
+            }
+        }
+        return str.toString();
+    }
+
+    public int getInvestmentAccountId(){
+        for(int i = 0; i < getNumAccounts(); i++){
+            if(accounts.get(i) instanceof  InvestmentAccount){
+                return i;
+            }
+        }
+        return -1;
+    }
 }

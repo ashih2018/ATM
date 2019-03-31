@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class DepositMoneyMethod implements InputMethod {
 
     private static final String DEPOSIT_FILE_NAME = "phase2/ATM_0354_phase2/Files/deposits.txt";
+
     @Override
     public String run(Scanner in) {
         System.out.println("======= Deposit Money =======");
@@ -30,7 +31,7 @@ public class DepositMoneyMethod implements InputMethod {
             } else {
                 System.out.println("Which account (id) would you like to deposit into?");
                 System.out.print(">");
-                User curUser = (User)Main.atm.getCurUser();
+                User curUser = (User) Main.atm.getCurUser();
                 int id = VerifyInputs.verifyAccountId(in, curUser, "deposit into");
 
                 List<String> all_deposits = Main.parseDeposits();
@@ -52,12 +53,11 @@ public class DepositMoneyMethod implements InputMethod {
                 System.out.print(">");
                 String input = in.nextLine();
                 while (true) {
-                    System.out.println("Input: "+input);
+                    System.out.println("Input: " + input);
                     if (all_deposits.contains(input)) {
                         all_deposits.remove(input);
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("input");
                         System.out.println("Invalid deposit.");
                         System.out.println("Select a deposit by inputting 'deposit_type, amount': ");
@@ -80,40 +80,34 @@ public class DepositMoneyMethod implements InputMethod {
                         e.printStackTrace();
                     }
                     return "UserOptions";
-                } else {
-                    System.out.println("Would you like to deposit more money? ('yes'/other)");
-                    System.out.print(">");
                 }
-                boolean cont = in.nextLine().equals("yes");
-
-                if (!cont) {
-                    return "UserOptions";
-                }
+                System.out.println("Would you like to deposit more money? (yes/no)");
+                System.out.print(">");
+                if (!VerifyInputs.verifyConfirmation(in)) return "UserOptions";
             }
         }
     }
 
-    private void displayDeposits(List<String> deposits){
+    private void displayDeposits(List<String> deposits) {
         System.out.println("==== Available Deposits ====");
         if (deposits.size() == 0)
             System.out.println("No available deposits.");
-        else{
-            for (String deposit: deposits) {
+        else {
+            for (String deposit : deposits) {
                 System.out.println(deposit);
             }
         }
     }
 
-    private void updateDeposits(List<String> deposits){
-        try{
+    private void updateDeposits(List<String> deposits) {
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(DEPOSIT_FILE_NAME), false));
-            for (String deposit: deposits){
+            for (String deposit : deposits) {
                 writer.write(deposit);
                 writer.newLine();
             }
             writer.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.toString());
             System.out.println("IOException when updating deposit in deposits.txt");
         }

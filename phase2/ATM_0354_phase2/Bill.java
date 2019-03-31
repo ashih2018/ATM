@@ -24,11 +24,12 @@ public class Bill extends Transaction {
 
     private void writeBill() {
         try {
-            System.out.println("printed to outgoing");
-            PrintWriter pw = new PrintWriter(new File("phase2/ATM_0354_phase2/Files/outgoing.txt"));
+            FileWriter fw = new FileWriter("phase2/ATM_0354_phase2/Files/outgoing.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
             pw.println(this.toString());
             pw.close();
-            System.out.println("printed to outgoing");
+            System.out.println("Bill paid (Printed to outgoing.txt)");
         } catch (IOException e) {
             System.out.println("IOException writing to outgoing.txt");
         }
@@ -46,7 +47,7 @@ public class Bill extends Transaction {
 
     @Override
     public String toString() {
-        return "Account ID Number " + getAccountFrom().getId() + " paid a $" + getValue() + " bill to " + this.destination;
+        return "User " + this.getAccountFrom().getUsername() + " paid a $" + getValue() + " bill to " + this.destination;
     }
 
     @Override

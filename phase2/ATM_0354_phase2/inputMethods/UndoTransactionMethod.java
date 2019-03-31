@@ -35,10 +35,9 @@ public class UndoTransactionMethod implements InputMethod {
         }
         System.out.println(String.format(num == 1?"Undoing %d transaction":"Undoing %d transactions", num));
         curUser.undoTransactions(num);
-        System.out.println("Would you like to undo any more transactions for a different user?");
+        System.out.println("Would you like to undo any more transactions for a different user? (yes/no)");
         System.out.print(">");
-        boolean cont = in.nextLine().equalsIgnoreCase("yes");
-        if(cont) return run(in);
+        if(VerifyInputs.verifyConfirmation(in)) return run(in);
         return "BankManagerOptions";
     }
 }

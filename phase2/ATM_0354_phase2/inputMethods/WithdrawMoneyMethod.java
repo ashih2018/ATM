@@ -29,9 +29,7 @@ public class WithdrawMoneyMethod implements InputMethod {
                 withdrawal.process();
                 System.out.println("Would you like to withdraw more money? (Y/N)");
                 System.out.print(">");
-                String response = in.nextLine();
-                boolean cont = response.equals("yes") || response.equalsIgnoreCase("Y");
-                if (!cont) return "UserOptions";
+                if (!VerifyInputs.verifyConfirmation(in)) return "UserOptions";
             }
         }
     }

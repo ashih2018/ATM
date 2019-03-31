@@ -18,7 +18,7 @@ public class RequestLoanMethod implements InputMethod {
         System.out.print(">");
         BigDecimal loanAmount;
         while (true) {
-            loanAmount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+            loanAmount = VerifyInputs.verifyMoney(in);
             if (loanAmount.compareTo(BigDecimal.valueOf(((User) Main.atm.getCurUser()).getLoanLimit())) > 0) {
                 System.out.println("You can't loan out that much!");
                 System.out.print(">");

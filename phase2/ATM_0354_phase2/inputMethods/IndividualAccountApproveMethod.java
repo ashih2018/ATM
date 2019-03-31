@@ -43,22 +43,14 @@ public class IndividualAccountApproveMethod implements InputMethod {
                 }
                 boolean approved;
                 if(strings[0].equals("Joint")){
-                    System.out.println("("+date+")"+" Approve a '"+accountType+"' account for "+user1+" and "+user2 +"? ('yes'/'no')");
+                    System.out.println(String.format("(%s) Approve a '%s' account for %s and %s? (yes/no)", date, accountType, user1, user2));
                     System.out.print(">");
-                    approved = in.nextLine().equals("yes");
+                    approved = VerifyInputs.verifyConfirmation(in);
                 }
                 else {
-                    System.out.println("("+date+")"+" Approve a \"" + accountType + "\" account for \"" + user1 + "\"?");
-                    System.out.print("Press \'yes\'/\'no\'\n>");
-                    while (true) {
-                        try {
-                            approved = in.nextLine().equalsIgnoreCase("yes");
-                            break;
-                        } catch (ClassCastException e) {
-                            System.out.println("Approve a \"" + accountType + "\" Account for \"" + user1 + "\"?");
-                            System.out.print("Press \'yes\'/\'no\'\n>");
-                        }
-                    }
+                    System.out.println(String.format("(%s) Approve a '%s' account for %s? (yes/no)", date, accountType, user1));
+                    System.out.print(">");
+                    approved = VerifyInputs.verifyConfirmation(in);
                 }
                 if (approved) {
                     if(strings[0].equals("Joint")) {

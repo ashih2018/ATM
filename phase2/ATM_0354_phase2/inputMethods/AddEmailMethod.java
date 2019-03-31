@@ -16,7 +16,7 @@ public class AddEmailMethod implements InputMethod {
         String email = VerifyInputs.verifyEmailFormat(in);
         System.out.println("An email will be sent to the account to verify.");
         int securityNum = EmailHandler.verifyEmail(Main.atm.getCurUser(), email);
-        if(securityNum == -1){
+        if (securityNum == -1) {
             System.out.println("There was an error sending the email. Please try again later.");
             try {
                 Thread.sleep(1000);
@@ -24,9 +24,8 @@ public class AddEmailMethod implements InputMethod {
                 e.printStackTrace();
             }
             return "UserOptions";
-        }
-        else{
-            while(true) {
+        } else {
+            while (true) {
                 System.out.println("Input your security number.");
                 System.out.print(">");
                 int attempt = VerifyInputs.verifyInt(in);
@@ -34,13 +33,10 @@ public class AddEmailMethod implements InputMethod {
                     System.out.println("Correct security number. Your email has been verified.");
                     Main.atm.getCurUser().setEmail(email);
                     return "UserOptions";
-                }
-                else{
-                    System.out.println("Incorrect security number. Would you like to try again?");
+                } else {
+                    System.out.println("Incorrect security number. Would you like to try again? (yes/no)");
                     System.out.print(">");
-                    if(in.nextLine().equalsIgnoreCase("yes")){
-                       break;
-                    }
+                    if (VerifyInputs.verifyConfirmation(in)) break;
                 }
             }
         }

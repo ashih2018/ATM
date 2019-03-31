@@ -1,9 +1,8 @@
 package ATM_0354_phase2;
 
 import javax.mail.*;
-import javax.mail.internet.*;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.Random;
 
@@ -47,20 +46,6 @@ public class EmailHandler {
         }
     }
 
-    public static void sendLoanEmail(User user, String emailTo, LocalDateTime date, BigDecimal loan) {
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(email));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
-            message.setSubject("Loan Payment Update");
-            message.setText("You have until " + date.toString() + " to pay your loan of " + loan.doubleValue() + ".");
-            Transport.send(message);
-            System.out.println("Email has been sent!");
-        } catch (MessagingException e) {
-            System.out.println("Couldn't send email!");
-        }
-    }
-
     public static int resetPassword(Person user, String emailTo) {
         int securityNum = random.nextInt(900000) + 100000;
         return sendSecurityNumber(emailTo, securityNum, String.format("Password Reset Security Number for %s", user.getUsername()));
@@ -85,7 +70,17 @@ public class EmailHandler {
         int securityNum = random.nextInt(900000)+100000;
         return sendSecurityNumber(emailTo, securityNum, String.format("Email Verification Security Number for %s", user.getUsername()));
     }
-    public static int notifyLoan(){
-        return -1;
+    static void notifyLoan(String emailTo, Loan loan){
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+            message.setSubject("Loan payment due soon.");
+            String msg = String.format("You have a loan of %f due by %s.", loan.getValue(), loan.endMonth());
+            message.setText(msg);
+            Transport.send(message);
+        }catch(MessagingException e){
+            System.out.println("Couldn't send email.");
+        }
     }
 }

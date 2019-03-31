@@ -26,11 +26,9 @@ public class AdminPanelMethod implements InputMethod {
                 case "b":
                     System.out.println("Are you sure you'd like to reset the ATM? (yes/no)");
                     System.out.print(">");
-                    boolean reset = in.nextLine().equalsIgnoreCase("yes");
-                    if(reset) return "ShutdownReset";
-                    else{
-                        return run(in);
-                    }
+                    if(VerifyInputs.verifyConfirmation(in)) return "ShutdownReset";
+                    else return run(in);
+
                 default:
                     System.out.println("Invalid option, please try again.");
                     System.out.print(">");

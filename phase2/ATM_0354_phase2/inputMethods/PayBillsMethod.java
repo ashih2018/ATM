@@ -8,10 +8,11 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class PayBillsMethod implements InputMethod {
+
     @Override
     public String run(Scanner in) {
         System.out.print("Who would you like to pay a bill to?\n>");
-        User curUser = (User)Main.atm.getCurUser();
+        User curUser = (User) Main.atm.getCurUser();
         String destination = in.nextLine();
         System.out.println("==== Your Accounts ====");
         String accountSummary = Main.atm.viewCurAccounts();
@@ -25,9 +26,8 @@ public class PayBillsMethod implements InputMethod {
         System.out.print("Which account will you use to pay?\n>");
         int id = VerifyInputs.verifyAccountId(in, curUser, "pay bills from");
         System.out.print("How much will you pay?\n>");
-        BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
+        BigDecimal amount = VerifyInputs.verifyMoney(in);
         curUser.payBill(destination, curUser.getAccount(id), amount);
-        in.nextLine();
         return "UserOptions";
     }
 }

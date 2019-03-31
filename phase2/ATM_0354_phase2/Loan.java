@@ -38,10 +38,15 @@ public class Loan extends Transaction implements Comparable<Loan>{
         this.setDate(this.getDate().plusMonths(deltaMonths));
         int monthsLeft = (endDate.getYear()-this.getDate().getYear())*12 + endDate.getMonthValue()-this.getDate().getMonthValue();
         if (monthsLeft <= 0) {
-            //TODO: Behavior when a loan expires
-        } else if(monthsLeft < 3){
-            EmailHandler.sendLoanEmail((User)Main.atm.getCurUser(), "", this.endDate, this.price);
+            Loan newLoan = new Loan(this.getAccountTo(), this.price,this.interest, this.endDate.plusMonths(4));
+            this.getAccountTo().addTransaction(newLoan);
+            newLoan.process();
+        } else if(monthsLeft < 3 && Main.atm.getUser(this.getAccountTo().getUsername()).hasEmail()){
+            EmailHandler.notifyLoan(Main.atm.getUser(this.getAccountTo().getUsername()).email, this);
         }
+    }
+    String endMonth(){
+        return this.endDate.getMonth()+" "+this.endDate.getYear();
     }
     public boolean isPaid(){
         return this.paidOff;
