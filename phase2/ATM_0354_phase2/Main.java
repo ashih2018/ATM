@@ -48,7 +48,6 @@ public class Main {
             parser.parseUsers(fileIn); //Also sets up accounts
             parser.parseTransactions();
             parser.parseStocks();
-            parser.updateStocks();
             state = "Login";
         }
 

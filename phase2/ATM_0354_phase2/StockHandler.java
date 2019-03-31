@@ -41,7 +41,8 @@ public class StockHandler {
      */
     public void updateStocks() {
         for (String key : prices.keySet()) {
-            updateStock(key);
+            if(!key.equals(""))
+                updateStock(key);
         }
     }
 

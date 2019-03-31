@@ -12,16 +12,9 @@ public class LineOfCreditAccount extends DebtAccount {
     public LineOfCreditAccount(String username, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         super(username, id, balance, dateOfCreation, transactions, new BigDecimal(5000));
     }
-    public void increaseDebt(BigDecimal value) {
-        this.setBalance(this.getBalance().add(value.setScale(2, BigDecimal.ROUND_HALF_UP)));
-    }
+
     @Override
     public String toString() {
         return "Line of Credit Account " + "\n" + super.toString();
-    }
-
-    @Override
-    String summary(int id) {
-        return "Line of Credit Account \n" + super.summary(id);
     }
 }

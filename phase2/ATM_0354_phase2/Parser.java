@@ -120,6 +120,7 @@ public class Parser {
                 for(String key: keys){
                     Main.atm.stockHandler.addStock(key);
                 }
+                Main.atm.stockHandler.updateStocks();
             }
             while(in.hasNextLine()){ //if someone currently owns stock
                 String[] stockInfo = in.nextLine().split(",");
@@ -139,10 +140,6 @@ public class Parser {
         catch(IOException e){
             System.out.println(e.toString());
         }
-    }
-
-    public void updateStocks(){
-        Main.atm.stockHandler.updateStocks();
     }
 
     public List<String> parseDeposits() {

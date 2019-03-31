@@ -3,6 +3,7 @@ package ATM_0354_phase2;
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public abstract class Account {
@@ -122,14 +123,13 @@ public abstract class Account {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = dateOfCreation.format(formatter);
         return "\tAccount ID: " + this.id +
-                "\n\tAccount Balance: " + this.balance + "\n" +
-                "\n\tDate of Creation: " + this.dateOfCreation + "\n";
+                "\n\tAccount Balance: " + this.balance +
+                "\n\tDate of Creation: " + formatDateTime + "\n";
     }
-    //for display through users.
-    String summary(int id){
-        return "\tAccount ID: " + id + "\n\tAccount Balance: "+this.balance+"\n";
-    }
+
     public void writeTransactions(){
         try{
             String filepath = "phase2/ATM_0354_phase2/Files/transactions.txt";

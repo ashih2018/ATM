@@ -19,7 +19,4 @@ public class CreditCardAccount extends DebtAccount {
     public String toString() {
         return "Credit Card Account " + "\n" + super.toString();
     }
-    String summary(int id){
-        return "Credit Card Account \n" + super.summary(id);
-    }
 }

@@ -19,11 +19,6 @@ public class InvestmentAccount extends AssetAccount {
         this.setMinimumAllowedBalance(BigDecimal.ZERO);
     }
 
-    @Override
-    String summary(int id) {
-        return getInvestmentPortfolio();
-    }
-
     public String writeInvestmentAccount(){
         StringBuilder str = new StringBuilder(getId());
         for (String key: stocks.keySet()){
