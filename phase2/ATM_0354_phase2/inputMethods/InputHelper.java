@@ -149,8 +149,11 @@ class VerifyInputs {
         } else if (new HashSet<>(Arrays.asList("no", "n")).contains(input)) {
             return false;
         }
-        System.out.println("Invalid response.");
-        System.out.println(">");
+        else{
+            System.out.println("Invalid response.");
+            System.out.print(">");
+        }
+
         return verifyConfirmation(in);
     }
 

@@ -67,10 +67,10 @@ public class InvestmentPortfolioMethod implements InputMethod {
     private void buyStocks(Scanner in){
         System.out.println("What stock would you like to buy?\n" +
                 "Enter the stock symbol.");
-        System.out.println(">");
+        System.out.print(">");
         String symbol = VerifyInputs.verifyStockSymbol(in);
         System.out.println("How many stocks would you like to buy?");
-        System.out.println(">");
+        System.out.print(">");
         int quantity = in.nextInt();
         ((User) Main.atm.getCurUser()).buyStock(symbol, quantity);
     }
@@ -78,10 +78,10 @@ public class InvestmentPortfolioMethod implements InputMethod {
     private void sellStocks(Scanner in){
         System.out.println("What stock would you like to sell?\n" +
                 "Enter the stock symbol.");
-        System.out.println(">");
+        System.out.print(">");
         String symbol = VerifyInputs.verifyStockSymbol(in);
         System.out.println("How many stocks would you like to sell?");
-        System.out.println(">");
+        System.out.print(">");
         int quantity = in.nextInt();
         ((User) Main.atm.getCurUser()).sellStock(symbol, quantity);
     }

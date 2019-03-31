@@ -40,6 +40,7 @@ public class AccountFactory {
             case "LineOfCreditAccount": return new LineOfCreditAccount(username, id, balance, dateOfCreation, transactions);
             case "ChequingAccount": return new ChequingAccount(username, id, balance, dateOfCreation, transactions);
             case "SavingsAccount": return new SavingsAccount(username, id, balance, dateOfCreation, transactions);
+            case "InvestmentAccount": return new InvestmentAccount(username, id, balance, dateOfCreation, transactions);
             default: throw new IllegalArgumentException("No such account of type: " + accountType);
         }
     }
