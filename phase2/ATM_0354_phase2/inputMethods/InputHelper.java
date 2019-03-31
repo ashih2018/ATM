@@ -42,21 +42,32 @@ class VerifyInputs {
         }
     }
 
-    static int verifyInt(Scanner in) {
+    static int verifyInt(Scanner in, boolean positive) {
         try {
-            int input = Integer.parseInt(in.nextLine());
-            if (input >= 0) {
-                return input;
-            } else {
-                System.out.println("Invalid number, please try again");
-                System.out.print(">");
-                return verifyInt(in);
+            if (positive) {
+                int input = Integer.parseInt(in.nextLine());
+                if (input > 0) {
+                    return input;
+                } else {
+                    System.out.println("Invalid number, please try again");
+                    System.out.print(">");
+                    return verifyInt(in, true);
+                }
             }
-
+            else {
+                int input = Integer.parseInt(in.nextLine());
+                if (input >= 0) {
+                    return input;
+                } else {
+                    System.out.println("Invalid number, please try again");
+                    System.out.print(">");
+                    return verifyInt(in, false);
+                }
+            }
         } catch (ClassCastException | NumberFormatException e) {
             System.out.println("Invalid number, please try again");
             System.out.print(">");
-            return verifyInt(in);
+            return verifyInt(in, positive);
         }
     }
 
@@ -79,7 +90,7 @@ class VerifyInputs {
     }
 
     static int verifyAccountId(Scanner in, User curUser, String action) {
-        int id = verifyInt(in);
+        int id = verifyInt(in, false);
         try {
             if (curUser.verifyID(id)) return id;
             else {
@@ -174,7 +185,7 @@ class VerifyInputs {
 
     static BigDecimal verifyMoney(Scanner in) {
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
-        if (amount.signum() == -1) {
+        if (amount.signum() == -1 || amount.intValue() == 0) {
             System.out.println("Invalid amount.");
             System.out.print(">");
             return verifyMoney(in);

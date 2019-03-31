@@ -18,7 +18,7 @@ public class RefillCashMethod implements InputMethod {
             int denomination = VerifyInputs.verifyDenomination(in);
             System.out.println("How many of those bills would you like to add?");
             System.out.print(">");
-            int count = VerifyInputs.verifyInt(in);
+            int count = VerifyInputs.verifyInt(in, true);
             Main.atm.addCash(denomination, count);
             System.out.println("Added " + count + " bills of denomination " + denomination);
             System.out.println("Would you like to restock again? ('yes'/other)");

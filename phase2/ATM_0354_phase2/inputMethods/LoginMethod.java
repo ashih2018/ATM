@@ -21,7 +21,7 @@ public class LoginMethod implements InputMethod {
             else {
                 System.out.println("We have sent you a security number! Please enter it in below.");
                 System.out.print(">");
-                int userNum = VerifyInputs.verifyInt(in);
+                int userNum = VerifyInputs.verifyInt(in, false);
                 if (securityNum == userNum) {
                     System.out.println("Enter your new password");
                     System.out.print(">");

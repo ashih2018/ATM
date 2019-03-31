@@ -24,7 +24,7 @@ public class WithdrawMoneyMethod implements InputMethod {
                 int id = VerifyInputs.verifyAccountId(in, curUser, "withdraw from");
                 System.out.println("How much money would you like to withdraw?");
                 System.out.print(">");
-                int money = VerifyInputs.verifyInt(in);
+                int money = VerifyInputs.verifyInt(in, true);
                 Transaction withdrawal = new Withdrawal(curUser.getAccount(id), money);
                 withdrawal.process();
                 System.out.println("Would you like to withdraw more money? (Y/N)");

@@ -20,7 +20,7 @@ public class AdminPanelMethod implements InputMethod {
                     System.out.println("Today's date is: "+Main.atm.getDateTime());
                     System.out.println("How many days would you like to move ahead?");
                     System.out.print(">");
-                    int days = VerifyInputs.verifyInt(in);
+                    int days = VerifyInputs.verifyInt(in, true);
                     Main.atm.newDate(Main.atm.getDateTime().plusDays(days));
                 case "reset":
                 case "b":
