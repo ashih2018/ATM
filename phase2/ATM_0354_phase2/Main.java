@@ -1,11 +1,8 @@
 package ATM_0354_phase2;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -37,6 +34,7 @@ public class Main {
             atm.cashHandler.addCash(10, 100);
             atm.cashHandler.addCash(5, 100);
         } else {
+            Parser parser = new Parser();
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
             LocalDateTime curDate = LocalDateTime.parse(date).plusDays(1);
@@ -47,138 +45,14 @@ public class Main {
                 cash.add(new CashObject((Integer.parseInt(lineInput[0])), Integer.parseInt(lineInput[1])));
             }
             atm.cashHandler = new CashHandler(cash);
-            parseUsers(fileIn); //Also sets up accounts
-            parseTransactions();
-            parseStocks();
+            parser.parseUsers(fileIn); //Also sets up accounts
+            parser.parseTransactions();
+            parser.parseStocks();
             updatestocks();
             state = "Login";
         }
 
         generateUI(new Scanner(System.in)); //Set up for console input
-    }
-
-
-    private static void parseTransactions() throws IOException {
-        Scanner in = new Scanner(new File(TRANSACTIONS_FILE));
-        while (in.hasNextLine()) {
-            String[] userTransactions = in.nextLine().split(",");
-            String username = userTransactions[0];
-            User curUser = (User) atm.getUser(username);
-            String transactionType = userTransactions[1];
-            Transaction newTransaction = null;
-            ArrayList<Account> relevantAccs = new ArrayList<>();
-            switch (transactionType) {
-                case "Bill": {
-                    String destination = userTransactions[2];
-                    int accountFromId = Integer.parseInt(userTransactions[3]);
-                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
-                    newTransaction = new Bill(destination, curUser.getAccount(accountFromId), value, date);
-                    relevantAccs.add(curUser.getAccount(accountFromId));
-                    break;
-                }
-                case "Deposit": {
-                    int accountToId = Integer.parseInt(userTransactions[2]);
-                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[3]));
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[4]);
-                    newTransaction = new Deposit(curUser.getAccount(accountToId), value, date);
-                    relevantAccs.add(curUser.getAccount((accountToId)));
-                    break;
-                }
-                case "Transfer": {
-                    User userFrom = (User) Main.atm.getUser(userTransactions[2]);
-                    int accountFromId = Integer.parseInt(userTransactions[3]);
-                    User userTo = (User) Main.atm.getUser(userTransactions[4]);
-                    int accountToId = Integer.parseInt(userTransactions[5]);
-                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[6]));
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[7]);
-                    newTransaction = new Transfer(userFrom.getAccount(accountFromId), userTo.getAccount(accountToId), value, date);
-                    relevantAccs.add(userFrom.getAccount(accountFromId));
-                    relevantAccs.add(userTo.getAccount(accountToId));
-                    break;
-                }
-                case "Withdrawal": {
-                    int accountFromId = Integer.parseInt(userTransactions[2]);
-                    int value = Integer.parseInt(userTransactions[3]);
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[4]);
-                    newTransaction = new Withdrawal(curUser.getAccount(accountFromId), value, date);
-                    relevantAccs.add(curUser.getAccount(accountFromId));
-                    break;
-                }
-                case "Loan": {
-                    int accountToId = Integer.parseInt(userTransactions[2]);
-                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[3]));
-                    BigDecimal interest = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
-                    LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
-                    LocalDateTime endDate = LocalDateTime.parse(userTransactions[6]);
-                    newTransaction = new Loan(curUser.getAccount(accountToId), value, interest, date, endDate);
-                    break;
-                }
-                default:
-                    System.out.println("transactions.txt has an invalid format");
-                    break;
-            }
-            for (Account relevantAcc : relevantAccs)
-                relevantAcc.addTransaction(newTransaction);
-
-        }
-    }
-
-
-    private static void parseUsers(Scanner fileIn) {
-        while (fileIn.hasNext()) {
-            String[] personInput = fileIn.nextLine().split(",");
-            String userType = personInput[0];
-            String username = personInput[1];
-            String password = personInput[2];
-            String salt = personInput[3];
-            atm.createPerson(userType, username, password, salt);
-            if (userType.equals("User")) {
-                int defaultID = Integer.parseInt(personInput[4]);
-                String[] accounts = Arrays.copyOfRange(personInput, 5, personInput.length);
-                User newUser = ((User) atm.getUser(username));
-                newUser.removeAccount(0); //Removes the "primary account"
-                int accountID = 0;
-                for (int i = 0; i < accounts.length; i += 3) {
-                    String accountType = accounts[i];
-                    BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(accounts[i + 1]));
-                    LocalDateTime dateOfCreation = LocalDateTime.parse(accounts[i + 2]);
-                    newUser.addAccount(accountType, accountID++, balance, dateOfCreation, new ArrayList<>());
-                }
-                newUser.setPrimary(defaultID);
-                newUser.accountFactory.setNextAccountId(accountID-1);
-            }
-        }
-    }
-
-    private static void parseStocks(){
-        try{
-            Scanner in = new Scanner(new File(STOCKS_FILE_NAME));
-
-            if(in.hasNextLine()){   //if there have ever been any stock purchases
-                String[] keys = in.nextLine().split(",");
-                for(String key: keys){
-                    atm.stockHandler.addStock(key);
-                }
-            }
-            while(in.hasNextLine()){ //if someone currently owns stock
-                String[] stockInfo = in.nextLine().split(",");
-                if(stockInfo.length > 1){
-                    String username = stockInfo[0];
-                    for(int i = 1; i < stockInfo.length - 1; i+=2){
-                        String symbol = stockInfo[i];
-                        int quantity = Integer.parseInt(stockInfo[i+1]);
-                        User user = ((User) atm.userHandler.getUser(username));
-                        int id = user.getInvestmentAccountId();
-                        ((InvestmentAccount) user.getAccount(id)).setupStock(symbol, quantity);
-                    }
-                }
-
-            }
-        }
-        catch(IOException e){
-            System.out.println(e.toString());
-        }
     }
 
     private static void generateUI(Scanner in) {
@@ -205,24 +79,6 @@ public class Main {
             writer.close();
         } catch (IOException e) {
             System.out.println("IOException with Account Creation Requests file");
-        }
-    }
-
-    public static List<String> parseDeposits() {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(DEPOSIT_FILE_NAME));
-            String line;
-
-            List<String> all_deposits = new ArrayList<>();
-            while ((line = br.readLine()) != null) {
-                all_deposits.add(line);
-            }
-            br.close();
-            return all_deposits;
-
-        } catch (IOException e) {
-            System.out.println("No Deposits.");
-            return new ArrayList<>();
         }
     }
 
