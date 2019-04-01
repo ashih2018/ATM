@@ -30,9 +30,7 @@ public class AccountFactory {
     }
 
 
-    /* Todo setup investment account
 
-     */
     //for setup
     public Account createAccount(String username, String accountType, int id, BigDecimal balance, LocalDateTime dateOfCreation, ArrayList<Transaction> transactions){
         switch (accountType) {
