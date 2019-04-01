@@ -22,18 +22,17 @@ public class ChequeHandler {
     public void processCheques() {
         try {
             String response = this.sendGet();
-            System.out.println("THIS IS THE RESPONSE: \n" + response.toString());
+            System.out.println("THIS IS THE RESPONSE: \n" + response);
 
             ArrayList<List> itemList = new ArrayList<>();
 
             Pattern p = Pattern.compile("\\{.*?}");
-            Matcher m = p.matcher(response.toString());
+            Matcher m = p.matcher(response);
             while (m.find()) {
                 String clean = m.group();
                 clean = clean.replace("{", "");
                 clean = clean.replace("}", "");
                 itemList.add(Arrays.asList(clean.split(",")));
-                //List<String> cleanSplit = Arrays.asList(clean.split(","));
             }
 
             String id = "";
@@ -110,7 +109,7 @@ public class ChequeHandler {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
 
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);

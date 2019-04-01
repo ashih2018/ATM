@@ -25,7 +25,7 @@ public class Parser {
             User curUser = (User) Main.atm.getUser(username);
             String transactionType = userTransactions[1];
             Transaction newTransaction = null;
-            ArrayList<Account> relevantAccs = new ArrayList<>();
+            ArrayList<Account> relevantAccounts = new ArrayList<>();
             switch (transactionType) {
                 case "Bill": {
                     String destination = userTransactions[2];
@@ -33,7 +33,7 @@ public class Parser {
                     BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[4]));
                     LocalDateTime date = LocalDateTime.parse(userTransactions[5]);
                     newTransaction = new Bill(destination, curUser.getAccount(accountFromId), value, date);
-                    relevantAccs.add(curUser.getAccount(accountFromId));
+                    relevantAccounts.add(curUser.getAccount(accountFromId));
                     break;
                 }
                 case "Deposit": {
@@ -41,7 +41,7 @@ public class Parser {
                     BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[3]));
                     LocalDateTime date = LocalDateTime.parse(userTransactions[4]);
                     newTransaction = new Deposit(curUser.getAccount(accountToId), value, date);
-                    relevantAccs.add(curUser.getAccount((accountToId)));
+                    relevantAccounts.add(curUser.getAccount((accountToId)));
                     break;
                 }
                 case "Transfer": {
@@ -52,8 +52,8 @@ public class Parser {
                     BigDecimal value = BigDecimal.valueOf(Double.parseDouble(userTransactions[6]));
                     LocalDateTime date = LocalDateTime.parse(userTransactions[7]);
                     newTransaction = new Transfer(userFrom.getAccount(accountFromId), userTo.getAccount(accountToId), value, date);
-                    relevantAccs.add(userFrom.getAccount(accountFromId));
-                    relevantAccs.add(userTo.getAccount(accountToId));
+                    relevantAccounts.add(userFrom.getAccount(accountFromId));
+                    relevantAccounts.add(userTo.getAccount(accountToId));
                     break;
                 }
                 case "Withdrawal": {
@@ -61,7 +61,7 @@ public class Parser {
                     int value = Integer.parseInt(userTransactions[3]);
                     LocalDateTime date = LocalDateTime.parse(userTransactions[4]);
                     newTransaction = new Withdrawal(curUser.getAccount(accountFromId), value, date);
-                    relevantAccs.add(curUser.getAccount(accountFromId));
+                    relevantAccounts.add(curUser.getAccount(accountFromId));
                     break;
                 }
                 case "Loan": {
@@ -79,7 +79,7 @@ public class Parser {
                     System.out.println("transactions.txt has an invalid format");
                     break;
             }
-            for (Account relevantAcc : relevantAccs)
+            for (Account relevantAcc : relevantAccounts)
                 relevantAcc.addTransaction(newTransaction);
         }
     }
