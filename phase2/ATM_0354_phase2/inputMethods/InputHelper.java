@@ -46,7 +46,10 @@ class VerifyInputs {
         try {
             if (positive) {
                 int input = Integer.parseInt(in.nextLine());
-                if (input > 0) {
+                if (input == -1) {
+                    return -1;
+                }
+                else if (input > 0) {
                     return input;
                 } else {
                     System.out.println("Invalid number, please try again");
@@ -56,7 +59,10 @@ class VerifyInputs {
             }
             else {
                 int input = Integer.parseInt(in.nextLine());
-                if (input >= 0) {
+                if (input == -1) {
+                    return -1;
+                }
+                else if (input >= 0) {
                     return input;
                 } else {
                     System.out.println("Invalid number, please try again");
@@ -193,13 +199,15 @@ class VerifyInputs {
 
     static BigDecimal verifyMoney(Scanner in) {
         BigDecimal amount = BigDecimal.valueOf(VerifyInputs.verifyDouble(in));
-        if (amount.signum() == -1 || amount.intValue() == 0) {
+        if (amount.intValue() == 0) {
             System.out.println("Invalid amount.");
             System.out.print(">");
             return verifyMoney(in);
         }
+        if (amount.signum() == -1) {
+            return new BigDecimal(-1);
+        }
         return amount;
-
     }
 }
 
