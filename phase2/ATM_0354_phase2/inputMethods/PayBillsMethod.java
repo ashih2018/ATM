@@ -25,8 +25,11 @@ public class PayBillsMethod implements InputMethod {
         }
         System.out.print("Which account will you use to pay?\n>");
         int id = VerifyInputs.verifyAccountId(in, curUser, "pay bills from");
-        System.out.print("How much will you pay?\n>");
+        System.out.print("How much will you pay? Input a negative number to go back.\n>");
         BigDecimal amount = VerifyInputs.verifyMoney(in);
+        if(amount.signum() == -1)
+            return "UserOptions";
+
         curUser.payBill(destination, curUser.getAccount(id), amount);
         return "UserOptions";
     }
