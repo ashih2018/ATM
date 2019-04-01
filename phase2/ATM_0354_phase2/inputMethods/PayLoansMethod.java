@@ -39,7 +39,7 @@ public class PayLoansMethod implements InputMethod {
             return "UserOptions";
         }
         while(true) {
-            System.out.println("How much would you like to pay back? Input a negative number to cancel.");
+            System.out.println("How much would you like to pay back? Input -1 to cancel.");
             System.out.print(">");
             BigDecimal amount = VerifyInputs.verifyMoney(in);
             System.out.println(curUser.getSummary());
