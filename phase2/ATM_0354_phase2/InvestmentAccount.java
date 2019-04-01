@@ -109,5 +109,8 @@ public class InvestmentAccount extends AssetAccount {
         return "Investment Account " + "\n" + super.toString();
     }
 
-
+    @Override
+    public String getSummary(int id){
+        return "Investment Account \n" + super.getSummary(id);
+    }
 }

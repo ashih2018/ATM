@@ -28,7 +28,7 @@ public class Transfer extends Transaction {
             getAccountFrom().addTransaction(this);
             getAccountTo().addTransaction(this);
         } catch (MoneyTransferException e) {
-            e.printStackTrace();
+            System.out.println("Not enough money in account.");
         }
     }
 

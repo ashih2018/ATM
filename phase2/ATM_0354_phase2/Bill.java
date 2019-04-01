@@ -30,7 +30,7 @@ public class Bill extends Transaction {
             PrintWriter pw = new PrintWriter(bw);
             pw.println(this.toString());
             pw.close();
-            System.out.println("Bill paid (Printed to outgoing.txt)");
+            System.out.println("Bill printed to outgoing.txt!");
         } catch (IOException e) {
             System.out.println("IOException writing to outgoing.txt");
         }
