@@ -22,7 +22,8 @@ public abstract class Person {
         return username;
     }
     public boolean hasEmail(){
-        return !this.email.equals("");
+
+        return  this.email != null&& !this.email.equals("");
     }
 
     public void setEmail(String email){
