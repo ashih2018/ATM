@@ -23,9 +23,18 @@ public class PayLoansMethod implements InputMethod {
         System.out.println("What loan would you like to pay off? Input -1 to go back.");
         System.out.print(">");
         int loanId;
-        do {
+
+        while(true){
             loanId = VerifyInputs.verifyInt(in, false);
-        } while (loanId >= numLoans && loanId != -1);
+            if(loanId < numLoans ||loanId == -1){
+                break;
+            }
+            else{
+                System.out.println("Invalid number. Please try again.");
+                System.out.print(">");
+            }
+        }
+
         if(loanId == -1){
             return "UserOptions";
         }
