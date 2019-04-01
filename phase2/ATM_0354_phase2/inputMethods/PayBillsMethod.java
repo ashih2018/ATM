@@ -26,11 +26,27 @@ public class PayBillsMethod implements InputMethod {
         System.out.print("Which account will you use to pay?\n>");
         int id = VerifyInputs.verifyAccountId(in, curUser, "pay bills from");
         System.out.print("How much will you pay? Input a negative number to go back.\n>");
-        BigDecimal amount = VerifyInputs.verifyMoney(in);
-        if(amount.signum() == -1)
-            return "UserOptions";
-
+        BigDecimal amount;
+        while (true) {
+            amount = VerifyInputs.verifyMoney(in);
+            if(amount.signum() == -1)
+                return "UserOptions";
+            if (curUser.getAccount(id).getBalance().compareTo(amount) < 0) {
+                System.out.println("You don't have enough in that account!");
+                System.out.println("Try a different amount or input a negative number to go back.");
+                System.out.print(">");
+            }
+            else {
+                break;
+            }
+        }
+        System.out.println("$" + amount.toString() + " has been paid to " + destination + ".");
         curUser.payBill(destination, curUser.getAccount(id), amount);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "UserOptions";
     }
 }
