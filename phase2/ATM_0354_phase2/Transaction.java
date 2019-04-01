@@ -41,7 +41,9 @@ public abstract class Transaction {
     public BigDecimal getValue() {
         return value;
     }
-
+    public void setValue(BigDecimal value){
+        this.value = value;
+    }
     public void process() {
         if (!getAccountFrom().canTransferOut()) {
             System.out.println("Account unable to withdraw from.");
