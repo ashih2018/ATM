@@ -17,4 +17,9 @@ public class LineOfCreditAccount extends DebtAccount {
     public String toString() {
         return "Line of Credit Account " + "\n" + super.toString();
     }
+
+    @Override
+    public String getSummary(int id){
+        return "Line of Credit Account \n" + super.getSummary(id);
+    }
 }

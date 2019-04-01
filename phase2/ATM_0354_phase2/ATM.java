@@ -28,7 +28,7 @@ public class ATM {
     }
 
     public int numUsers(){
-        return this.userHandler.users.size();
+        return this.userHandler.users.size()-1; //take out the manager
     }
 
     void setDateTime(LocalDateTime datetime) {
@@ -53,6 +53,7 @@ public class ATM {
             deltaMonths = (newDate.getYear()-this.datetime.getYear())*12
                             + newDate.getMonthValue()-this.datetime.getMonthValue();
         }
+        this.datetime = newDate;
         return deltaMonths;
     }
 

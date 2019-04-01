@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Loan extends Transaction implements Comparable<Loan>{
 
-    private BigDecimal price;
     private BigDecimal interest;
     private LocalDateTime endDate;
     private boolean paidOff;
@@ -18,7 +17,6 @@ public class Loan extends Transaction implements Comparable<Loan>{
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime endDate) {
         super(null, accountTo, value, Main.atm.getDateTime());
         this.original = value;
-        this.price = value;
         this.interest = interest;
         this.endDate = endDate;
         this.paidOff = false;
@@ -27,7 +25,6 @@ public class Loan extends Transaction implements Comparable<Loan>{
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime date, LocalDateTime endDate) {
         super(null, accountTo, value, date);
         this.original = value;
-        this.price = value;
         this.interest = interest;
         this.endDate = endDate;
         this.paidOff = false;
@@ -39,7 +36,7 @@ public class Loan extends Transaction implements Comparable<Loan>{
         this.setDate(this.getDate().plusMonths(deltaMonths));
         int monthsLeft = (endDate.getYear()-this.getDate().getYear())*12 + endDate.getMonthValue()-this.getDate().getMonthValue();
         if (monthsLeft <= 0) {
-            Loan newLoan = new Loan(this.getAccountTo(), this.price,this.interest, this.endDate.plusMonths(4));
+            Loan newLoan = new Loan(this.getAccountTo(), this.getValue(),this.interest, this.endDate.plusMonths(4));
             this.getAccountTo().addTransaction(newLoan);
             newLoan.process();
         } else if(monthsLeft < 3 && Main.atm.getUser(this.getAccountTo().getUsername()).hasEmail()){
@@ -53,13 +50,13 @@ public class Loan extends Transaction implements Comparable<Loan>{
         return this.paidOff;
     }
     public boolean pay(BigDecimal amount){
-        if(amount.compareTo(price) > 0) return false;
-        this.price = this.price.subtract(amount);
-        if(price.compareTo(BigDecimal.ZERO) == 0) this.paidOff = true;
+        if(amount.compareTo(this.getValue()) > 0) return false;
+        this.setValue(this.getValue().subtract(amount));
+        if(this.getValue().compareTo(BigDecimal.ZERO) == 0) this.paidOff = true;
         return true;
     }
     private void compound(int months) {
-        price = price.multiply(interest.pow(months));
+        this.setValue(this.getValue().multiply(interest.pow(months)));
     }
 
     public void recordLoan() {

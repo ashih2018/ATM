@@ -28,6 +28,7 @@ public class User extends Person {
     }
 
     public String getCreationDate() {
+        System.out.println(creationDate);
         return dateFormat.format(creationDate);
     }
 
@@ -83,7 +84,7 @@ public class User extends Person {
             Account account = this.accounts.get(id);
             if (id == this.getPrimaryAccountId())
                 summary.append("(Primary Account)\n");
-            summary.append(account.toString());
+            summary.append(account.getSummary(id));
             summary.append("\n");
         }
         return summary.toString();
@@ -141,7 +142,7 @@ public class User extends Person {
     }
 
     public void requestJointAccount(User otherUser, String accountType) {
-        String accountRequest = String.join(",", "Joint", this.getUsername(), otherUser.getUsername(), accountType, this.getCreationDate());
+        String accountRequest = String.join(",", "Joint", this.getUsername(), otherUser.getUsername(), accountType, Main.atm.getDateTime().toString());
         writeLineToAccReq(accountRequest);
     }
 
@@ -209,7 +210,8 @@ public class User extends Person {
     }
 
     public boolean payLoan(BigDecimal amount, int loanId) {
-        return getLoans().get(loanId).pay(amount);
+        boolean out = getLoans().get(loanId).pay(amount);
+        return out;
     }
 
     public ArrayList<Loan> getLoans() {
