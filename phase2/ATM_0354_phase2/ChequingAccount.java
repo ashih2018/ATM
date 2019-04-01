@@ -20,4 +20,9 @@ public class ChequingAccount extends AssetAccount {
     public String toString() {
         return "Chequing Account " + "\n" + super.toString();
     }
+
+    @Override
+    public String getSummary(int id){
+        return "Chequing Account \n" + super.getSummary(id);
+    }
 }

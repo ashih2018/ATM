@@ -28,7 +28,7 @@ public class ATM {
     }
 
     public int numUsers(){
-        return this.userHandler.users.size();
+        return this.userHandler.users.size()-1; //take out the manager
     }
 
     void setDateTime(LocalDateTime datetime) {

@@ -59,22 +59,6 @@ public abstract class Account {
         this.transactions.add(transaction);
     }
 
-    public Transaction getLastTransaction() throws IndexOutOfBoundsException{
-        try {
-            return this.transactions.get(this.transactions.size() - 1);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Couldn't get last transaction!");
-            return null;
-        }
-    }
-
-    public boolean doesTransactionExist(Transaction transaction) {
-        return transactions.contains(transaction);
-    }
-
-    public void deleteSpecificTransaction(Transaction transaction) {
-        this.transactions.remove(transaction);
-    }
     public ArrayList<Transaction> getTransactions(){return this.transactions;}
     public LocalDateTime getDateOfCreation() {
         return this.dateOfCreation;
@@ -98,10 +82,6 @@ public abstract class Account {
 
     public boolean canTransferOut() {
         return transferOut;
-    }
-
-    public void setTransferIn(boolean canTransferIn) {
-        this.transferIn = canTransferIn;
     }
 
     public void setTransferOut(boolean canTransferOut) {
@@ -128,6 +108,15 @@ public abstract class Account {
                 "\n\tAccount Balance: " + this.balance +
                 "\n\tDate of Creation: " + formatDateTime + "\n";
     }
+
+    public String getSummary(int id){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = dateOfCreation.format(formatter);
+        return "\tAccount ID: " + id +
+                "\n\tAccount Balance: " + this.balance +
+                "\n\tDate of Creation: " + formatDateTime + "\n";
+    }
+
 
     public void writeTransactions(){
         try{

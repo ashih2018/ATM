@@ -27,5 +27,8 @@ public class SavingsAccount extends AssetAccount {
     public String toString() {
         return "Savings Account " + "\n" + super.toString();
     }
-
+    @Override
+    public String getSummary(int id){
+        return "Savings Account \n" + super.getSummary(id);
+    }
 }
