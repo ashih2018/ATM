@@ -53,7 +53,6 @@ public class User extends Person {
 
     public int addAccount(String accountType) {
         Account account = accountFactory.createAccount(getUsername(), accountType);
-        System.out.println(account.getId());
         this.accounts.put(account.getId(), account);
         return account.getId();
     }

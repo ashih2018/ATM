@@ -68,6 +68,13 @@ public class IndividualAccountApproveMethod implements InputMethod {
             System.out.println(e.toString());
             System.out.println("IOException caught when reading file in IndividualAccountApproveMethod.");
         }
+        System.out.println("No Accounts to approve.");
+        System.out.println("Returning to options menu...");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if(Main.atm.getCurUser() instanceof BankManager)
             return "BankManagerOptions";
         else
