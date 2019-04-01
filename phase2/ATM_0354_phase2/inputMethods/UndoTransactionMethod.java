@@ -10,8 +10,12 @@ public class UndoTransactionMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("========== Undo Transaction ==========");
         System.out.println("Enter username of the User whose transactions you want to undo.");
+        System.out.println("Input -1 to go back");
         System.out.print(">");
         User curUser = VerifyInputs.verifyUser(in);
+        if (curUser == null) {
+            return "BankManagerOptions";
+        }
         System.out.println("===== Transaction History =====");
         String summaryOutput = curUser.fullTransactionHistory();
         if(summaryOutput.equals("")){

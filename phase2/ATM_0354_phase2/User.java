@@ -209,7 +209,8 @@ public class User extends Person {
     }
 
     public boolean payLoan(BigDecimal amount, int loanId) {
-        return getLoans().get(loanId).pay(amount);
+        boolean out = getLoans().get(loanId).pay(amount);
+        return out;
     }
 
     public ArrayList<Loan> getLoans() {

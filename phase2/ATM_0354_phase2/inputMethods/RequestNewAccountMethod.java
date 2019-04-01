@@ -4,9 +4,6 @@ import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 import ATM_0354_phase2.User;
 
-import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Scanner;
 
 public class RequestNewAccountMethod implements InputMethod {
@@ -33,8 +30,12 @@ public class RequestNewAccountMethod implements InputMethod {
             if (joint) {
                 while(true) {
                     System.out.println("Who would you like to open the account with?");
+                    System.out.println("Input -1 to go back");
                     System.out.print(">");
                     otherUser = VerifyInputs.verifyUser(in);
+                    if (otherUser == null) {
+                        return "UserOptions";
+                    }
                     if (otherUser == curUser) {
                         System.out.println("You can't open a joint account with yourself! Please try again.");
                     }else{
