@@ -52,6 +52,8 @@ public abstract class DebtAccount extends Account {
 
     @Override
     public String toString() {
-        return "\tAccount ID: " + this.getId() + "\t\nAmount Owed: " + this.getBalance();
+        return "\tAccount ID: " + this.getId() +
+                "\n\tAmount Owed: " + this.getBalance() +
+                "\n\tDate of Creation: " + getDateOfCreation();
     }
 }
