@@ -18,7 +18,7 @@ public class EmailSummaryMethod implements InputMethod {
                 Main.atm.sendEmailSummary(curUser, curUser.getEmail());
                 System.out.println("Canceling summary....");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

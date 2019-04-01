@@ -1,0 +1,221 @@
+================== TEST DOCUMENT ====================
+Reading from the Google Doc is easier (and shows all changes made to the doc).
+
+
+http://bit.ly/CSC207_0354_TestDocs
+(Manually tested everything )
+
+=============================
+RAW PASTE DATA:
+=============================
+P = Passed, F = Failed, U = Untested
+
+Red - important
+Yellow - note
+Blue - needs retesting
+Green - Passed
+
+Input Check consists of:
+Alphanum check
+Non-alphanum
+Empty
+Ex. ‘a’ or ‘create users’ and its variations
+Correct/Incorrect (ex. login)
+
+P | Password Reset
+Fixed: Stuck
+P | Input Check
+P | manager as user
+P | No Email (crashes)
+P | Functionality
+Bank Manager Creation
+P | Username
+P | Input Check
+P | Password
+P | Input Check
+Bank Manager
+Login
+P | Non-User
+P | User
+P | Input Check
+Features
+P | Input Check
+
+A. 'create users'
+P | Input Check
+P | Duplicate Check
+Employee-Employee
+User-User
+User-Employee
+Blank-Blank
+
+B. 'approve account creation requests'
+P | Format
+Fixed: Make it strictly yes/no instead of yes/other.
+Fixed: Also if there are no requests, there’s no indicator, it just returns to menu, maybe have something like “No requests” for like 2 seconds, and then go back
+Fixed: println accountID nums
+C. 'refill cash'
+Display would be nice
+P | Denomination Check
+P | Incorrect (-, 0, other)
+P | Correct
+P | Text/Blank
+P | Number of bills to add
+P | Incorrect (< 0)
+P | Correct
+P | Text
+P | Format
+P | Restock
+P | Different “yes” should work
+P | Restock Function
+
+D. 'undo recent transactions'
+P | Format // Suggestion fixed: added “(yes/no)”
+
+P | User Input Check
+P | Number of transactions Input Check
+P | More transactions
+P | Values updated
+E. 'process email cheques'
+nani
+F. 'logout'
+G. 'view admin panel'
+P | Input Check
+P | Reset
+P | Change Date
+H. 'shutdown’
+[NOT DOCUMENTED]
+
+Customer
+Login
+P | Username
+P | Input Check
+P | Password
+P | Input Check
+
+A. 'view accounts'
+Fixed: Takes two blank enters to input lines back
+P | Default Chequing
+Fixed: Deposited $1000 to default chequing, requested a new chequing, got approved, checked balance again, balance = 0 (default got overridden?)
+P | Joint Account
+P | Input Check
+Fixed: Except the fact that you can’t go back if another user does not exist. (If only 1 user exists and you choose joint, you’re stuck.)
+P | Fixed: No joint account with yourself
+P | Format: Different variations of account types
+Ex. “Credit Card” doesn’t work, but ‘credit card’ does
+P | Functionality (Fixed: Duplicate ids)
+P | Multiple Chequing Accounts
+P | Multiple Savings Accounts
+P | Multiple Credit Card Accounts
+P | Multiple Line of Credit Accounts
+P | Format
+P | Individual Account
+P | Input Check
+P | Format
+P | Multiple Chequing Accounts
+P | Multiple Savings Accounts
+P | Multiple Credit Card Accounts
+P | Multiple Line of Credit Accounts
+
+B. 'withdraw money'
+P | Account ID Check
+P | Amount Check
+P | Input Check
+P | Accepts negative amount to withdraw (even if it doesn’t do anything)
+P | Not enough money
+P | Boundaries
+Voided: Accepts $5, $15, etc. even if only $10 bills available (does not disrupt functionality and does not change anything)
+P | Format
+Fixed: No “Enter Account ID with “>”
+Fixed: “Withdraw more” has delay before going back to options screen (have to like press random input twice)
+
+C. 'deposit money'
+P | Account ID Check
+P | Deposit Input Check
+P | Format
+Fixed: Screen moved instantly when no deposits available
+Fixed: Prompt needed “Would you like to deposit more money?” ADD “(yes/no)” thingy
+Fixed: Line 3,4 for incorrect string (whats that input thing, is it for debug?) (Cuz println for correct amount is one line)
+P | Balance Updated
+P | Deposit More
+Fixed: Saying yes to “deposit more money” doesn’t update deposits available properly (infinite money)
+
+D. 'transfer money'
+P | Account ID Check
+Fixed: Doesn’t say anything when you enter blanks, it just goes to the next line until you write something
+P | Account Type Check
+P | Transfers to self between accounts. (A)
+P | Transfers to self; different account but you input this user (unexpected feature)
+If from primary, nothing happens
+If from other, money gets transferred to primary
+P | Account with Zero Balance
+Fixed: Transfer A - same account id - >= 0 gives red error message (but doesn’t crash)
+Fixed: Transfer A - different account id - >=0 gives red error message
+F | Amount Check
+Fixed: crashes for Text Input
+P | Boundaries
+Fixed: Negative Accepted (money duplication, negative balance)
+Fixed: Above Balance: (The error works but idk, why is it red, shouldn’t it prompt again?)
+P | Manager Transfer Denied
+P | Format
+Fixed: “Would you like to transfer more” skipped.
+Fixed: Add Yes/No
+
+E. 'pay bills'
+P | Account ID Check
+P | Amount Check
+P | Text
+P | Negative
+P | Fixed: Beyond boundary doesn’t ask to type again, displays bill paid (and also prints it) even though invalid and goes back to options
+P | Format
+Fixed: “Bill Paid (Printed to outgoing.txt)” sounds better
+Fixed: outgoing.txt only has one line even though bills paid to multiple people
+P | Amount decreased
+
+F. 'request a loan'
+P | Format
+Fixed: Blank input is messed up
+Fixed: “Press any button to continue” would make this perfect
+P | Loan Boundaries
+P | Input Check
+Fixed: > 50000 works
+Fixed: <= 0 works
+P | Month Boundaries
+P | Input Check
+Fixed: When there’s 0 loan available, you are trapped
+Voided: Loan amount does not reset after loan repaid
+
+G. 'pay back loans'
+P | Input Check
+P | No loans crashes
+P | Loan amount decreases
+P | Loan amount does not decreases for “pay off more loans” (but it decreases amount from account so that’s okay; display issue)
+P | Format
+Fixed: when entering wrong loan number >= 0(have to enter input twice)
+Fixed: Skips “Would you like pay back more loan” after valid loan amount
+Fixed: Infinite loop (Also doesn’t decrease)
+P | Go back/Cancel
+
+H. 'get an email account summary'
+P | Format
+Fixed: also i’d like yes/no to be available instead of just y/n
+Fixed: Add different variations of yes/no (YES, Yes, etc) like everything else
+Fixed: Too quick, add delay before going back.
+Fixed: extra space
+Fixed: Invalid emails displays internal error.
+P | Functionality
+
+I. 'add email'
+P | Valid Email Check
+P | Security Number Check
+P | Format
+Fixed: No option to leave if wrong for both email and security number even though i answered the question?
+
+Fixed: Too quick, add pause before returning to menu
+
+J. ‘view investment portfolio’
+[NOT DOCUMENTED]
+
+P | X. 'logout'
+
+DATE TESTS [NOT DOCUMENTED]

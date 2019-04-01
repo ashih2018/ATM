@@ -41,6 +41,7 @@ public class LoginMethod implements InputMethod {
             }
             else{
                 System.out.println("This user doesn't have any emails associated with them. They can't reset their password unfortunately.");
+                System.out.println("Press any keys to return.");
                 System.out.print(">");
                 in.nextLine();
                 return "Login";
