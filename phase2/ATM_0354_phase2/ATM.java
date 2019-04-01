@@ -53,6 +53,7 @@ public class ATM {
             deltaMonths = (newDate.getYear()-this.datetime.getYear())*12
                             + newDate.getMonthValue()-this.datetime.getMonthValue();
         }
+        this.datetime = newDate;
         return deltaMonths;
     }
 
