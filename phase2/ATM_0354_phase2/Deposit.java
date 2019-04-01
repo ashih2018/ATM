@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Deposit extends Transaction {
     public Deposit (@NotNull Account accountTo, BigDecimal value) {
-        super(null, accountTo, value, LocalDateTime.now());
+        super(null, accountTo, value, Main.atm.getDateTime());
     }
 
     public Deposit (@NotNull Account accountTo, BigDecimal value, LocalDateTime date) {

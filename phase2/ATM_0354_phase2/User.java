@@ -160,7 +160,10 @@ public class User extends Person {
     public void newMonth(int deltaMonths) {
         for (Account account : this.accounts.values()) {
             if (account instanceof SavingsAccount)
-                for (int i = 0; i < deltaMonths; i++) ((SavingsAccount) account).addInterest();
+                for (int i = 0; i < deltaMonths; i++) {
+                    ((SavingsAccount) account).addInterest();
+                }
+
             for (Transaction transaction : account.getTransactions())
                 if (transaction instanceof Loan) {
                     Loan loan = ((Loan) transaction);
