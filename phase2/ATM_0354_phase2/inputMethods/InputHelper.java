@@ -34,7 +34,7 @@ class VerifyInputs {
             } else {
                 return denomination;
             }
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NumberFormatException e) {
             System.out.println("Invalid denomination.");
             System.out.println("What denomination would you like to restock?");
             System.out.print(">");
