@@ -32,15 +32,23 @@ public class AddEmailMethod implements InputMethod {
                 if (securityNum == attempt) {
                     System.out.println("Correct security number. Your email has been verified.");
                     Main.atm.getCurUser().setEmail(email);
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     return "UserOptions";
                 } else {
                     System.out.println("Incorrect security number. Would you like to try again? (yes/no)");
                     System.out.print(">");
                     if (VerifyInputs.verifyConfirmation(in)) break;
+                    else{
+                        return "UserOptions";
+                    }
                 }
             }
         }
-        return null;
+        return "UserOptions";
     }
 
 }

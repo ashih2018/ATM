@@ -73,7 +73,7 @@ public class Loan extends Transaction implements Comparable<Loan>{
             getAccountTo().transferMoneyIn(getValue());
             getAccountTo().addTransaction(this);
         } catch (MoneyTransferException e) {
-            e.printStackTrace();
+            System.out.println("Accounts unable to transfer");
         }
     }
 
