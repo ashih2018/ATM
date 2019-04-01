@@ -25,7 +25,7 @@ public class PayBillsMethod implements InputMethod {
         }
         System.out.print("Which account will you use to pay?\n>");
         int id = VerifyInputs.verifyAccountId(in, curUser, "pay bills from");
-        System.out.print("How much will you pay? Input a negative number to go back.\n>");
+        System.out.print("How much will you pay? Input -1 to go back.\n>");
         BigDecimal amount;
         while (true) {
             amount = VerifyInputs.verifyMoney(in);
@@ -33,7 +33,7 @@ public class PayBillsMethod implements InputMethod {
                 return "UserOptions";
             if (curUser.getAccount(id).getBalance().compareTo(amount) < 0) {
                 System.out.println("You don't have enough in that account!");
-                System.out.println("Try a different amount or input a negative number to go back.");
+                System.out.println("Try a different amount or input -1  to go back.");
                 System.out.print(">");
             }
             else {
