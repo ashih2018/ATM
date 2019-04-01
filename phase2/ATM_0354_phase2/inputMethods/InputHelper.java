@@ -133,6 +133,14 @@ class VerifyInputs {
         System.out.print(">");
         return verifyUser(in);
     }
+    static Person verifyPerson(Scanner in) {
+        String input = in.nextLine();
+        if (Main.atm.usernameExists(input))
+            return Main.atm.getUser(input);
+        System.out.println("Not a valid username.");
+        System.out.print(">");
+        return verifyPerson(in);
+    }
 
     static String verifyAccountType(Scanner in) {
         String input = in.nextLine().toLowerCase();
