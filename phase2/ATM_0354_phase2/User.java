@@ -11,7 +11,7 @@ import java.util.*;
 public class User extends Person {
     private Map<Integer, Account> accounts;
     AccountFactory accountFactory;
-    private Date creationDate;
+    private LocalDateTime creationDate;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Account primaryAccount;
     private int loanLimit;
@@ -21,7 +21,7 @@ public class User extends Person {
         accounts = new HashMap<>();
         accountFactory = new AccountFactory();
         Account account = accountFactory.createAccount(getUsername(), "CHEQUINGACCOUNT");
-        creationDate = new Date();
+        creationDate = Main.atm.getDateTime();
         primaryAccount = account;
         accounts.put(0, account);
         this.loanLimit = 50000;
@@ -29,16 +29,6 @@ public class User extends Person {
 
     public String getCreationDate() {
         return dateFormat.format(creationDate);
-    }
-
-    public BigDecimal maxAccountTotal(){
-        BigDecimal max = new BigDecimal(-1);
-        for(Account acc: this.accounts.values()){
-            if(acc.getBalance().compareTo(max) > 0){
-                max = acc.getBalance();
-            }
-        }
-        return max;
     }
 
     public Account getAccount(int accountId) {
@@ -55,11 +45,10 @@ public class User extends Person {
         return this.accounts.size();
     }
 
-    public int addAccount(Account account) {
+    public void addAccount(Account account) {
         int id = ++accountFactory.nextAccountId; //fix this
         account.setId(id);
         this.accounts.put(id, account);
-        return id;
     }
 
     public int addAccount(String accountType) {
@@ -74,13 +63,11 @@ public class User extends Person {
         this.accounts.put(id, account);
     }
 
-    public boolean setPrimary(int accountID) {
+    public void setPrimary(int accountID) {
         Account account = this.accounts.get(accountID);
         if (account instanceof ChequingAccount) {
             primaryAccount = account;
-            return true;
         }
-        return false;
     }
 
     public Account getPrimaryAccount() {
@@ -104,16 +91,6 @@ public class User extends Person {
 
     public void removeAccount(int id) {
         this.accounts.remove(id);
-    }
-
-
-    public LocalDateTime getAccountDate(int accountId) {
-        Account account = this.getAccount(accountId);
-        if (account == null) {
-            System.out.println("Account does not exist");
-            return null;
-        }
-        return account.getDateOfCreation();
     }
 
     public int getLoanLimit() {
@@ -145,7 +122,7 @@ public class User extends Person {
         new Bill(destination, account, amount).process();
     }
 
-    void requestAccount(String accountType) {
+    public void requestAccount(String accountType) {
         String accountRequest = "Individual," + this.getUsername() + "," + accountType + "," + this.getCreationDate();
         writeLineToAccReq(accountRequest);
     }
@@ -163,14 +140,11 @@ public class User extends Person {
         }
     }
 
-    void requestJointAccount(User otherUser, String accountType) {
+    public void requestJointAccount(User otherUser, String accountType) {
         String accountRequest = String.join(",", "Joint", this.getUsername(), otherUser.getUsername(), accountType, this.getCreationDate());
         writeLineToAccReq(accountRequest);
     }
 
-    /*
-        For storage in people.txt
-     */
     public String writeUser() {
         StringBuilder str = new StringBuilder("User," + getUsername() + "," + getHash() +
                 "," + getSalt() + "," + getPrimaryAccountId());
@@ -182,7 +156,7 @@ public class User extends Person {
         return str.toString();
     }
 
-    void newMonth(int deltaMonths) {
+    public void newMonth(int deltaMonths) {
         for (Account account : this.accounts.values()) {
             if (account instanceof SavingsAccount)
                 for (int i = 0; i < deltaMonths; i++) ((SavingsAccount) account).addInterest();
@@ -197,7 +171,7 @@ public class User extends Person {
         }
     }
 
-    ArrayList<Transaction> getTransactions(){
+    public ArrayList<Transaction> getAllTransactions(){
         ArrayList<Transaction> transactions = new ArrayList<>();
         for (Account account : this.accounts.values()) {
             transactions.addAll(account.getTransactions());
@@ -207,9 +181,9 @@ public class User extends Person {
         return transactions;
     }
 
-    public String transactionHistory(){
+    public String fullTransactionHistory(){
         StringBuilder out = new StringBuilder();
-        ArrayList<Transaction> transactions = getTransactions();
+        ArrayList<Transaction> transactions = getAllTransactions();
         out.append(String.format("%d;", transactions.size()));
         for(int i=0; i<transactions.size(); i++) {
             out.append(String.format("%d: (%s) %s\n", i, transactions.get(i).getDate().toString(), transactions.get(i).view()));
@@ -244,7 +218,7 @@ public class User extends Person {
         return loans;
     }
 
-    void writeTransactions() {
+    public void writeTransactions() {
         this.accounts.forEach((id, account) -> account.writeTransactions());
     }
 
@@ -283,7 +257,7 @@ public class User extends Person {
     }
 
     public void undoTransactions(int num) {
-        ArrayList<Transaction> transactions = this.getTransactions();
+        ArrayList<Transaction> transactions = this.getAllTransactions();
         for(int i=0; i<num; i++){
             transactions.get(i).undo();
         }

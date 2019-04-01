@@ -73,10 +73,9 @@ public abstract class Account {
     }
 
     public void deleteSpecificTransaction(Transaction transaction) {
-        // Should only be used SOME times
         this.transactions.remove(transaction);
     }
-    ArrayList<Transaction> getTransactions(){return this.transactions;}
+    public ArrayList<Transaction> getTransactions(){return this.transactions;}
     public LocalDateTime getDateOfCreation() {
         return this.dateOfCreation;
     }

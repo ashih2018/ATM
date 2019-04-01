@@ -4,6 +4,7 @@ import com.sun.istack.internal.Nullable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Transaction {
 
@@ -60,8 +61,11 @@ public abstract class Transaction {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " : Account ID Number " + this.accountFrom + " sent $" + value +
-                " to " + this.accountTo;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = getDate().format(formatter);
+        return formatDateTime + "\n" +
+                "\tTransaction: $" + getValue() + " from user \'" + getAccountFrom().getUsername()
+                + "\' to user \'" + getAccountTo().getUsername() + "\'";
     }
 
     public abstract void undo();

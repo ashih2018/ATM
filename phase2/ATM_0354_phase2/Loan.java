@@ -4,6 +4,7 @@ import com.sun.istack.internal.Nullable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Loan extends Transaction implements Comparable<Loan>{
 
@@ -91,7 +92,10 @@ public class Loan extends Transaction implements Comparable<Loan>{
 
     @Override
     public String toString() {
-        return "The bank loaned $" + getValue() + " to account ID Number " + getAccountTo();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = getDate().format(formatter);
+        return formatDateTime + "\n" +
+                "\tLoan: $" + getValue() + " to account ID #" + getAccountTo().getId();
     }
 
     @Override

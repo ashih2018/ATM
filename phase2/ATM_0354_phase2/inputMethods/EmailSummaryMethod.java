@@ -38,7 +38,7 @@ public class EmailSummaryMethod implements InputMethod {
             Main.atm.sendEmailSummary(curUser, email);
             return "UserOptions";
         } else {
-            System.out.println("Lets try again");
+            System.out.println("Try again.");
             return this.run(in);
         }
     }

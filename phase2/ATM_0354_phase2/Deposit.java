@@ -4,6 +4,7 @@ import com.sun.istack.internal.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Deposit extends Transaction {
     public Deposit (@NotNull Account accountTo, BigDecimal value) {
@@ -30,8 +31,11 @@ public class Deposit extends Transaction {
     }
     @Override
     public String toString(){
-        return String.format("%s: $%f was deposited into %s's account number %d", this.getClass().getSimpleName(),
-                this.getValue().doubleValue(), this.getAccountTo().getUsername(), this.getAccountTo().getId());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = getDate().format(formatter);
+        return formatDateTime + "\n" +
+                "\tDeposit: $" + getValue()
+                + "\' to user \'" + getAccountTo().getUsername() + "\' account #" +getAccountTo().getId();
     }
 
     @Override

@@ -81,29 +81,6 @@ public class UserHandler {
         return null;
     }
 
-    /**
-     * Withdraw money from a user's account.
-     *
-     * @param user  The user to withdraw from
-     * @param money The amount of money to withdraw.
-     * @param id    The id of the account to withdraw from.
-     * @return true if the withdrawal succeeds, false otherwise.
-     */
-    boolean withdraw(User user, int money, int id) throws MoneyTransferException {
-        for (Person person : this.users) {
-            if (person == user) {
-                if (person instanceof User) {
-                    Account account = processAccountID(person, id);
-                    if (account == null) return false;
-                    Withdrawal withdrawal = new Withdrawal(account, money);
-                    withdrawal.process();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     private Account processAccountID(Person person, int id) {
         if (id < 0) return ((User) person).getPrimaryAccount();
         else return ((User) person).getAccount(id);
