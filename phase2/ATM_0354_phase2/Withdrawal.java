@@ -2,6 +2,7 @@ package ATM_0354_phase2;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Withdrawal extends Transaction {
     public Withdrawal(Account accountFrom, int value) {
@@ -42,4 +43,11 @@ public class Withdrawal extends Transaction {
         }
 
     }
+
+    @Override
+    public String toString(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = getDate().format(formatter);
+        return formatDateTime + "\n" +
+                "\tWithdrawal: $" + getValue() + " from user \'" + getAccountFrom().getUsername() + "\' account #" + getAccountFrom().getId();}
 }

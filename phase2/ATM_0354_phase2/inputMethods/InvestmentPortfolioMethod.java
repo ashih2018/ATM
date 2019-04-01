@@ -82,7 +82,7 @@ public class InvestmentPortfolioMethod implements InputMethod {
         String symbol = VerifyInputs.verifyStockSymbol(in);
         System.out.println("How many stocks would you like to sell?");
         System.out.print(">");
-        int quantity = VerifyInputs.verifyInt(in);
+        int quantity = VerifyInputs.verifyInt(in,  true);
         ((User) Main.atm.getCurUser()).sellStock(symbol, quantity);
     }
 }

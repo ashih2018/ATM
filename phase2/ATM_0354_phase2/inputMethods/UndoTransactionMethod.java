@@ -13,7 +13,7 @@ public class UndoTransactionMethod implements InputMethod {
         System.out.print(">");
         User curUser = VerifyInputs.verifyUser(in);
         System.out.println("===== Transaction History =====");
-        String summaryOutput = curUser.transactionHistory();
+        String summaryOutput = curUser.fullTransactionHistory();
         if(summaryOutput.equals("")){
             System.out.println("No available transactions. Press anything to go back.");
             System.out.print(">");

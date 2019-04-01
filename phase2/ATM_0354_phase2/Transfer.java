@@ -4,11 +4,12 @@ import com.sun.istack.internal.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transfer extends Transaction {
 
     public Transfer(@NotNull Account accountFrom, @NotNull Account accountTo, BigDecimal value) {
-        super(accountFrom, accountTo, value, LocalDateTime.now());
+        super(accountFrom, accountTo, value, Main.atm.getDateTime());
     }
 
     public Transfer(@NotNull Account accountFrom, @NotNull Account accountTo, BigDecimal value, LocalDateTime date) {
@@ -46,7 +47,11 @@ public class Transfer extends Transaction {
 
     @Override
     public String toString() {
-        return super.getAccountFrom() + " sent $" + getValue() + " to " + super.getAccountTo();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = getDate().format(formatter);
+        return formatDateTime + "\n" +
+                "\tTransfer: $" + getValue() + " from user \'" + getAccountFrom().getUsername() + "\' account #" + getAccountFrom().getId()
+                + " to user \'" + getAccountTo().getUsername() + "\' account # " + getAccountTo().getId();
     }
 
     @Override

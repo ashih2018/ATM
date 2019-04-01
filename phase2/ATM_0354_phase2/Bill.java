@@ -3,6 +3,7 @@ package ATM_0354_phase2;
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Bill extends Transaction {
     String destination;
@@ -47,7 +48,11 @@ public class Bill extends Transaction {
 
     @Override
     public String toString() {
-        return "User " + this.getAccountFrom().getUsername() + " paid a $" + getValue() + " bill to " + this.destination;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = getDate().format(formatter);
+        return formatDateTime + "\n" +
+                "\tBill: $" + getValue() + " from user \'" + getAccountFrom().getUsername() + "\' account #" + getAccountFrom().getId()
+                + "\tDestination: " + destination;
     }
 
     @Override
