@@ -54,6 +54,7 @@ public class ATM {
                             + newDate.getMonthValue()-this.datetime.getMonthValue();
         }
         this.datetime = newDate;
+        stockHandler.updateStocks();
         return deltaMonths;
     }
 

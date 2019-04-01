@@ -37,11 +37,6 @@ public class InvestmentAccount extends AssetAccount {
         stocks.put(key, quantity);
     }
 
-    public InvestmentAccount(String username, int id, HashMap<String, Integer> stocks){
-        super(username, id);
-        this.stocks = stocks;
-        setMinimumAllowedBalance(BigDecimal.ZERO);
-    }
 
     public BigDecimal getTotalValue(){
         BigDecimal value = getBalance();
@@ -51,9 +46,6 @@ public class InvestmentAccount extends AssetAccount {
         return value;
     }
 
-    /*Todo get rid of the name in stockhandler
-     *
-     */
     public void buyStock(String key, int quantity){
         if(!Main.atm.stockHandler.getKeys().contains(key)){
             Main.atm.stockHandler.addStock(key);

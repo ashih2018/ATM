@@ -4,11 +4,14 @@ import ATM_0354_phase2.BankEmployee;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class UserOptionsMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        System.out.println("Today's date is: "+ Main.atm.getDateTime().format(formatter) + "\n");
         System.out.println("======= User Panel ========");
         boolean isEmployee = Main.atm.getCurUser() instanceof BankEmployee;
         System.out.println("Options:");

@@ -72,7 +72,6 @@ public class DepositMoneyMethod implements InputMethod {
                 updateDeposits(all_deposits);
                 displayDeposits(all_deposits);
                 if (all_deposits.size() == 0) {
-                    System.out.println("No deposits remaining.");
                     System.out.println("Returning to user options...");
                     try {
                         Thread.sleep(1000);

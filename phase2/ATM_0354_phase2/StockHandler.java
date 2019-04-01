@@ -12,13 +12,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 
 public class StockHandler {
     private HashMap<String, BigDecimal> prices;
     private final String API_KEY = "KJFQFRS9IL1YVZ9B";
+
     public StockHandler() {
         prices = new HashMap<>();
     }
@@ -41,25 +45,32 @@ public class StockHandler {
      */
     public void updateStocks() {
         for (String key : prices.keySet()) {
-            if(!key.equals(""))
+            if (!key.equals(""))
                 updateStock(key);
         }
     }
 
-    public void updateStock(String key) {
+    private String formatDate(){
         LocalDateTime date = Main.atm.getDateTime().minusMonths(3);
-        if(date.getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+        HashSet<String> holidays = new HashSet<>(Arrays.asList("2018-01-01", "2018-01-15", "2018-02-19", "2018-03-30",
+                "2018-05-28", "2018-07-04", "2018-09-03", "2018-11-22", "2018-12-05", "2018-12-25", "2019-01-01",
+                "2019-02-18", "2019-04-19", "2019-05-27"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formatDateTime = date.format(formatter);
+
+        while(holidays.contains(formatDateTime) ||
+                date.getDayOfWeek().equals(DayOfWeek.SUNDAY) || date.getDayOfWeek().equals(DayOfWeek.SATURDAY)){
             date = date.minusDays(1);
+            formatDateTime = date.format(formatter);
         }
-        else if(date.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-            date = date.minusDays(2);
-        }
-        int monthValue = date.getMonthValue();
-        String month = "" + date.getMonthValue();
-        if (monthValue + 1 <10){
-            month  = "0" + monthValue;
-        }
-        String formattedDate = "" + date.getYear() + "-" + month + "-" + date.getDayOfMonth();
+        return formatDateTime;
+
+    }
+
+    public void updateStock(String key) {
+
+        String formattedDate = formatDate();
         try {
             URL url = new URL(
                     "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&" +

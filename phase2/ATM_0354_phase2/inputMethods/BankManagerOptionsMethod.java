@@ -1,7 +1,9 @@
 package ATM_0354_phase2.inputMethods;
 
 import ATM_0354_phase2.InputMethod;
+import ATM_0354_phase2.Main;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class BankManagerOptionsMethod implements InputMethod {
@@ -13,8 +15,12 @@ public class BankManagerOptionsMethod implements InputMethod {
      */
     @Override
     public String run(Scanner in) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        System.out.println("Today's date is: "+ Main.atm.getDateTime().format(formatter) + "\n");
         System.out.println("======= Bank Manager Panel =======");
-        System.out.println("Options:\nA. 'create users'\nB. 'approve account creation requests'\nC. 'refill cash'\nD. 'undo recent transactions'\nE. 'process email cheques'\nF. 'logout'\nG. 'view admin panel'\nH. 'shutdown'");
+        System.out.println("Options:\nA. 'create users'\nB. 'approve account creation requests'\nC. 'refill cash'" +
+                "\nD. 'undo recent transactions'\nE. 'process email cheques'" +
+                "\nF. 'view admin panel'\nG. 'shutdown'\nX. 'logout'");
         System.out.println("What would you like to do?");
         System.out.print(">");
         String input = in.nextLine();
@@ -36,13 +42,13 @@ public class BankManagerOptionsMethod implements InputMethod {
                 case "e":
                     return "ProcessEmailCheques";
                 case "logout":
-                case "f":
+                case "x":
                     return "Logout";
                 case "view admin panel":
-                case "g":
+                case "f":
                     return "AdminPanel";
                 case "shutdown":
-                case "h":
+                case "g":
                     return "Shutdown";
                 default:
                     System.out.println("Invalid option, please try again.");
