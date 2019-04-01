@@ -85,6 +85,7 @@ public class User extends Person {
             if (id == this.getPrimaryAccountId())
                 summary.append("(Primary Account)\n");
             summary.append(account.toString());
+            summary.append("\n");
         }
         return summary.toString();
     }
@@ -123,7 +124,7 @@ public class User extends Person {
     }
 
     public void requestAccount(String accountType) {
-        String accountRequest = "Individual," + this.getUsername() + "," + accountType + "," + this.getCreationDate();
+        String accountRequest = "Individual," + this.getUsername() + "," + accountType + "," + Main.atm.getDateTime();
         writeLineToAccReq(accountRequest);
     }
 
