@@ -14,12 +14,12 @@ public class RequestLoanMethod implements InputMethod {
     public String run(Scanner in) {
         System.out.println("You can loan out " + ((User) Main.atm.getCurUser()).getLoanLimit());
         System.out.println("How much money would you like to loan out?");
-        System.out.println("Input 9999 to go back");
+        System.out.println("Input -1 to go back");
         System.out.print(">");
         BigDecimal loanAmount;
         while (true) {
             loanAmount = VerifyInputs.verifyMoney(in);
-            if (loanAmount.intValue() == 9999) {
+            if (loanAmount.intValue() == -1) {
                 return "UserOptions";
             }
             else if (loanAmount.compareTo(BigDecimal.valueOf(((User) Main.atm.getCurUser()).getLoanLimit())) > 0) {
@@ -43,6 +43,7 @@ public class RequestLoanMethod implements InputMethod {
         loan.process();
         ((User) Main.atm.getCurUser()).changeLoanLimit(-1 * loanAmount.intValue());
         System.out.println("The maximum amount you will be able to loan in the future is " + ((User) Main.atm.getCurUser()).getLoanLimit());
+        System.out.println("Press any key to return");
         System.out.print(">");
         in.nextLine();
         return "UserOptions";

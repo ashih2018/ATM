@@ -18,7 +18,7 @@ public class InvestmentPortfolioMethod implements InputMethod {
                     Main.atm.requestAccount(curUser, "investment");
                     System.out.println("Investment account requested successfully.\n" +
                             "Input anything to go back.");
-                    System.out.println(">");
+                    System.out.print(">");
                     in.nextLine();
                     return "UserOptions";
                 }
@@ -42,7 +42,7 @@ public class InvestmentPortfolioMethod implements InputMethod {
                 }
                 else{
                     System.out.println("Input anything to go back.");
-                    System.out.println(">");
+                    System.out.print(">");
                     in.nextLine();
                     return "UserOptions";
                 }
@@ -53,36 +53,28 @@ public class InvestmentPortfolioMethod implements InputMethod {
 
     private void tradeStocks(Scanner in){
         System.out.println("Would you like to buy stocks? (Y/N)");
+        String action = "";
         if(VerifyInputs.verifyConfirmation(in)){
-            buyStocks(in);
+            action = "buy";
         }
         else{
             System.out.println("Would you like to sell stocks? (Y/N)");
             if(VerifyInputs.verifyConfirmation(in)){
-                sellStocks(in);
+                action = "sell";
             }
         }
-    }
 
-    private void buyStocks(Scanner in){
-        System.out.println("What stock would you like to buy?\n" +
-                "Enter the stock symbol.");
-        System.out.print(">");
-        String symbol = VerifyInputs.verifyStockSymbol(in);
-        System.out.println("How many stocks would you like to buy?");
-        System.out.print(">");
-        int quantity = VerifyInputs.verifyInt(in, true);
-        ((User) Main.atm.getCurUser()).buyStock(symbol, quantity);
-    }
+        if(!action.equals("")){
+            System.out.println(String.format("What stock would you like to %s?\n" +
+                    "Enter the stock symbol.", action));
+            System.out.print(">");
+            String symbol = VerifyInputs.verifyStockSymbol(in);
+            System.out.println(String.format("How many stocks would you like to %s?", action));
+            System.out.print(">");
+            int quantity = VerifyInputs.verifyInt(in, true);
 
-    private void sellStocks(Scanner in){
-        System.out.println("What stock would you like to sell?\n" +
-                "Enter the stock symbol.");
-        System.out.print(">");
-        String symbol = VerifyInputs.verifyStockSymbol(in);
-        System.out.println("How many stocks would you like to sell?");
-        System.out.print(">");
-        int quantity = VerifyInputs.verifyInt(in,  true);
-        ((User) Main.atm.getCurUser()).sellStock(symbol, quantity);
+            if(action.equals("buy")) ((User) Main.atm.getCurUser()).buyStock(symbol, quantity);
+            else ((User) Main.atm.getCurUser()).sellStock(symbol, quantity);
+        }
     }
 }
