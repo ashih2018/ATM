@@ -15,7 +15,7 @@ public class Loan extends Transaction implements Comparable<Loan>{
 
 
     public Loan(@Nullable Account accountTo, BigDecimal value, BigDecimal interest, LocalDateTime endDate) {
-        super(null, accountTo, value, LocalDateTime.now());
+        super(null, accountTo, value, Main.atm.getDateTime());
         this.original = value;
         this.interest = interest;
         this.endDate = endDate;

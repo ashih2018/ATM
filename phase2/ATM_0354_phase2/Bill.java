@@ -13,7 +13,7 @@ public class Bill extends Transaction {
         this.destination = destination;
     }
     public Bill(String destination, Account accountFrom, BigDecimal value) {
-        super(accountFrom, null, value, LocalDateTime.now());
+        super(accountFrom, null, value, Main.atm.getDateTime());
         this.destination = destination;
     }
 

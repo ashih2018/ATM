@@ -127,6 +127,9 @@ class VerifyInputs {
 
     static User verifyUser(Scanner in) {
         String input = in.nextLine();
+        if (input.equals("-1")) {
+            return null;
+        }
         if (Main.atm.usernameExists(input) && Main.atm.getUser(input) instanceof User)
             return (User) Main.atm.getUser(input);
         System.out.println("Not a valid username.");
