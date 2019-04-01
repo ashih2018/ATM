@@ -20,13 +20,13 @@ public class PayLoansMethod implements InputMethod {
         }
         summary = summary.split(";")[1];
         System.out.println(summary);
-        System.out.println("What loan would you like to pay off? Input 9999 to go back.");
+        System.out.println("What loan would you like to pay off? Input -1 to go back.");
         System.out.print(">");
         int loanId;
         do {
             loanId = VerifyInputs.verifyInt(in, false);
-        } while (loanId >= numLoans && loanId != 9999);
-        if(loanId == 9999){
+        } while (loanId >= numLoans && loanId != -1);
+        if(loanId == -1){
             return "UserOptions";
         }
         while(true) {
