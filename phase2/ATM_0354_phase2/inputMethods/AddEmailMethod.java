@@ -37,10 +37,13 @@ public class AddEmailMethod implements InputMethod {
                     System.out.println("Incorrect security number. Would you like to try again? (yes/no)");
                     System.out.print(">");
                     if (VerifyInputs.verifyConfirmation(in)) break;
+                    else{
+                        return "UserOptions";
+                    }
                 }
             }
         }
-        return null;
+        return "UserOptions";
     }
 
 }
