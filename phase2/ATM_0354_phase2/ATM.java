@@ -1,8 +1,6 @@
 package ATM_0354_phase2;
 
 import java.math.BigDecimal;
-import java.net.PasswordAuthentication;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ATM {
@@ -81,8 +79,8 @@ public class ATM {
      * @param id    The id of the account to deposit into.
      * @return True if the deposit succeeds, false otherwise.
      */
-    public boolean deposit(User user, BigDecimal money, int id) {
-        return userHandler.deposit(user, money, id);
+    public void deposit(User user, BigDecimal money, int id) {
+        userHandler.deposit(user, money, id);
 
     }
 

@@ -10,24 +10,22 @@ public class UserCreationScreenMethod implements InputMethod {
     @Override
     public String run(Scanner in) {
         System.out.println("========== User Creation ==========");
-        while (true) {
+        do {
             System.out.println("What type of user are you creating?\nA. Customer\nB. Employee");
             System.out.println("Input -1 to go back.");
             System.out.print(">");
             String type = in.nextLine();
-            while(true){
+            while (true) {
                 if (type.equals("-1")) {
                     return "BankManagerOptions";
                 }
-                if (type.equalsIgnoreCase("customer") || type.equalsIgnoreCase("a")){
+                if (type.equalsIgnoreCase("customer") || type.equalsIgnoreCase("a")) {
                     type = "User";
                     break;
-                }
-                else if (type.equalsIgnoreCase("employee") || type.equalsIgnoreCase("b")){
+                } else if (type.equalsIgnoreCase("employee") || type.equalsIgnoreCase("b")) {
                     type = "BankEmployee";
                     break;
-                }
-                else{
+                } else {
                     System.out.println("That is not a valid type.");
                     System.out.println("Please enter\nA. User\nB. Employee");
                     System.out.print(">");
@@ -44,8 +42,7 @@ public class UserCreationScreenMethod implements InputMethod {
             Main.atm.createPerson(type, username, password, null);
             System.out.println("Would you like to create another user? (yes/no)");
             System.out.print(">");
-            if (!VerifyInputs.verifyConfirmation(in)) break;
-        }
+        } while (VerifyInputs.verifyConfirmation(in));
         if(Main.atm.getCurUser() instanceof BankManager)
             return "BankManagerOptions";
         else
