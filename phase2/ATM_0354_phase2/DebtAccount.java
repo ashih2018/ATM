@@ -37,11 +37,6 @@ public abstract class DebtAccount extends Account {
         } else throw new MoneyTransferException("Can't transfer money out of this account");
     }
 
-    @Override
-    public boolean canTransferOut(){
-        return super.canTransferOut();
-    }
-
     private boolean underMaxDebt(BigDecimal value){
         return getBalance().add(value.setScale(2, BigDecimal.ROUND_HALF_UP)).compareTo(maxDebt) < 0;
     }

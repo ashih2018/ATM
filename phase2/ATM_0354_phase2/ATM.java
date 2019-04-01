@@ -1,8 +1,6 @@
 package ATM_0354_phase2;
 
 import java.math.BigDecimal;
-import java.net.PasswordAuthentication;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ATM {
