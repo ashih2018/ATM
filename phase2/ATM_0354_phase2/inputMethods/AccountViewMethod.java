@@ -28,7 +28,7 @@ public class AccountViewMethod implements InputMethod {
     private void viewTransactionHistory(Scanner in){
         User user = (User) Main.atm.getCurUser();
         System.out.println("What account (id) would you like to view?");
-        System.out.println(">");
+        System.out.print(">");
         int id = VerifyInputs.verifyAccountId(in, user, "view");
         if(user.getAccount(id).getTransactions().isEmpty()){
             System.out.println("No transactions.");

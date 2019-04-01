@@ -3,6 +3,7 @@ package ATM_0354_phase2;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CashHandler {
@@ -79,6 +80,7 @@ public class CashHandler {
         if (money != 0) {
             this.setCash(original);
         }
+        updateRestockStatus();
         return money == 0;
     }
 
@@ -99,11 +101,16 @@ public class CashHandler {
         try {
             File file = new File("phase2/ATM_0354_phase2/Files/alerts.txt");
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formatDateTime = Main.atm.getDateTime().format(formatter);
+            writer.write("ATM needs restocking: " + formatDateTime);
             for (CashObject c : cash) {
-                writer.write(c.getCashValue() + ", " + c.getCount());
                 writer.newLine();
+                writer.write(c.getCashValue() + ", " + c.getCount());
             }
+            writer.newLine();
+            writer.write("------------------------------------------");
+            writer.newLine();
 
             writer.close();
         } catch (Exception e) {

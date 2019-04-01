@@ -22,7 +22,6 @@ public class ChequeHandler {
     public void processCheques() {
         try {
             String response = this.sendGet();
-            System.out.println("THIS IS THE RESPONSE: \n" + response);
 
             ArrayList<List> itemList = new ArrayList<>();
 
