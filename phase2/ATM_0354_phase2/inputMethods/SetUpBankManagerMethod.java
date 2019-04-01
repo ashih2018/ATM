@@ -4,7 +4,6 @@ import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class SetUpBankManagerMethod implements InputMethod {
 

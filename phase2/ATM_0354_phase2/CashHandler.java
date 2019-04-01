@@ -94,9 +94,6 @@ public class CashHandler {
         this.hasEnoughBills = true;
     }
 
-    public boolean hasEnoughBills() {
-        return hasEnoughBills;
-    }
 
     public void sendAlert() {
         try {

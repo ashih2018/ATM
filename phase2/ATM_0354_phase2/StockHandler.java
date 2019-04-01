@@ -21,7 +21,6 @@ import java.util.HashSet;
 
 public class StockHandler {
     private HashMap<String, BigDecimal> prices;
-    private final String API_KEY = "KJFQFRS9IL1YVZ9B";
 
     public StockHandler() {
         prices = new HashMap<>();
@@ -72,6 +71,7 @@ public class StockHandler {
 
         String formattedDate = formatDate();
         try {
+            String API_KEY = "KJFQFRS9IL1YVZ9B";
             URL url = new URL(
                     "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&" +
                             "symbol=" + key + "&apikey=" + API_KEY);

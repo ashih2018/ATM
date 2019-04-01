@@ -39,7 +39,7 @@ public class ChequeHandler {
             String id = "";
             String to = "";
             String from = "";
-            Double amount = 0.0;
+            double amount = 0.0;
             for (List list : itemList) {
                 Pattern colonPattern = Pattern.compile(":.*");
 
@@ -74,7 +74,7 @@ public class ChequeHandler {
 
 
                 // send money to each account
-                Boolean bothUsersExist = Main.atm.usernameExists(from) &&  Main.atm.usernameExists(to);
+                boolean bothUsersExist = Main.atm.usernameExists(from) &&  Main.atm.usernameExists(to);
 
                 if (bothUsersExist) {
                     Account fromAccount = ((User) Main.atm.getUser(from)).getPrimaryAccount();

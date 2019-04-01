@@ -27,10 +27,6 @@ public class User extends Person {
         this.loanLimit = 50000;
     }
 
-    public String getCreationDate() {
-        System.out.println(creationDate);
-        return dateFormat.format(creationDate);
-    }
 
     public Account getAccount(int accountId) {
         Account account;
@@ -210,8 +206,7 @@ public class User extends Person {
     }
 
     public boolean payLoan(BigDecimal amount, int loanId) {
-        boolean out = getLoans().get(loanId).pay(amount);
-        return out;
+        return getLoans().get(loanId).pay(amount);
     }
 
     public ArrayList<Loan> getLoans() {
