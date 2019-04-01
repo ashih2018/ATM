@@ -26,7 +26,7 @@ public class Deposit extends Transaction {
             getAccountTo().addTransaction(this);
         }
         catch(MoneyTransferException e){
-            System.out.println(e.toString());
+            System.out.println("Account unable to transfer money in.");
         }
     }
     @Override
