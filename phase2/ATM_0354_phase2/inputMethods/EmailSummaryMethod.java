@@ -16,9 +16,14 @@ public class EmailSummaryMethod implements InputMethod {
         if (VerifyInputs.verifyConfirmation(in)) {
             System.out.println("Sending email to " + email);
             Main.atm.sendEmailSummary((User) Main.atm.getCurUser(), email);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return "UserOptions";
         } else {
-            System.out.println("Lets try again");
+            System.out.println("Try again.");
             return this.run(in);
         }
     }
