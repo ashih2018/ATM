@@ -3,6 +3,7 @@ package ATM_0354_phase2.inputMethods;
 import ATM_0354_phase2.InputMethod;
 import ATM_0354_phase2.Main;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class AdminPanelMethod implements InputMethod {
@@ -17,7 +18,8 @@ public class AdminPanelMethod implements InputMethod {
             switch(input.toLowerCase()){
                 case "manage date":
                 case "a":
-                    System.out.println("Today's date is: "+Main.atm.getDateTime());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    System.out.println("Today's date is: "+Main.atm.getDateTime().format(formatter));
                     System.out.println("How many days would you like to move ahead?");
                     System.out.print(">");
                     int days = VerifyInputs.verifyInt(in, true);

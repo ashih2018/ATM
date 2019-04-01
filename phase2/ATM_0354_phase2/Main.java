@@ -38,7 +38,7 @@ public class Main {
             Scanner atmFileIn = new Scanner(new File(ATM_FILE_NAME));
             String date = atmFileIn.nextLine();
             LocalDateTime curDate = LocalDateTime.parse(date).plusDays(1);
-            atm.newDate(curDate);
+            int deltaMonths = atm.newDate(curDate);
             ArrayList<CashObject> cash = new ArrayList<>();
             while (atmFileIn.hasNextLine()) { //update cash amounts
                 String[] lineInput = atmFileIn.nextLine().split(",");
@@ -48,6 +48,7 @@ public class Main {
             parser.parseUsers(fileIn); //Also sets up accounts
             parser.parseTransactions();
             parser.parseStocks();
+            atm.userHandler.newMonth(deltaMonths);
             state = "Login";
         }
 

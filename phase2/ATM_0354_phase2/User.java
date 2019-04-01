@@ -53,7 +53,6 @@ public class User extends Person {
 
     public int addAccount(String accountType) {
         Account account = accountFactory.createAccount(getUsername(), accountType);
-        System.out.println(account.getId());
         this.accounts.put(account.getId(), account);
         return account.getId();
     }
@@ -160,7 +159,10 @@ public class User extends Person {
     public void newMonth(int deltaMonths) {
         for (Account account : this.accounts.values()) {
             if (account instanceof SavingsAccount)
-                for (int i = 0; i < deltaMonths; i++) ((SavingsAccount) account).addInterest();
+                for (int i = 0; i < deltaMonths; i++) {
+                    ((SavingsAccount) account).addInterest();
+                }
+
             for (Transaction transaction : account.getTransactions())
                 if (transaction instanceof Loan) {
                     Loan loan = ((Loan) transaction);

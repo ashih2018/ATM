@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Withdrawal extends Transaction {
     public Withdrawal(Account accountFrom, int value) {
-        super(accountFrom, null, new BigDecimal(value), LocalDateTime.now());
+        super(accountFrom, null, new BigDecimal(value), Main.atm.getDateTime());
     }
 
     Withdrawal(Account accountFrom, int value, LocalDateTime date) {

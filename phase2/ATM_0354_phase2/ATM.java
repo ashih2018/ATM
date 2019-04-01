@@ -43,14 +43,17 @@ public class ATM {
         return curUser;
     }
 
-    public void newDate(LocalDateTime newDate){
+    public int newDate(LocalDateTime newDate){
         if(this.datetime.compareTo(newDate) > 0){
             System.out.println("Invalid date");
-            return;
+            return 0;
         }
+        int deltaMonths = 0;
         if(newDate.getYear() > this.datetime.getYear() || newDate.getMonthValue()>this.datetime.getMonthValue()){ //new month
-            this.userHandler.newMonth((newDate.getYear()-this.datetime.getYear())*12 + newDate.getMonthValue()-this.datetime.getMonthValue());
+            deltaMonths = (newDate.getYear()-this.datetime.getYear())*12
+                            + newDate.getMonthValue()-this.datetime.getMonthValue();
         }
+        return deltaMonths;
     }
 
     /**
