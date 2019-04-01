@@ -34,8 +34,8 @@ public class Transfer extends Transaction {
 
     @Override
     public String serialize() {
-        return String.join(",", this.getAccountFrom().getUsername(),
-                this.getClass().getSimpleName(), ((Integer) this.getAccountFrom().getId()).toString(),
+        return String.join(",", this.getClass().getSimpleName(), this.getAccountFrom().getUsername(),
+                ((Integer) this.getAccountFrom().getId()).toString(),
                 getAccountTo().getUsername(), ((Integer) getAccountTo().getId()).toString(), this.getValue().toString(),
                 this.getDate().toString());
     }
